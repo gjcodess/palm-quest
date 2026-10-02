@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Analytics } from '@vercel/analytics/react';
 import { useGame } from './context/GameContext';
 import { HeaderHUD } from './components/HeaderHUD';
 import { TeacherMiaSidebar } from './components/TeacherMiaSidebar';
@@ -132,7 +131,6 @@ export const App = () => {
       <SystemOverviewModal />
       <ConfirmModal />
       <FloatingItemCursor />
-      <Analytics />
     </div>
   );
 };

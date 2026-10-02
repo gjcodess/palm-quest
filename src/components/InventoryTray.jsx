@@ -18,6 +18,12 @@ export const InventoryTray = ({
 }) => {
   const { holdingItem, setHoldingItem, isInventoryCollapsed, setIsInventoryCollapsed } = useGame();
 
+  const closeCompactRack = () => {
+    if (window.matchMedia('(max-width: 950px) and (orientation: landscape)').matches) {
+      setIsInventoryCollapsed(true);
+    }
+  };
+
   const handleCardClick = (item) => {
     if (item.isUsed) return;
     if (item.disabled && !item.onClick) return;
@@ -25,12 +31,14 @@ export const InventoryTray = ({
 
     if (item.onClick) {
       item.onClick();
+      closeCompactRack();
       return;
     }
 
     const clickHandler = onItemClick || onItemSelect;
     if (clickHandler) {
       clickHandler(item);
+      closeCompactRack();
       return;
     }
 
@@ -44,6 +52,7 @@ export const InventoryTray = ({
         icon: item.fallbackIcon || '🥣',
       });
     }
+    closeCompactRack();
   };
 
   // Render Collapsed Slim Vertical Tab (Right Edge)

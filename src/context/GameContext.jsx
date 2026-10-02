@@ -181,9 +181,10 @@ export const GameProvider = ({ children }) => {
       setIsDialogueCollapsed(true);
       setIsInventoryCollapsed(true);
     } else if (stageScenes.includes(scene)) {
-      // Expand both sidebars by default when entering Stages 1 through 8
-      setIsDialogueCollapsed(false);
-      setIsInventoryCollapsed(false);
+      // Compact devices use the sidebars as optional drawers over the lab.
+      const compact = window.matchMedia('(max-width: 950px)').matches;
+      setIsDialogueCollapsed(compact);
+      setIsInventoryCollapsed(compact);
     }
   }, [scene]);
 

@@ -671,3 +671,145 @@
     min-height: 140px;
   }
 }
+
+/* Phone browser fallback. The installed Android app requests landscape itself. */
+.screen-restriction-overlay { display: none !important; }
+@media screen and (max-width: 600px) and (orientation: portrait) {
+  .screen-restriction-overlay {
+    display: grid !important;
+    position: fixed;
+    inset: 0;
+    z-index: 9999999;
+    place-items: center;
+    padding: 24px;
+    background: linear-gradient(135deg, #173e2c, #2b180a);
+  }
+  .restriction-modal-card {
+    width: min(100%, 350px);
+    padding: 28px 24px;
+    text-align: center;
+    background: #fffaf0;
+    border: 3px solid #e5ba64;
+    border-radius: 22px;
+    box-shadow: 0 18px 48px #0006;
+  }
+  .restriction-rotate-icon { display: block; font-size: 4rem; line-height: 1; color: #15803d; }
+  .restriction-modal-card h2 { margin: 12px 0 8px; font: 800 1.5rem var(--font-heading); color: #2b180a; }
+  .restriction-modal-card p { margin: 0; line-height: 1.45; color: #5c4228; }
+}
+
+/* Compact landscape layout: the activity gets the full width; guide and tray
+   open over it as scrollable drawers. This includes 800 x 360 phones. */
+@media screen and (max-width: 950px) and (orientation: landscape) {
+  .game-app { height: 100dvh; width: 100%; }
+  .game-viewport, .viewport-layout-grid, .viewport-center-column { min-width: 0; }
+  .viewport-center-column, .viewport-left-column { flex: 1 1 100% !important; width: 100% !important; max-width: 100% !important; }
+  .viewport-mentor-column, .viewport-right-column,
+  .viewport-mentor-column.expanded, .viewport-right-column.expanded {
+    position: absolute !important;
+    inset: 0 auto 0 0;
+    flex: 0 0 0 !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    z-index: 90;
+  }
+  .viewport-right-column, .viewport-right-column.expanded { inset: 0 0 0 auto; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded {
+    position: fixed !important;
+    top: 44px !important;
+    bottom: 7px !important;
+    left: 6px !important;
+    width: min(310px, calc(100vw - 54px)) !important;
+    max-width: min(310px, calc(100vw - 54px)) !important;
+    max-height: none !important;
+    height: auto !important;
+    margin: 0 !important;
+    overflow-y: auto !important;
+  }
+  .viewport-right-column .right-inventory-rack.expanded {
+    position: fixed !important;
+    top: 44px !important;
+    bottom: 7px !important;
+    right: 6px !important;
+    width: min(310px, calc(100vw - 54px)) !important;
+    max-width: min(310px, calc(100vw - 54px)) !important;
+    max-height: none !important;
+    height: auto !important;
+    margin: 0 !important;
+    overflow-y: auto !important;
+  }
+  .left-mentor-sidebar.collapsed, .viewport-mentor-column .left-mentor-sidebar.collapsed,
+  .right-inventory-rack.collapsed {
+    width: 42px !important;
+    height: 112px !important;
+    padding: 6px 3px !important;
+  }
+  .mentor-tab-name, .mentor-tab-sub, .inventory-tab-label-stack { font-size: .62rem !important; }
+  .stage-center-zone,
+  .game-viewport.dialogue-collapsed .stage-center-zone,
+  .game-viewport.inventory-collapsed .stage-center-zone {
+    justify-content: flex-start !important;
+    padding: 42px 48px 52px !important;
+    overflow-y: auto !important;
+  }
+  .stage-content-row { width: 100% !important; max-width: 620px !important; }
+  .workstation-viewport, .washing-viewport, .molding-qc-viewport,
+  .steaming-qc-viewport, .qc-viewport, .frying-qc-viewport,
+  .packaging-qc-viewport, .dehydration-qc-viewport, .dropzone {
+    height: 190px !important;
+    min-height: 180px !important;
+    max-height: 220px !important;
+  }
+  .container-state-img, .sink-preview-img, .workstation-img, .equipment-img {
+    height: 165px !important;
+    max-height: 180px !important;
+  }
+  .stage-next-action-wrapper { position: fixed; right: 52px; bottom: 8px; }
+  .game-hud { height: 42px !important; min-height: 42px; padding: 0 8px !important; }
+  .hud-brand-title { font-size: 1.15rem !important; }
+  .hud-right { gap: 4px !important; }
+  .hud-btn { padding: 4px 6px !important; }
+  .title-scene { padding: 5px 12px 16px; align-items: flex-start; }
+  .title-container { max-width: 720px; }
+  .title-card { padding: 4px 8px !important; }
+  .title-badge { margin-bottom: 2px !important; font-size: .62rem !important; }
+  .game-logo { font-size: clamp(2rem, 6vw, 3rem) !important; margin-bottom: 2px !important; }
+  .game-subtitle { font-size: .8rem !important; margin-bottom: 4px !important; }
+  .title-divider { margin: 0 auto 6px !important; }
+  .title-hero-grid { padding: 6px 10px !important; margin-bottom: 8px !important; gap: 8px !important; }
+  .hero-avatar, .hero-snack { width: 42px !important; height: 42px !important; }
+  .hero-speech-bubble { padding: 6px 10px !important; }
+  .hero-speech-bubble p { font-size: .68rem !important; line-height: 1.2 !important; }
+  .start-form { margin-bottom: 8px !important; }
+  .input-group { margin-bottom: 6px !important; }
+  .input-group label { margin-bottom: 2px !important; font-size: .7rem !important; }
+  .input-group input { padding: 7px 10px !important; font-size: .85rem !important; }
+  .btn-start { padding: 7px 12px !important; font-size: .85rem !important; }
+  .title-quick-links { gap: 5px !important; }
+  .link-btn { padding: 5px 8px !important; font-size: .68rem !important; }
+  .checkpoint-modal-backdrop { padding: 5px 48px; }
+  .checkpoint-modal-card { max-width: 620px; max-height: calc(100dvh - 10px); border-radius: 15px; }
+  .checkpoint-header { padding: 6px 12px; gap: 8px; }
+  .teacher-badge-text { font-size: .74rem; }
+  .checkpoint-stage-tag { font-size: .64rem; padding: 2px 6px; }
+  .checkpoint-body { min-height: 0; overflow-y: auto; padding: 8px 12px; gap: 6px; }
+  .checkpoint-question-title { font-size: .9rem; }
+  .checkpoint-choices-stack { gap: 5px; }
+  .checkpoint-choice-btn { padding: 5px 8px; border-radius: 9px; gap: 7px; }
+  .choice-letter-badge { width: 24px; height: 24px; font-size: .72rem; }
+  .choice-text { font-size: .76rem; }
+  .checkpoint-feedback-box { padding: 7px 9px; }
+  .checkpoint-footer { padding: 5px 12px; }
+  .btn-checkpoint-proceed { padding: 5px 12px; font-size: .8rem; }
+}
+
+@media screen and (max-width: 700px) and (orientation: landscape) {
+  .stage-center-zone,
+  .game-viewport.dialogue-collapsed .stage-center-zone,
+  .game-viewport.inventory-collapsed .stage-center-zone { padding-left: 42px !important; padding-right: 42px !important; }
+  .hero-snack-box { display: none; }
+  .title-hero-grid { grid-template-columns: auto 1fr; }
+}

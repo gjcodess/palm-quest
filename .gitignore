@@ -6,6 +6,12 @@ node_modules/
 # Production build
 dist/
 dist-ssr/
+out/
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+tmp/
 
 # Local Environment & Secrets
 .env
