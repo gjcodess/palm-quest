@@ -75,7 +75,7 @@ export const App = () => {
   }
 
   return (
-    <div className="game-app">
+    <div className={`game-app ${isInventoryCollapsed ? 'inventory-closed' : 'inventory-open'}`}>
       <ScreenRestrictionOverlay />
       <HeaderHUD />
       <main

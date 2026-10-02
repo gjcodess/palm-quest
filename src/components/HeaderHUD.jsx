@@ -254,6 +254,27 @@ export const HeaderHUD = () => {
               </div>
 
               <div className="hud-menu-body">
+                <nav className="hud-menu-progress" aria-label="Stage progress">
+                  {HUD_STEPS.map((stepObj) => {
+                    const isActive = currentStage.step === stepObj.step;
+                    const isUnlocked = stepObj.step === 0 || stepObj.step <= (maxUnlockedStage || 0) || isActive ||
+                      (stepObj.step === 10 && Boolean(missionsCompleted?.sequencing));
+                    return (
+                      <button
+                        key={stepObj.id}
+                        type="button"
+                        className={`hud-menu-progress-step ${isActive ? 'active' : ''} ${missionsCompleted?.[stepObj.id] ? 'completed' : ''}`}
+                        title={stepObj.title}
+                        aria-label={stepObj.title}
+                        aria-current={isActive ? 'step' : undefined}
+                        disabled={!isUnlocked}
+                        onClick={() => handleStepClick(stepObj)}
+                      >
+                        {stepObj.label}
+                      </button>
+                    );
+                  })}
+                </nav>
                 {/* Full-width Mini Hero Card: Teacher Mia greeting */}
                 <div className="hud-menu-hero-card">
                   <img

@@ -2,6 +2,7 @@ export default {
   packagerConfig: {
     name: 'PALMQuest',
     executableName: 'PALMQuest',
+    icon: 'build-resources/app',
     asar: true,
     ignore: [
       /^\/android(?:\/|$)/,
@@ -19,6 +20,6 @@ export default {
   },
   makers: [{
     name: '@electron-forge/maker-squirrel',
-    config: { name: 'PALMQuest', setupExe: 'PALMQuestSetup.exe' },
+    config: { name: 'PALMQuest', setupExe: 'PALMQuestSetup.exe', setupIcon: 'build-resources/app.ico' },
   }],
 };

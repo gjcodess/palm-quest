@@ -813,3 +813,273 @@
   .hero-snack-box { display: none; }
   .title-hero-grid { grid-template-columns: auto 1fr; }
 }
+
+/* Phone landscape: keep the workstation and both open drawers in the same row. */
+@media screen and (max-width: 950px) and (orientation: landscape),
+       screen and (max-width: 1200px) and (orientation: landscape) and (pointer: coarse) {
+  .game-hud {
+    flex: 0 0 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    overflow: visible !important;
+    z-index: 120;
+  }
+  .hud-left, .hud-stepper, .game-hud .mission-pill { display: none !important; }
+  .game-hud .hud-right {
+    position: fixed;
+    top: max(7px, env(safe-area-inset-top));
+    right: max(8px, env(safe-area-inset-right));
+    z-index: 120;
+  }
+  .game-app.inventory-open .game-hud .hud-right {
+    right: calc(clamp(174px, 25vw, 210px) + 8px);
+  }
+  .game-hud .hud-btn-menu {
+    width: 42px;
+    height: 38px;
+    padding: 0 !important;
+    border-radius: 12px;
+    justify-content: center;
+    box-shadow: 0 3px 10px #0004;
+  }
+  .game-hud .hud-btn-menu .label { display: none !important; }
+  .game-hud .hud-btn-menu .icon { font-size: 1.15rem; }
+  .hud-menu-panel {
+    top: max(7px, env(safe-area-inset-top)) !important;
+    right: max(7px, env(safe-area-inset-right)) !important;
+    width: min(560px, calc(100vw - 16px)) !important;
+    max-width: calc(100vw - 16px) !important;
+    max-height: calc(100dvh - 14px);
+    border-width: 2px;
+    border-radius: 16px;
+  }
+  .hud-menu-header { padding: 8px 12px 0; }
+  .hud-menu-header-content { gap: 3px; }
+  .hud-menu-top-badge { font-size: .58rem; padding: 1px 7px; }
+  .hud-menu-logo { font-size: 1.16rem; }
+  .hud-menu-close-btn { width: 26px; height: 26px; }
+  .hud-menu-stage-strip { margin-top: 0; padding: 2px 7px; gap: 5px; }
+  .stage-strip-badge, .stage-strip-title { font-size: .62rem; }
+  .hud-menu-divider { height: 2px; margin-top: 6px; }
+  .hud-menu-body { min-height: 0; max-height: none; gap: 7px; padding: 7px 10px 10px; }
+  .hud-menu-progress { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 3px; }
+  .hud-menu-progress-step {
+    min-width: 0;
+    height: 25px;
+    border: 1px solid #d5c3ab;
+    border-radius: 6px;
+    background: #fff;
+    color: #54361e;
+    font: 700 .57rem var(--font-heading);
+    cursor: pointer;
+    padding: 0 1px;
+  }
+  .hud-menu-progress-step.active { background: #15803d; border-color: #116b34; color: #fff; }
+  .hud-menu-progress-step.completed:not(.active) { background: #e1f7e9; border-color: #5dbf80; }
+  .hud-menu-progress-step:disabled { opacity: .46; cursor: default; }
+  .hud-menu-hero-card { display: none; }
+  .hud-menu-grid-columns { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 7px; }
+  .hud-menu-col { min-width: 0; gap: 6px; }
+  .hud-menu-section-title { font-size: .61rem; }
+  .hud-menu-item-btn, .hud-menu-row.sound-setting-card { padding: 5px 7px; gap: 6px; border-radius: 9px; }
+  .menu-btn-icon-box { width: 27px; min-width: 27px; height: 27px; font-size: .95rem; border-radius: 7px; }
+  .menu-item-text strong, .zoom-title-stack strong { font-size: .7rem; }
+  .menu-item-text small, .zoom-title-stack small { font-size: .58rem; }
+  .hud-menu-zoom-card { padding: 6px 7px; gap: 5px; border-radius: 9px; }
+  .hud-menu-zoom-controls { padding: 2px 5px; }
+  .menu-switch-btn { padding: 3px 7px; font-size: .65rem; }
+
+  .viewport-layout-grid { align-items: stretch; }
+  .viewport-center-column, .viewport-left-column,
+  .game-viewport.inventory-collapsed .viewport-center-column,
+  .game-viewport.inventory-collapsed .viewport-left-column {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+  .viewport-mentor-column.expanded, .viewport-right-column.expanded {
+    position: relative !important;
+    inset: auto !important;
+    flex: 0 0 clamp(174px, 25vw, 210px) !important;
+    width: clamp(174px, 25vw, 210px) !important;
+    min-width: 0 !important;
+    max-width: clamp(174px, 25vw, 210px) !important;
+    padding: 5px 3px !important;
+    overflow: hidden !important;
+  }
+  .viewport-mentor-column.collapsed, .viewport-right-column.collapsed {
+    position: relative !important;
+    inset: auto !important;
+    flex: 0 0 0 !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    padding: 0 !important;
+  }
+  .viewport-mentor-column .left-mentor-sidebar.expanded,
+  .viewport-right-column .right-inventory-rack.expanded {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: calc(100% - 4px) !important;
+    max-height: calc(100% - 4px) !important;
+    margin: 0 !important;
+    padding: 7px 6px !important;
+    gap: 5px !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+  }
+  .viewport-right-column .right-inventory-rack.expanded { border-width: 2px !important; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded { border-width: 2px !important; }
+  .rack-title-text, .mentor-title-text { font-size: .75rem !important; }
+  .rack-hint-bar, .mentor-hint-bar { font-size: .6rem !important; padding: 3px 5px !important; }
+  .inventory-vertical-stack { gap: 5px !important; padding: 4px 2px !important; }
+  .right-inventory-rack .drag-card.horizontal-item-card { min-height: 54px !important; padding: 4px 5px !important; gap: 5px !important; }
+  .card-icon-col { width: 30px !important; min-width: 30px !important; height: 30px !important; }
+  .card-icon-col .card-icon-img { width: 25px !important; height: 25px !important; }
+  .card-info-col .card-title { font-size: .68rem !important; }
+  .card-info-col .card-measure, .card-desc-text { font-size: .56rem !important; }
+
+  .stage-center-zone,
+  .game-viewport.dialogue-collapsed .stage-center-zone,
+  .game-viewport.inventory-collapsed .stage-center-zone {
+    padding: 38px 9px 24px !important;
+    min-width: 0;
+  }
+  .btn-recipe-guide-trigger { display: none !important; }
+  .stage-content-row { max-width: 100% !important; }
+  .station-center-card, .active-vessel-card { max-width: 100% !important; min-width: 0; }
+  .workstation-header, .prep-scene .workstation-header, .washing-workstation .workstation-header {
+    padding: 5px 7px !important;
+    gap: 4px !important;
+  }
+  .workstation-name, .prep-scene .workstation-name { font-size: .83rem !important; }
+  .workstation-sub, .prep-scene .workstation-sub { font-size: .62rem !important; }
+  .workstation-step-badge, .prep-scene .workstation-step-badge { font-size: .61rem !important; padding: 2px 5px !important; }
+  .game-viewport.dialogue-expanded.inventory-expanded .workstation-step-badge { display: none !important; }
+  .workstation-viewport, .washing-viewport, .molding-qc-viewport,
+  .steaming-qc-viewport, .qc-viewport, .frying-qc-viewport,
+  .packaging-qc-viewport, .dehydration-qc-viewport, .dropzone {
+    height: clamp(106px, 36dvh, 138px) !important;
+    min-height: 106px !important;
+    max-height: 138px !important;
+  }
+  .container-state-img, .sink-preview-img, .workstation-img, .equipment-img {
+    height: 115px !important;
+    max-height: 115px !important;
+    max-width: 100% !important;
+  }
+  .prep-scene .washing-viewport,
+  .prep-scene .workstation-viewport,
+  .prep-scene .station-center-card .multi-state-workstation {
+    height: 138px !important;
+    min-height: 130px !important;
+    max-height: 138px !important;
+    padding: 0 !important;
+  }
+  .prep-scene .sink-preview-img,
+  .prep-scene .container-state-img { height: 126px !important; max-height: 126px !important; }
+  .prep-scene .stage-center-zone { padding: 38px 9px 20px !important; }
+  .prep-scene .stage-single-workstation,
+  .prep-scene .stage-content-row.stage-single-workstation,
+  .prep-scene .stage-single-workstation .station-center-card,
+  .prep-scene .stage-content-row.stage-single-workstation > .station-center-card { max-width: 100% !important; }
+  .workstation-footer, .prep-scene .workstation-footer { padding: 5px 7px !important; gap: 4px !important; }
+  .workstation-status { font-size: .62rem !important; }
+  .btn-workstation-action, .btn-primary { font-size: .72rem !important; padding: 6px 9px !important; }
+  .stage-next-action-wrapper { right: 8px; bottom: 5px; }
+
+  .orientation-scene .orientation-subnav-container { margin: 5px auto 7px !important; padding: 0 8px !important; }
+  .orientation-subnav { gap: 3px !important; }
+  .subnav-pill { min-width: 0; padding: 4px 5px !important; font-size: .62rem !important; gap: 3px !important; }
+  .subnav-pill-icon { font-size: .75rem !important; }
+  .orientation-scene .stage-center-zone,
+  .game-viewport .orientation-scene .stage-center-zone { padding: 3px 8px 12px !important; }
+  .orientation-card .vessel-title { font-size: .95rem !important; }
+  .orientation-card .vessel-badge { font-size: .6rem !important; padding: 2px 6px !important; }
+  .orientation-card .vessel-top-badge { font-size: .62rem !important; padding: 2px 7px !important; }
+  .orientation-card .inspection-header-row { padding: 4px 6px !important; gap: 4px; }
+  .orientation-card .item-target-title { font-size: .74rem !important; }
+  .orientation-card .inspection-counter { font-size: .61rem !important; padding: 2px 5px !important; }
+  .orientation-card .inspection-prompt { font-size: .68rem !important; margin: 2px 0 5px !important; }
+  .inspection-card-wrapper .inspection-cards-grid,
+  .inspection-cards-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 5px !important; }
+  .inspection-card-wrapper .inspection-card, .inspection-card { min-width: 0; padding: 5px 3px !important; border-width: 2px; border-radius: 10px !important; }
+  .inspection-card-wrapper .card-img-wrapper, .card-img-wrapper { width: 44px !important; height: 44px !important; margin: 9px 0 2px !important; padding: 3px !important; }
+  .inspection-card-wrapper .card-title, .inspection-card .card-title { font-size: .65rem !important; line-height: 1.1; }
+  .inspection-card-wrapper .card-desc, .inspection-card .card-desc { font-size: .56rem !important; line-height: 1.15; }
+  .card-badge-tag { top: 3px; left: 3px; font-size: .52rem; padding: 1px 4px; }
+  .inspection-card .card-verdict-banner { margin-top: 4px; padding: 2px 3px; font-size: .55rem; }
+  .inspection-actions-row { margin-top: 5px; gap: 5px; }
+  .btn-next-inspection, .btn-unselect-inspection { font-size: .67rem; padding: 4px 7px; }
+
+  .floating-item-aura { width: 90px; height: 90px; }
+  .floating-item-graphic-wrap, .floating-item-img { width: 74px; height: 74px; }
+  .floating-item-emoji { font-size: 3rem; }
+  .floating-item-tooltip { top: 40px; padding: 3px 7px; border-radius: 6px; }
+  .floating-item-tooltip .tooltip-name { font-size: .65rem; }
+  .floating-item-tooltip .tooltip-hint { font-size: .54rem; }
+}
+
+/* Type and feedback sizing for landscape phones, including wider Android WebViews. */
+@media screen and (max-width: 950px) and (orientation: landscape),
+       screen and (max-width: 1200px) and (orientation: landscape) and (pointer: coarse) {
+  :root { font-size: 14px; }
+
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-identity-row { gap: 5px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-avatar-box { width: 32px; height: 32px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-header-avatar { width: 27px; height: 27px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-name-text { font-size: .76rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-role-text { font-size: .58rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-collapse-btn { width: 24px; height: 24px; font-size: .62rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-stage-badge-strip { padding: 3px 6px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .badge-stage-text { font-size: .62rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-content-viewport { padding: 3px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-tab-panel { gap: 6px; padding: 2px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-speech-card { padding: 7px; gap: 5px; border-radius: 10px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .quote-icon { font-size: .76rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .speech-status-tag { font-size: .58rem; padding: 1px 4px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .speech-replay-btn { font-size: .7rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-speech-body { gap: 4px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-speech-paragraph { font-size: .7rem; line-height: 1.36; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .speech-focus-strip { font-size: .62rem; line-height: 1.25; padding: 4px 5px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .speech-focus-icon { font-size: .7rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-callouts-box { gap: 5px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-callout-item { gap: 5px; padding: 5px 6px; border-radius: 8px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .callout-icon { font-size: .72rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .callout-title { font-size: .61rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .callout-desc { font-size: .61rem; line-height: 1.25; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-stage-btn { font-size: .67rem; padding: 5px 7px; }
+
+  .inspection-feedback-box { gap: 6px; padding: 6px 8px; margin-top: 5px !important; font-size: .68rem; line-height: 1.25; border-radius: 9px; }
+  .inspection-feedback-box > div:first-child { font-size: 1rem !important; }
+  .inspection-feedback-box strong { font-size: .72rem !important; margin-bottom: 2px !important; }
+  .inspection-feedback-box p { font-size: .68rem !important; line-height: 1.25 !important; margin-bottom: 3px !important; }
+  .inspection-feedback-box > div:last-child > div { font-size: .64rem !important; padding: 3px 5px !important; }
+  .inspection-actions-row { margin-top: 5px !important; }
+  .inspection-actions-row .btn-secondary { padding: 4px 7px !important; font-size: .66rem !important; }
+
+  .feedback-toast {
+    top: max(48px, env(safe-area-inset-top)) !important;
+    width: min(280px, calc(100vw - 96px));
+    max-width: calc(100vw - 96px);
+    box-sizing: border-box;
+    gap: 6px;
+    padding: 4px 6px;
+    border-width: 1.5px;
+    border-radius: 12px;
+  }
+  .toast-icon-box { width: 24px; height: 24px; border-width: 1.5px; }
+  .toast-icon { font-size: .9rem; }
+  .toast-body { min-width: 0; }
+  .toast-body h4 { font-size: .7rem; letter-spacing: 0; }
+  .toast-body p { font-size: .61rem; line-height: 1.2; margin-top: 1px; }
+  .toast-dismiss-btn { width: 19px; height: 19px; margin-left: auto; font-size: .68rem; }
+}
