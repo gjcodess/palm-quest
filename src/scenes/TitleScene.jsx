@@ -22,7 +22,6 @@ export const TitleScene = () => {
       <div className="title-container">
         {/* Main Banner Card */}
         <div className="title-card">
-          <div className="title-badge">🥥 Home Economics Food Processing Simulation</div>
           <h1 className="game-logo">PALM<span>QUEST</span></h1>
           <p className="game-subtitle">The Coconut Palm Crackers Virtual Laboratory Challenge</p>
           <div className="title-divider" />
