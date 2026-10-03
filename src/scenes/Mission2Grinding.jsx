@@ -371,7 +371,7 @@ export const Mission2Grinding = () => {
                 isBlending
                   ? `⚡ Pureeing boiled fibers at high speed... ${blendProgress}%`
                   : isLidLocked && processorStep === 2
-                  ? 'Select “high speed puree” for it to be processed blend well.'
+                  ? 'Ready to blend:'
                   : processorSteps[processorStep]?.prompt || 'Ready'
               }
               specBadge={

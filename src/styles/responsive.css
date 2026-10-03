@@ -1447,40 +1447,52 @@
     margin-top: 4px !important;
   }
   .workstation-footer:not(.has-custom-footer) {
-    padding: 3px 12px !important;
-    gap: 8px !important;
-    min-height: 40px !important;
-    border-radius: 14px !important;
+    padding: 3px 10px !important;
+    gap: 6px !important;
+    min-height: 34px !important;
+    max-height: 38px !important;
+    border-radius: 12px !important;
     align-items: center !important;
   }
-  .workstation-status { font-size: .62rem !important; }
+  .workstation-status {
+    font-size: .60rem !important;
+    gap: 6px !important;
+  }
   .workstation-status .status-text,
   .status-text {
-    font-size: .66rem !important;
+    font-size: .63rem !important;
     line-height: 1.2 !important;
     -webkit-line-clamp: 1 !important;
     line-clamp: 1 !important;
   }
   .status-dot {
-    width: 8px !important;
-    height: 8px !important;
+    width: 7px !important;
+    height: 7px !important;
     border-width: 1.5px !important;
   }
-  .btn-workstation-action, .btn-primary, .btn-processor-pulse, .btn-workstation-action.processor-pulse {
-    font-size: .72rem !important;
-    padding: 4px 14px !important;
+  .btn-workstation-action,
+  .btn-primary,
+  .btn-processor-pulse,
+  .btn-workstation-action.processor-pulse {
+    font-size: .62rem !important;
+    padding: 3px 10px !important;
     border-radius: 999px !important;
-    min-height: 28px !important;
-    max-height: 32px !important;
-    line-height: 1.2 !important;
-    box-shadow: 0 2.5px 0 #78350f, 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+    min-height: 24px !important;
+    max-height: 26px !important;
+    line-height: 1.15 !important;
+    border-width: 1.5px !important;
+    box-shadow: 0 1.5px 0 #78350f, 0 3px 8px rgba(0, 0, 0, 0.18) !important;
     flex-shrink: 0 !important;
+    letter-spacing: 0.2px !important;
   }
-  .btn-workstation-action.processor-pulse, .btn-processor-pulse {
-    box-shadow: 0 2.5px 0 #7c2d12, 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+  .btn-workstation-action.processor-pulse,
+  .btn-processor-pulse {
+    box-shadow: 0 1.5px 0 #7c2d12, 0 3px 8px rgba(0, 0, 0, 0.18) !important;
   }
-  .btn-workstation-action .action-icon, .btn-processor-pulse .action-icon {
-    font-size: .88rem !important;
+  .btn-workstation-action .action-icon,
+  .btn-processor-pulse .action-icon {
+    font-size: .68rem !important;
+    margin-right: 2px !important;
   }
   .stage-next-action-wrapper {
     right: max(8px, env(safe-area-inset-right, 0px)) !important;
