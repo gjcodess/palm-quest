@@ -815,7 +815,8 @@
 
 /* Phone landscape: keep the workstation and both open drawers in the same row. */
 @media screen and (max-width: 950px) and (orientation: landscape),
-       screen and (max-width: 1200px) and (orientation: landscape) and (pointer: coarse) {
+       screen and (max-width: 1200px) and (orientation: landscape) and (pointer: coarse),
+       screen and (max-height: 520px) and (orientation: landscape) {
   .game-hud {
     flex: 0 0 0 !important;
     width: 0 !important;
@@ -1251,11 +1252,256 @@
     line-height: 1.15 !important;
     min-height: auto !important;
   }
+
+  /* ==========================================================================
+     LOADING SCREEN (COMPACT MOBILE LANDSCAPE - NO OVERFLOW OR SCROLLBAR)
+     ========================================================================== */
+  .loading-screen-backdrop {
+    height: 100dvh !important;
+    height: 100vh !important;
+    max-height: 100dvh !important;
+    overflow: hidden !important;
+    padding: max(6px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)) !important;
+  }
+
+  .loading-ambient-particles .particle-card,
+  .loading-ambient-particles .particle-ubod {
+    opacity: 0.22 !important;
+    transform: scale(0.5) !important;
+  }
+
+  .loading-title-container {
+    max-width: min(92vw, 640px) !important;
+    width: 100% !important;
+    margin: auto !important;
+  }
+
+  .loading-card-minimal {
+    padding: 0 4px !important;
+    gap: 0 !important;
+  }
+
+  .loading-title-group {
+    margin-bottom: 2px !important;
+  }
+
+  .loading-game-logo {
+    font-size: clamp(1.8rem, 5.2vw, 2.3rem) !important;
+    margin-bottom: 2px !important;
+    line-height: 1.05 !important;
+  }
+
+  .loading-game-subtitle {
+    font-size: 0.68rem !important;
+    margin-bottom: 4px !important;
+    line-height: 1.2 !important;
+  }
+
+  .loading-title-group .title-divider {
+    height: 2px !important;
+    width: 80px !important;
+    margin: 0 auto 5px !important;
+  }
+
+  .loading-product-feature {
+    width: min(85vw, 360px) !important;
+    height: clamp(50px, 16dvh, 68px) !important;
+    margin: 0 auto 6px !important;
+    gap: 10px !important;
+  }
+
+  .loading-product-feature img {
+    height: 100% !important;
+    width: auto !important;
+    max-height: 68px !important;
+    object-fit: contain !important;
+  }
+
+  .loading-progress-wrapper {
+    max-width: 400px !important;
+    width: 100% !important;
+    margin: 0 auto 6px !important;
+    gap: 3px !important;
+  }
+
+  .loading-progress-header {
+    font-size: 0.68rem !important;
+    padding: 0 4px !important;
+  }
+
+  .progress-label {
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+  }
+
+  .progress-percent {
+    font-size: 0.76rem !important;
+    font-weight: 800 !important;
+  }
+
+  .loading-progress-track {
+    height: 14px !important;
+    border-width: 1.5px !important;
+    padding: 1.5px !important;
+  }
+
+  .loading-footer {
+    min-height: 36px !important;
+  }
+
+  .btn-enter-lab-pulsing {
+    padding: 6px 20px !important;
+    font-size: 0.82rem !important;
+    min-width: 190px !important;
+    max-width: 280px !important;
+    height: 36px !important;
+    border-bottom-width: 3px !important;
+    border-radius: 999px !important;
+  }
+
+  .loading-hint-text {
+    padding: 4px 12px !important;
+    font-size: 0.68rem !important;
+  }
+
+  /* ==========================================================================
+     TITLE SCENE (COMPACT MOBILE LANDSCAPE - NO SQUASHING, CLEAR BOTTOM)
+     ========================================================================== */
+  .title-scene {
+    height: 100dvh !important;
+    height: 100vh !important;
+    padding: max(4px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow-y: auto !important;
+  }
+
+  .title-container {
+    max-width: min(94vw, 700px) !important;
+    width: 100% !important;
+    margin: auto !important;
+  }
+
+  .title-card {
+    padding: 2px 4px !important;
+  }
+
+  .title-badge {
+    font-size: 0.58rem !important;
+    padding: 2px 9px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .title-card .game-logo {
+    font-size: clamp(1.7rem, 4.8vw, 2.2rem) !important;
+    margin-bottom: 1px !important;
+    line-height: 1.05 !important;
+  }
+
+  .title-card .game-subtitle {
+    font-size: 0.66rem !important;
+    margin-bottom: 3px !important;
+    line-height: 1.15 !important;
+  }
+
+  .title-card .title-divider {
+    height: 2px !important;
+    width: 80px !important;
+    margin: 0 auto 4px !important;
+  }
+
+  .title-hero-grid {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto !important;
+    padding: 4px 10px !important;
+    margin-bottom: 5px !important;
+    gap: 8px !important;
+    border-radius: 12px !important;
+    border-width: 1.5px !important;
+    border-bottom-width: 3px !important;
+  }
+
+  .hero-avatar-box,
+  .hero-snack-box {
+    gap: 2px !important;
+  }
+
+  .hero-avatar,
+  .hero-snack {
+    width: 34px !important;
+    height: 34px !important;
+    border-width: 2px !important;
+  }
+
+  .hero-name,
+  .snack-tag {
+    font-size: 0.56rem !important;
+    white-space: nowrap !important;
+  }
+
+  .hero-speech-bubble {
+    padding: 4px 8px !important;
+    border-radius: 8px !important;
+  }
+
+  .hero-speech-bubble p {
+    font-size: 0.63rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .start-form {
+    margin-bottom: 5px !important;
+    width: 100% !important;
+    max-width: 600px !important;
+  }
+
+  .input-group {
+    margin-bottom: 4px !important;
+  }
+
+  .input-group label {
+    font-size: 0.64rem !important;
+    margin-bottom: 2px !important;
+  }
+
+  .input-group input {
+    height: 30px !important;
+    padding: 4px 10px !important;
+    font-size: 0.76rem !important;
+    border-radius: 8px !important;
+  }
+
+  .btn-start {
+    height: 34px !important;
+    padding: 5px 16px !important;
+    font-size: 0.80rem !important;
+    border-radius: 999px !important;
+    border-bottom-width: 3px !important;
+    gap: 6px !important;
+  }
+
+  .title-quick-links {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    margin-bottom: max(6px, env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .link-btn {
+    font-size: 0.56rem !important;
+    padding: 3px 7px !important;
+    border-radius: 999px !important;
+    white-space: nowrap !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+  }
 }
 
 /* Type and feedback sizing for landscape phones, including wider Android WebViews. */
 @media screen and (max-width: 950px) and (orientation: landscape),
-       screen and (max-width: 1200px) and (orientation: landscape) and (pointer: coarse) {
+       screen and (max-width: 1200px) and (orientation: landscape) and (pointer: coarse),
+       screen and (max-height: 520px) and (orientation: landscape) {
   :root { font-size: 14px; }
 
   .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-identity-row { gap: 5px; }
