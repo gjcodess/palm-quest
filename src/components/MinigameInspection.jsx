@@ -302,7 +302,17 @@ export const MinigameInspection = ({
       )}
 
       {/* Action Row */}
-      <div className="inspection-actions-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '14px' }}>
+      <div
+        className="inspection-actions-row"
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginTop: '14px',
+          marginBottom: 'max(16px, env(safe-area-inset-bottom, 0px))',
+          paddingBottom: '6px',
+        }}
+      >
         <button
           className="btn-secondary"
           onClick={handlePrevItem}
