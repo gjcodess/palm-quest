@@ -974,7 +974,7 @@
     width: 100% !important;
   }
   .station-center-card,
-  .active-vessel-card,
+  .active-vessel-card:not(.orientation-card),
   .prep-scene .stage-single-workstation .station-center-card,
   .prep-scene .stage-content-row.stage-single-workstation > .station-center-card {
     min-width: 0 !important;
@@ -1039,55 +1039,274 @@
   }
 
   /* =========================================================================
-     STATE 1: BOTH SIDEBARS COLLAPSED (CONSISTENT OPEN-SIDEBAR MAX WIDTH)
+     STAGES 1-8 WORKSTATIONS ONLY (CONSISTENT OPEN-SIDEBAR MAX WIDTH)
+     DOES NOT AFFECT NON-STAGE SCREENS (ORIENTATION, SEQUENCING, RESULTS, EVALUATION)
      ========================================================================= */
-  .game-viewport.dialogue-collapsed.inventory-collapsed .stage-content-row.stage-single-workstation,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .stage-single-workstation,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .station-center-card,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .prep-scene .stage-single-workstation,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .prep-scene .stage-content-row.stage-single-workstation,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .prep-scene .stage-single-workstation .station-center-card,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .prep-scene .stage-content-row.stage-single-workstation > .station-center-card,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .workstation-header,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .washing-workstation,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .multi-state-workstation,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .active-vessel-card {
+
+  /* STATE 1: BOTH SIDEBARS COLLAPSED (STAGES 1-8 ONLY) */
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .stage-single-workstation .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .stage-content-row.stage-single-workstation > .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .workstation-header,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .washing-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .multi-state-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .active-vessel-card:not(.orientation-card) {
     max-width: min(100%, calc(100vw - (2 * clamp(174px, 25vw, 210px)) - 20px)) !important;
     width: 100% !important;
   }
 
-  .game-viewport.dialogue-collapsed.inventory-collapsed .workstation-viewport,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .washing-viewport,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .molding-qc-viewport,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .steaming-qc-viewport,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .qc-viewport,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .frying-qc-viewport,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .packaging-qc-viewport,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .dehydration-qc-viewport,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .dropzone,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .prep-scene .washing-viewport,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .prep-scene .workstation-viewport {
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .workstation-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .molding-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steaming-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .frying-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .packaging-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .dehydration-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .dropzone,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .workstation-viewport {
     height: clamp(165px, 46dvh, 215px) !important;
     min-height: 155px !important;
     max-height: 220px !important;
     padding: 0 !important;
   }
 
-  .game-viewport.dialogue-collapsed.inventory-collapsed .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .sink-preview-img,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .workstation-img,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .equipment-img,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .container-asset-img,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .prep-scene .sink-preview-img,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .prep-scene .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .steaming-scene .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .steamer-step-0 .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .steamer-step-1 .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .steamer-step-2 .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .steamer-step-3 .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .steamer-step-4 .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .steamer-step-5 .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-collapsed .steamer-step-6 .container-state-img {
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .workstation-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .equipment-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .container-asset-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steaming-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steamer-step-0 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steamer-step-1 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steamer-step-2 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steamer-step-3 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steamer-step-4 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steamer-step-5 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steamer-step-6 .container-state-img {
+    height: clamp(155px, 43dvh, 205px) !important;
+    max-height: 210px !important;
+    width: auto !important;
+    max-width: 96% !important;
+    transform: none !important;
+    object-fit: contain !important;
+  }
+
+  /* STATE 2: ONE SIDEBAR EXPANDED, ONE COLLAPSED (STAGES 1-8 ONLY) */
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .stage-single-workstation .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .stage-single-workstation .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .stage-content-row.stage-single-workstation > .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .stage-content-row.stage-single-workstation > .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .workstation-header,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .workstation-header,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .washing-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .washing-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .multi-state-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .multi-state-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .active-vessel-card:not(.orientation-card),
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .active-vessel-card:not(.orientation-card) {
+    max-width: min(100%, calc(100vw - (2 * clamp(174px, 25vw, 210px)) - 20px)) !important;
+    width: 100% !important;
+  }
+
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .workstation-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .workstation-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .molding-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .molding-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steaming-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steaming-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .frying-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .frying-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .packaging-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .packaging-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .dehydration-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .dehydration-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .dropzone,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .dropzone,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .workstation-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .workstation-viewport {
+    height: clamp(165px, 46dvh, 215px) !important;
+    min-height: 155px !important;
+    max-height: 220px !important;
+    padding: 0 !important;
+  }
+
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .workstation-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .workstation-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .equipment-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .equipment-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .container-asset-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .container-asset-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steaming-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steaming-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steamer-step-0 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steamer-step-0 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steamer-step-1 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steamer-step-1 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steamer-step-2 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steamer-step-2 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steamer-step-3 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steamer-step-3 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steamer-step-4 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steamer-step-4 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steamer-step-5 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steamer-step-5 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steamer-step-6 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steamer-step-6 .container-state-img {
+    height: clamp(155px, 43dvh, 205px) !important;
+    max-height: 210px !important;
+    width: auto !important;
+    max-width: 96% !important;
+    transform: none !important;
+    object-fit: contain !important;
+  }
+
+  /* STATE 3: BOTH SIDEBARS EXPANDED (STAGES 1-8 ONLY) */
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .stage-single-workstation,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .station-center-card,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .stage-single-workstation,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .stage-single-workstation .station-center-card,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .stage-single-workstation .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .stage-content-row.stage-single-workstation > .station-center-card,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .stage-content-row.stage-single-workstation > .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .workstation-header,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .workstation-header,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .washing-workstation,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .washing-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .multi-state-workstation,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .multi-state-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .active-vessel-card:not(.orientation-card),
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .active-vessel-card:not(.orientation-card) {
+    max-width: min(100%, calc(100vw - (2 * clamp(174px, 25vw, 210px)) - 20px)) !important;
+    width: 100% !important;
+  }
+
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .workstation-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .workstation-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .washing-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .molding-qc-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .molding-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steaming-qc-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steaming-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .qc-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .frying-qc-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .frying-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .packaging-qc-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .packaging-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .dehydration-qc-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .dehydration-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .dropzone,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .dropzone,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .washing-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .workstation-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .workstation-viewport {
+    height: clamp(165px, 46dvh, 215px) !important;
+    min-height: 155px !important;
+    max-height: 220px !important;
+    padding: 0 !important;
+  }
+
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .sink-preview-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .workstation-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .workstation-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .equipment-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .equipment-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .container-asset-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .container-asset-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .sink-preview-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steaming-scene .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steaming-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steamer-step-0 .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-0 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steamer-step-1 .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-1 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steamer-step-2 .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-2 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steamer-step-3 .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-3 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steamer-step-4 .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-4 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steamer-step-5 .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-5 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steamer-step-6 .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-6 .container-state-img {
+    height: clamp(155px, 43dvh, 205px) !important;
+    max-height: 210px !important;
+    width: auto !important;
+    max-width: 96% !important;
+    transform: none !important;
+    object-fit: contain !important;
+  }
+
+  /* Fallback Base for Stages 1-8 Workstations Only */
+  .game-viewport[class*="scene-mission"] .workstation-viewport,
+  .game-viewport[class*="scene-mission"] .washing-viewport,
+  .game-viewport[class*="scene-mission"] .molding-qc-viewport,
+  .game-viewport[class*="scene-mission"] .steaming-qc-viewport,
+  .game-viewport[class*="scene-mission"] .qc-viewport,
+  .game-viewport[class*="scene-mission"] .frying-qc-viewport,
+  .game-viewport[class*="scene-mission"] .packaging-qc-viewport,
+  .game-viewport[class*="scene-mission"] .dehydration-qc-viewport,
+  .game-viewport[class*="scene-mission"] .dropzone,
+  .game-viewport[class*="scene-mission"] .prep-scene .washing-viewport,
+  .game-viewport[class*="scene-mission"] .prep-scene .workstation-viewport {
+    height: clamp(165px, 46dvh, 215px) !important;
+    min-height: 155px !important;
+    max-height: 220px !important;
+    padding: 0 !important;
+  }
+  .game-viewport[class*="scene-mission"] .container-state-img,
+  .game-viewport[class*="scene-mission"] .sink-preview-img,
+  .game-viewport[class*="scene-mission"] .workstation-img,
+  .game-viewport[class*="scene-mission"] .equipment-img,
+  .game-viewport[class*="scene-mission"] .container-asset-img {
     height: clamp(155px, 43dvh, 205px) !important;
     max-height: 210px !important;
     width: auto !important;
@@ -1097,223 +1316,37 @@
   }
 
   /* =========================================================================
-     STATE 2: ONE SIDEBAR EXPANDED, ONE COLLAPSED (CONSISTENT OPEN-SIDEBAR MAX WIDTH)
+     NON-STAGE SCREENS (ORIENTATION, SEQUENCING, RESULTS, EVALUATION):
+     EXPLICITLY PRESERVE WIDE / SPACIOUS LAYOUT
      ========================================================================= */
-  .game-viewport.dialogue-collapsed.inventory-expanded .stage-content-row.stage-single-workstation,
-  .game-viewport.dialogue-expanded.inventory-collapsed .stage-content-row.stage-single-workstation,
-  .game-viewport.dialogue-collapsed.inventory-expanded .stage-single-workstation,
-  .game-viewport.dialogue-expanded.inventory-collapsed .stage-single-workstation,
-  .game-viewport.dialogue-collapsed.inventory-expanded .station-center-card,
-  .game-viewport.dialogue-expanded.inventory-collapsed .station-center-card,
-  .game-viewport.dialogue-collapsed.inventory-expanded .prep-scene .stage-single-workstation,
-  .game-viewport.dialogue-expanded.inventory-collapsed .prep-scene .stage-single-workstation,
-  .game-viewport.dialogue-collapsed.inventory-expanded .prep-scene .stage-content-row.stage-single-workstation,
-  .game-viewport.dialogue-expanded.inventory-collapsed .prep-scene .stage-content-row.stage-single-workstation,
-  .game-viewport.dialogue-collapsed.inventory-expanded .prep-scene .stage-single-workstation .station-center-card,
-  .game-viewport.dialogue-expanded.inventory-collapsed .prep-scene .stage-single-workstation .station-center-card,
-  .game-viewport.dialogue-collapsed.inventory-expanded .prep-scene .stage-content-row.stage-single-workstation > .station-center-card,
-  .game-viewport.dialogue-expanded.inventory-collapsed .prep-scene .stage-content-row.stage-single-workstation > .station-center-card,
-  .game-viewport.dialogue-collapsed.inventory-expanded .workstation-header,
-  .game-viewport.dialogue-expanded.inventory-collapsed .workstation-header,
-  .game-viewport.dialogue-collapsed.inventory-expanded .washing-workstation,
-  .game-viewport.dialogue-expanded.inventory-collapsed .washing-workstation,
-  .game-viewport.dialogue-collapsed.inventory-expanded .multi-state-workstation,
-  .game-viewport.dialogue-expanded.inventory-collapsed .multi-state-workstation,
-  .game-viewport.dialogue-collapsed.inventory-expanded .active-vessel-card,
-  .game-viewport.dialogue-expanded.inventory-collapsed .active-vessel-card {
-    max-width: min(100%, calc(100vw - (2 * clamp(174px, 25vw, 210px)) - 20px)) !important;
+  .orientation-scene .stage-center-zone,
+  .game-viewport.scene-orientation .stage-center-zone {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .orientation-scene .active-vessel-card,
+  .game-viewport.scene-orientation .active-vessel-card,
+  .active-vessel-card.orientation-card,
+  .orientation-card {
+    max-width: min(96vw, 1040px) !important;
     width: 100% !important;
   }
 
-  .game-viewport.dialogue-collapsed.inventory-expanded .workstation-viewport,
-  .game-viewport.dialogue-expanded.inventory-collapsed .workstation-viewport,
-  .game-viewport.dialogue-collapsed.inventory-expanded .washing-viewport,
-  .game-viewport.dialogue-expanded.inventory-collapsed .washing-viewport,
-  .game-viewport.dialogue-collapsed.inventory-expanded .molding-qc-viewport,
-  .game-viewport.dialogue-expanded.inventory-collapsed .molding-qc-viewport,
-  .game-viewport.dialogue-collapsed.inventory-expanded .steaming-qc-viewport,
-  .game-viewport.dialogue-expanded.inventory-collapsed .steaming-qc-viewport,
-  .game-viewport.dialogue-collapsed.inventory-expanded .qc-viewport,
-  .game-viewport.dialogue-expanded.inventory-collapsed .qc-viewport,
-  .game-viewport.dialogue-collapsed.inventory-expanded .frying-qc-viewport,
-  .game-viewport.dialogue-expanded.inventory-collapsed .frying-qc-viewport,
-  .game-viewport.dialogue-collapsed.inventory-expanded .packaging-qc-viewport,
-  .game-viewport.dialogue-expanded.inventory-collapsed .packaging-qc-viewport,
-  .game-viewport.dialogue-collapsed.inventory-expanded .dehydration-qc-viewport,
-  .game-viewport.dialogue-expanded.inventory-collapsed .dehydration-qc-viewport,
-  .game-viewport.dialogue-collapsed.inventory-expanded .dropzone,
-  .game-viewport.dialogue-expanded.inventory-collapsed .dropzone,
-  .game-viewport.dialogue-collapsed.inventory-expanded .prep-scene .washing-viewport,
-  .game-viewport.dialogue-expanded.inventory-collapsed .prep-scene .washing-viewport,
-  .game-viewport.dialogue-collapsed.inventory-expanded .prep-scene .workstation-viewport,
-  .game-viewport.dialogue-expanded.inventory-collapsed .prep-scene .workstation-viewport {
-    height: clamp(165px, 46dvh, 215px) !important;
-    min-height: 155px !important;
-    max-height: 220px !important;
-    padding: 0 !important;
-  }
-
-  .game-viewport.dialogue-collapsed.inventory-expanded .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-expanded .sink-preview-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .sink-preview-img,
-  .game-viewport.dialogue-collapsed.inventory-expanded .workstation-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .workstation-img,
-  .game-viewport.dialogue-collapsed.inventory-expanded .equipment-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .equipment-img,
-  .game-viewport.dialogue-collapsed.inventory-expanded .container-asset-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .container-asset-img,
-  .game-viewport.dialogue-collapsed.inventory-expanded .prep-scene .sink-preview-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .prep-scene .sink-preview-img,
-  .game-viewport.dialogue-collapsed.inventory-expanded .prep-scene .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .prep-scene .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-expanded .steaming-scene .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .steaming-scene .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-expanded .steamer-step-0 .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .steamer-step-0 .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-expanded .steamer-step-1 .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .steamer-step-1 .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-expanded .steamer-step-2 .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .steamer-step-2 .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-expanded .steamer-step-3 .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .steamer-step-3 .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-expanded .steamer-step-4 .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .steamer-step-4 .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .steamer-step-5 .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .steamer-step-5 .container-state-img,
-  .game-viewport.dialogue-collapsed.inventory-expanded .steamer-step-6 .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-collapsed .steamer-step-6 .container-state-img {
-    height: clamp(155px, 43dvh, 205px) !important;
-    max-height: 210px !important;
-    width: auto !important;
-    max-width: 96% !important;
-    transform: none !important;
-    object-fit: contain !important;
-  }
-
-  /* =========================================================================
-     STATE 3: BOTH SIDEBARS EXPANDED (ENLARGED COMFORTABLE ASSET FIT)
-     ========================================================================= */
-  .game-viewport.dialogue-expanded.inventory-expanded .stage-content-row.stage-single-workstation,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .stage-content-row.stage-single-workstation,
-  .game-viewport.dialogue-expanded.inventory-expanded .stage-single-workstation,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .stage-single-workstation,
-  .game-viewport.dialogue-expanded.inventory-expanded .station-center-card,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .station-center-card,
-  .game-viewport.dialogue-expanded.inventory-expanded .prep-scene .stage-single-workstation,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .stage-single-workstation,
-  .game-viewport.dialogue-expanded.inventory-expanded .prep-scene .stage-content-row.stage-single-workstation,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .stage-content-row.stage-single-workstation,
-  .game-viewport.dialogue-expanded.inventory-expanded .prep-scene .stage-single-workstation .station-center-card,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .stage-single-workstation .station-center-card,
-  .game-viewport.dialogue-expanded.inventory-expanded .prep-scene .stage-content-row.stage-single-workstation > .station-center-card,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .stage-content-row.stage-single-workstation > .station-center-card,
-  .game-viewport.dialogue-expanded.inventory-expanded .workstation-header,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .workstation-header,
-  .game-viewport.dialogue-expanded.inventory-expanded .washing-workstation,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .washing-workstation,
-  .game-viewport.dialogue-expanded.inventory-expanded .multi-state-workstation,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .multi-state-workstation,
-  .game-viewport.dialogue-expanded.inventory-expanded .active-vessel-card,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .active-vessel-card {
-    max-width: min(100%, calc(100vw - (2 * clamp(174px, 25vw, 210px)) - 20px)) !important;
+  .orientation-cards-grid,
+  .ppe-grid {
+    max-width: 100% !important;
     width: 100% !important;
   }
 
-  .game-viewport.dialogue-expanded.inventory-expanded .workstation-viewport,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .workstation-viewport,
-  .game-viewport.dialogue-expanded.inventory-expanded .washing-viewport,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .washing-viewport,
-  .game-viewport.dialogue-expanded.inventory-expanded .molding-qc-viewport,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .molding-qc-viewport,
-  .game-viewport.dialogue-expanded.inventory-expanded .steaming-qc-viewport,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .steaming-qc-viewport,
-  .game-viewport.dialogue-expanded.inventory-expanded .qc-viewport,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .qc-viewport,
-  .game-viewport.dialogue-expanded.inventory-expanded .frying-qc-viewport,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .frying-qc-viewport,
-  .game-viewport.dialogue-expanded.inventory-expanded .packaging-qc-viewport,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .packaging-qc-viewport,
-  .game-viewport.dialogue-expanded.inventory-expanded .dehydration-qc-viewport,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .dehydration-qc-viewport,
-  .game-viewport.dialogue-expanded.inventory-expanded .dropzone,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .dropzone,
-  .game-viewport.dialogue-expanded.inventory-expanded .prep-scene .washing-viewport,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .washing-viewport,
-  .game-viewport.dialogue-expanded.inventory-expanded .prep-scene .workstation-viewport,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .workstation-viewport {
-    height: clamp(165px, 46dvh, 215px) !important;
-    min-height: 155px !important;
-    max-height: 220px !important;
-    padding: 0 !important;
-  }
-
-  .game-viewport.dialogue-expanded.inventory-expanded .container-state-img,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-expanded .sink-preview-img,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .sink-preview-img,
-  .game-viewport.dialogue-expanded.inventory-expanded .workstation-img,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .workstation-img,
-  .game-viewport.dialogue-expanded.inventory-expanded .equipment-img,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .equipment-img,
-  .game-viewport.dialogue-expanded.inventory-expanded .container-asset-img,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .container-asset-img,
-  .game-viewport.dialogue-expanded.inventory-expanded .prep-scene .sink-preview-img,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .sink-preview-img,
-  .game-viewport.dialogue-expanded.inventory-expanded .prep-scene .container-state-img,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-expanded .steaming-scene .container-state-img,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .steaming-scene .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-expanded .steamer-step-0 .container-state-img,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-0 .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-expanded .steamer-step-1 .container-state-img,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-1 .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-expanded .steamer-step-2 .container-state-img,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-2 .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-expanded .steamer-step-3 .container-state-img,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-3 .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-expanded .steamer-step-4 .container-state-img,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-4 .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-expanded .steamer-step-5 .container-state-img,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-5 .container-state-img,
-  .game-viewport.dialogue-expanded.inventory-expanded .steamer-step-6 .container-state-img,
-  .game-viewport:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-6 .container-state-img {
-    height: clamp(155px, 43dvh, 205px) !important;
-    max-height: 210px !important;
-    width: auto !important;
-    max-width: 96% !important;
-    transform: none !important;
-    object-fit: contain !important;
-  }
-
-  /* Fallback Base for Workstation Viewports & Images */
-  .workstation-viewport,
-  .washing-viewport,
-  .molding-qc-viewport,
-  .steaming-qc-viewport,
-  .qc-viewport,
-  .frying-qc-viewport,
-  .packaging-qc-viewport,
-  .dehydration-qc-viewport,
-  .dropzone,
-  .prep-scene .washing-viewport,
-  .prep-scene .workstation-viewport {
-    height: clamp(165px, 46dvh, 215px) !important;
-    min-height: 155px !important;
-    max-height: 220px !important;
-    padding: 0 !important;
-  }
-  .container-state-img,
-  .sink-preview-img,
-  .workstation-img,
-  .equipment-img,
-  .container-asset-img {
-    height: clamp(155px, 43dvh, 205px) !important;
-    max-height: 210px !important;
-    width: auto !important;
-    max-width: 96% !important;
-    transform: none !important;
-    object-fit: contain !important;
+  .game-viewport.scene-sequencing .sequencing-scene,
+  .game-viewport.scene-sequencing .sequencing-page-container,
+  .game-viewport.scene-results .results-scene,
+  .game-viewport.scene-results .results-page-container,
+  .game-viewport.scene-evaluation .eval-scene-body,
+  .game-viewport.scene-evaluation .evaluation-page-container {
+    max-width: 100% !important;
+    width: 100% !important;
   }
 
   /* Hide floating duplicate sink status pill to eliminate console collisions */
