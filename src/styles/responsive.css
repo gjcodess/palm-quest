@@ -836,7 +836,7 @@
     z-index: 120;
   }
   .game-app.inventory-open .game-hud .hud-right {
-    right: calc(clamp(174px, 25vw, 210px) + 8px);
+    right: max(8px, env(safe-area-inset-right)) !important;
   }
   .game-hud .hud-btn-menu {
     width: 42px;
@@ -949,54 +949,227 @@
   .stage-center-zone,
   .game-viewport.dialogue-collapsed .stage-center-zone,
   .game-viewport.inventory-collapsed .stage-center-zone {
-    padding-top: 38px !important;
-    padding-bottom: max(32px, calc(18px + env(safe-area-inset-bottom, 0px))) !important;
+    padding-top: 26px !important;
+    padding-bottom: max(26px, calc(16px + env(safe-area-inset-bottom, 0px))) !important;
     padding-left: var(--zone-pad-left, 42px) !important;
     padding-right: var(--zone-pad-right, 42px) !important;
     min-width: 0;
   }
   .btn-recipe-guide-trigger { display: none !important; }
-  .stage-content-row { max-width: 100% !important; }
-  .station-center-card, .active-vessel-card { max-width: 100% !important; min-width: 0; }
-  .workstation-header, .prep-scene .workstation-header, .washing-workstation .workstation-header {
-    padding: 5px 7px !important;
-    gap: 4px !important;
-  }
-  .workstation-name, .prep-scene .workstation-name { font-size: .83rem !important; }
-  .workstation-sub, .prep-scene .workstation-sub { font-size: .62rem !important; }
-  .workstation-step-badge, .prep-scene .workstation-step-badge { font-size: .61rem !important; padding: 2px 5px !important; }
-  .game-viewport.dialogue-expanded.inventory-expanded .workstation-step-badge { display: none !important; }
-  .workstation-viewport, .washing-viewport, .molding-qc-viewport,
-  .steaming-qc-viewport, .qc-viewport, .frying-qc-viewport,
-  .packaging-qc-viewport, .dehydration-qc-viewport, .dropzone {
-    height: clamp(106px, 36dvh, 138px) !important;
-    min-height: 106px !important;
-    max-height: 138px !important;
-  }
-  .container-state-img, .sink-preview-img, .workstation-img, .equipment-img {
-    height: 115px !important;
-    max-height: 115px !important;
+  .stage-content-row { max-width: 100% !important; width: 100% !important; }
+  .station-center-card,
+  .active-vessel-card,
+  .prep-scene .stage-single-workstation .station-center-card,
+  .prep-scene .stage-content-row.stage-single-workstation > .station-center-card {
     max-width: 100% !important;
-  }
-  .prep-scene .washing-viewport,
-  .prep-scene .workstation-viewport,
-  .prep-scene .station-center-card .multi-state-workstation {
-    height: 138px !important;
-    min-height: 130px !important;
-    max-height: 138px !important;
+    min-width: 0 !important;
     padding: 0 !important;
   }
+
+  /* Workstation Header Capsules */
+  .workstation-header,
+  .prep-scene .workstation-header,
+  .washing-workstation .workstation-header {
+    padding: 4px 12px !important;
+    margin: 0 0 5px 0 !important;
+    gap: 6px !important;
+    border-radius: 999px !important;
+    box-shadow: 0 2.5px 0 #bda88e, 0 6px 14px rgba(78, 52, 28, 0.08) !important;
+  }
+  .workstation-titles,
+  .prep-scene .workstation-titles {
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    gap: 1px !important;
+  }
+  .workstation-name,
+  .prep-scene .workstation-name {
+    font-size: .80rem !important;
+    line-height: 1.2 !important;
+  }
+  .workstation-sub,
+  .prep-scene .workstation-sub {
+    font-size: .62rem !important;
+    line-height: 1.15 !important;
+  }
+  .workstation-step-badge,
+  .prep-scene .workstation-step-badge {
+    font-size: .60rem !important;
+    padding: 2px 8px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    max-width: 130px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .game-viewport.dialogue-expanded.inventory-expanded .workstation-step-badge {
+    display: none !important;
+  }
+
+  /* Workstation Container Flexibility */
+  .multi-state-workstation,
+  .prep-scene .multi-state-workstation,
+  .station-center-card .multi-state-workstation {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    flex: 0 1 auto !important;
+    width: 100% !important;
+  }
+
+  /* Compact Viewports & Images across All Workstations */
+  .workstation-viewport,
+  .washing-viewport,
+  .molding-qc-viewport,
+  .steaming-qc-viewport,
+  .qc-viewport,
+  .frying-qc-viewport,
+  .packaging-qc-viewport,
+  .dehydration-qc-viewport,
+  .dropzone,
+  .prep-scene .washing-viewport,
+  .prep-scene .workstation-viewport {
+    height: clamp(92px, 30dvh, 120px) !important;
+    min-height: 92px !important;
+    max-height: 120px !important;
+    padding: 0 !important;
+  }
+  .container-state-img,
+  .sink-preview-img,
+  .workstation-img,
+  .equipment-img,
   .prep-scene .sink-preview-img,
-  .prep-scene .container-state-img { height: 126px !important; max-height: 126px !important; }
-  .prep-scene .stage-center-zone { padding: 38px 9px max(32px, calc(18px + env(safe-area-inset-bottom, 0px))) !important; }
+  .prep-scene .container-state-img,
+  .steaming-scene .container-state-img,
+  .steamer-step-0 .container-state-img,
+  .steamer-step-1 .container-state-img,
+  .steamer-step-2 .container-state-img,
+  .steamer-step-3 .container-state-img,
+  .steamer-step-4 .container-state-img,
+  .steamer-step-5 .container-state-img,
+  .steamer-step-6 .container-state-img {
+    height: clamp(84px, 27dvh, 108px) !important;
+    max-height: 108px !important;
+    width: auto !important;
+    max-width: 100% !important;
+    transform: none !important;
+  }
+  .prep-scene .stage-center-zone {
+    padding: 26px 9px max(26px, calc(16px + env(safe-area-inset-bottom, 0px))) !important;
+  }
   .prep-scene .stage-single-workstation,
-  .prep-scene .stage-content-row.stage-single-workstation,
-  .prep-scene .stage-single-workstation .station-center-card,
-  .prep-scene .stage-content-row.stage-single-workstation > .station-center-card { max-width: 100% !important; }
-  .workstation-footer, .prep-scene .workstation-footer { padding: 5px 7px !important; gap: 4px !important; }
+  .prep-scene .stage-content-row.stage-single-workstation {
+    max-width: 100% !important;
+  }
+
+  /* Hide floating duplicate sink status pill to eliminate console collisions */
+  .sink-status-pill {
+    display: none !important;
+  }
+  .sink-drain-guidance-pill,
+  .dropzone-guide-pill,
+  .spatula-scrape-guide,
+  .lid-interlock-guide {
+    font-size: .62rem !important;
+    padding: 3px 8px !important;
+    top: 6px !important;
+    right: 8px !important;
+  }
+  .spatula-wiping-anim,
+  .mold-leveling-anim {
+    width: 58px !important;
+    height: 58px !important;
+  }
+
+  /* Tactile Rotary Consoles & Appliance Aprons on Mobile */
+  .faucet-knob-console,
+  .stove-burner-console,
+  .dehydrator-appliance-console,
+  .prep-scene .faucet-knob-console,
+  .prep-scene .stove-burner-console {
+    min-height: 48px !important;
+    max-height: 58px !important;
+    padding: 4px 12px !important;
+    border-radius: 14px !important;
+    gap: 8px !important;
+    margin-top: 4px !important;
+    border-width: 2px !important;
+    border-bottom-width: 3.5px !important;
+    box-shadow: 0 2px 0 #bda88e, 0 4px 10px rgba(78, 52, 28, 0.08) !important;
+  }
+  .knob-assembly,
+  .faucet-knob-assembly,
+  .dehydrator-dial-assembly {
+    width: 36px !important;
+    height: 36px !important;
+    flex-shrink: 0 !important;
+  }
+  .burner-panel-text,
+  .faucet-panel-text,
+  .dehydrator-panel-text {
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    gap: 1px !important;
+    overflow: hidden !important;
+  }
+  .burner-badge-row {
+    gap: 5px !important;
+  }
+  .burner-led {
+    width: 8px !important;
+    height: 8px !important;
+  }
+  .burner-mode-title,
+  .faucet-title,
+  .dehydrator-mode-title {
+    font-size: .72rem !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .faucet-action-hint,
+  .burner-sub-row span,
+  .dehydrator-action-hint {
+    font-size: .58rem !important;
+    line-height: 1.15 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+  }
+
+  /* Standard Workstation Footers & Action Buttons */
+  .workstation-footer,
+  .prep-scene .workstation-footer {
+    padding: 0 !important;
+    gap: 4px !important;
+    margin-top: 4px !important;
+  }
+  .workstation-footer:not(.has-custom-footer) {
+    padding: 4px 10px !important;
+    gap: 6px !important;
+    min-height: 36px !important;
+    border-radius: 12px !important;
+  }
   .workstation-status { font-size: .62rem !important; }
-  .btn-workstation-action, .btn-primary { font-size: .72rem !important; padding: 6px 9px !important; }
-  .stage-next-action-wrapper { right: max(8px, env(safe-area-inset-right, 0px)); bottom: max(16px, calc(8px + env(safe-area-inset-bottom, 0px))); }
+  .workstation-status .status-text,
+  .status-text {
+    font-size: .66rem !important;
+    line-height: 1.2 !important;
+    -webkit-line-clamp: 1 !important;
+    line-clamp: 1 !important;
+  }
+  .status-dot {
+    width: 8px !important;
+    height: 8px !important;
+    border-width: 1.5px !important;
+  }
+  .btn-workstation-action, .btn-primary { font-size: .70rem !important; padding: 5px 10px !important; border-radius: 9px !important; }
+  .stage-next-action-wrapper {
+    right: max(8px, env(safe-area-inset-right, 0px)) !important;
+    bottom: max(18px, calc(10px + env(safe-area-inset-bottom, 0px))) !important;
+  }
 
   .orientation-scene .orientation-subnav-container { margin: 5px auto 7px !important; padding: 0 8px !important; }
   .orientation-subnav { gap: 3px !important; }
@@ -1033,6 +1206,51 @@
   .floating-item-tooltip { top: 40px; padding: 3px 7px; border-radius: 6px; }
   .floating-item-tooltip .tooltip-name { font-size: .65rem; }
   .floating-item-tooltip .tooltip-hint { font-size: .54rem; }
+
+  /* Sequencing Scene Compact Mobile Landscape */
+  .sequencing-scene {
+    padding: 6px 12px 24px 12px !important;
+  }
+  .sequencing-page-container {
+    gap: 8px !important;
+  }
+  .sequencing-hero-header {
+    padding: 8px 12px !important;
+    border-radius: 12px !important;
+  }
+  .hero-exam-badge {
+    padding: 2px 8px !important;
+    font-size: .56rem !important;
+  }
+  .hero-exam-title {
+    font-size: .92rem !important;
+    margin: 2px 0 !important;
+  }
+  .hero-exam-desc {
+    font-size: .64rem !important;
+    line-height: 1.25 !important;
+  }
+  .sequencing-activity-card {
+    padding: 8px 10px !important;
+    border-radius: 12px !important;
+  }
+  .sequencing-slots-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+  .sequencing-card {
+    padding: 4px !important;
+    border-radius: 8px !important;
+  }
+  .seq-card-img-wrapper .seq-card-img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .seq-card-title {
+    font-size: .62rem !important;
+    line-height: 1.15 !important;
+    min-height: auto !important;
+  }
 }
 
 /* Type and feedback sizing for landscape phones, including wider Android WebViews. */
@@ -1083,7 +1301,8 @@
   .inspection-actions-row .btn-secondary { padding: 4px 7px !important; font-size: .66rem !important; }
 
   .feedback-toast {
-    top: max(48px, env(safe-area-inset-top)) !important;
+    top: max(8px, env(safe-area-inset-top)) !important;
+    z-index: 150 !important;
     width: min(280px, calc(100vw - 96px));
     max-width: calc(100vw - 96px);
     box-sizing: border-box;

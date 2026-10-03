@@ -25,6 +25,9 @@ export const OrientationSidebar = ({
           onClick={() => {
             soundManager.playClick();
             setIsInventoryCollapsed(false);
+            if (window.matchMedia('(max-width: 950px) and (orientation: landscape), (max-width: 1200px) and (orientation: landscape) and (pointer: coarse)').matches) {
+              setIsDialogueCollapsed(true);
+            }
           }}
           title="Click to open Pre-Test Assessment Guide (◀)"
           role="button"

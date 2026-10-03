@@ -668,24 +668,7 @@ export const Mission1Prep = () => {
                         : ''
                     }`}
                   >
-                    {isWashingActive ? (
-                      <>
-                        <span className="badge-icon">💧</span>
-                        <span>Click the “Click cross to rinse” to full washed the ubod</span>
-                      </>
-                    ) : isWashed ? (
-                      <>
-                        <span className="badge-icon-check">✓</span>
-                        <span>Select the washed ubod. Put in the pot.</span>
-                      </>
-                    ) : isUbodInColander ? (
-                      <>
-                        <span className="badge-icon">🌿</span>
-                        <span>Click the “Click cross to rinse” to full washed the ubod</span>
-                      </>
-                    ) : (
-                      <span>Select the raw ubod and place it in the sink</span>
-                    )}
+                    Step {!isUbodInColander ? '1' : !isWashed ? '2' : '3'} of 3
                   </div>
                 </div>
 
@@ -855,24 +838,7 @@ export const Mission1Prep = () => {
                         : ''
                     }`}
                   >
-                    {isCoolingRinseActive ? (
-                      <>
-                        <span className="badge-icon">💧</span>
-                        <span>Click “Turn faucet to cool” so the ubod will be cooled and drained</span>
-                      </>
-                    ) : isCoolingRinseComplete ? (
-                      <>
-                        <span className="badge-icon-check">✓</span>
-                        <span>Click the “Proceed to stage 2”</span>
-                      </>
-                    ) : potStep >= 5 ? (
-                      <>
-                        <span className="badge-icon">♨️</span>
-                        <span>Click “Turn faucet to cool” so the ubod will be cooled and drained</span>
-                      </>
-                    ) : (
-                      <span>Select stainless colander then drop to the pot.</span>
-                    )}
+                    Step {potStep === 4 ? '7' : !isCoolingRinseComplete ? '8' : '9'} of 9
                   </div>
                 </div>
 
