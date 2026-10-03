@@ -18,11 +18,6 @@ export const InventoryTray = ({
 }) => {
   const { holdingItem, setHoldingItem, isInventoryCollapsed, setIsInventoryCollapsed } = useGame();
 
-  const closeCompactRack = () => {
-    if (window.matchMedia('(max-width: 950px) and (orientation: landscape)').matches) {
-      setIsInventoryCollapsed(true);
-    }
-  };
 
   const handleCardClick = (item) => {
     if (item.isUsed) return;
@@ -31,14 +26,12 @@ export const InventoryTray = ({
 
     if (item.onClick) {
       item.onClick();
-      closeCompactRack();
       return;
     }
 
     const clickHandler = onItemClick || onItemSelect;
     if (clickHandler) {
       clickHandler(item);
-      closeCompactRack();
       return;
     }
 
@@ -52,7 +45,6 @@ export const InventoryTray = ({
         icon: item.fallbackIcon || '🥣',
       });
     }
-    closeCompactRack();
   };
 
   // Render Collapsed Slim Vertical Tab (Right Edge)
@@ -65,9 +57,6 @@ export const InventoryTray = ({
           onClick={() => {
             soundManager.playClick();
             setIsInventoryCollapsed(false);
-            if (window.matchMedia('(max-width: 950px) and (orientation: landscape), (max-width: 1200px) and (orientation: landscape) and (pointer: coarse)').matches) {
-              setIsDialogueCollapsed(true);
-            }
           }}
           title="Click to open Cookware & Ingredients Rack (◀)"
           role="button"
