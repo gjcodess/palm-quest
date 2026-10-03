@@ -23,6 +23,72 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
+
+  /* Dynamic clearance for collapsible side panels (minimizes gaps, maximizes center content) */
+  --zone-pad-left: 12px;
+  --zone-pad-right: 12px;
+}
+
+/* Desktop: Clear 58px tabs when collapsed with tight 4px clearance */
+.game-viewport.dialogue-collapsed {
+  --zone-pad-left: 62px;
+}
+.game-viewport.dialogue-expanded {
+  --zone-pad-left: 10px;
+}
+.game-viewport.inventory-collapsed {
+  --zone-pad-right: 62px;
+}
+.game-viewport.inventory-expanded {
+  --zone-pad-right: 10px;
+}
+
+/* Tablet & Compact Desktop (<= 1200px): Clear 48px tabs with 4px gap */
+@media (max-width: 1200px) {
+  .game-viewport.dialogue-collapsed {
+    --zone-pad-left: 52px;
+  }
+  .game-viewport.dialogue-expanded {
+    --zone-pad-left: 8px;
+  }
+  .game-viewport.inventory-collapsed {
+    --zone-pad-right: 52px;
+  }
+  .game-viewport.inventory-expanded {
+    --zone-pad-right: 8px;
+  }
+}
+
+/* Mobile & Phone Landscape (<= 950px): Clear 42px tabs with minimal 4px gap */
+@media screen and (max-width: 950px), screen and (max-height: 520px) {
+  .game-viewport.dialogue-collapsed {
+    --zone-pad-left: 46px;
+  }
+  .game-viewport.dialogue-expanded {
+    --zone-pad-left: 6px;
+  }
+  .game-viewport.inventory-collapsed {
+    --zone-pad-right: 46px;
+  }
+  .game-viewport.inventory-expanded {
+    --zone-pad-right: 6px;
+  }
+}
+
+/* Compact Mobile (<= 700px): Clear 38px tabs with 4px gap */
+@media screen and (max-width: 700px) {
+  .game-viewport.dialogue-collapsed {
+    --zone-pad-left: 42px;
+  }
+  .game-viewport.dialogue-expanded {
+    --zone-pad-left: 4px;
+  }
+  .game-viewport.inventory-collapsed {
+    --zone-pad-right: 42px;
+  }
+  .game-viewport.inventory-expanded {
+    --zone-pad-right: 4px;
+  }
 }
 
 .viewport-layout-grid {

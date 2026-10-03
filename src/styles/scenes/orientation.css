@@ -18,17 +18,14 @@
   -webkit-overflow-scrolling: touch;
 }
 
-/* Ensure padding never shifts when dialogue or inventory is toggled */
-.dialogue-collapsed .orientation-scene .stage-center-zone,
-.game-viewport.dialogue-collapsed .orientation-scene .stage-center-zone,
-.orientation-scene.dialogue-collapsed .stage-center-zone,
-.inventory-collapsed .orientation-scene .stage-center-zone,
-.game-viewport.inventory-collapsed .orientation-scene .stage-center-zone,
-.orientation-scene.inventory-collapsed .stage-center-zone,
-.dialogue-collapsed.inventory-collapsed .orientation-scene .stage-center-zone,
-.game-viewport.dialogue-collapsed.inventory-collapsed .orientation-scene .stage-center-zone {
-  padding-left: 32px !important;
-  padding-right: 32px !important;
+/* Independent dynamic padding based on sidebar collapsed states */
+.orientation-scene .stage-center-zone,
+.game-viewport .orientation-scene .stage-center-zone,
+.orientation-scene.stage-center-zone {
+  padding-top: 8px !important;
+  padding-bottom: 36px !important;
+  padding-left: var(--zone-pad-left, 12px) !important;
+  padding-right: var(--zone-pad-right, 12px) !important;
   justify-content: flex-start !important;
 }
 
@@ -42,7 +39,7 @@
   justify-content: center;
   align-items: center;
   margin: 12px auto 14px;
-  padding: 0 32px !important;
+  padding: 0 var(--zone-pad-right, 12px) 0 var(--zone-pad-left, 12px) !important;
   box-sizing: border-box;
   z-index: 10;
   position: relative;
@@ -50,12 +47,10 @@
   transition: none !important;
 }
 
-.dialogue-collapsed .orientation-scene .orientation-subnav-container,
-.game-viewport.dialogue-collapsed .orientation-scene .orientation-subnav-container,
-.inventory-collapsed .orientation-scene .orientation-subnav-container,
-.game-viewport.inventory-collapsed .orientation-scene .orientation-subnav-container {
-  padding-left: 32px !important;
-  padding-right: 32px !important;
+.orientation-scene .orientation-subnav-container,
+.game-viewport .orientation-scene .orientation-subnav-container {
+  padding-left: var(--zone-pad-left, 12px) !important;
+  padding-right: var(--zone-pad-right, 12px) !important;
 }
 
 .orientation-subnav {
@@ -165,7 +160,7 @@
    ========================================================================== */
 .active-vessel-card.orientation-card {
   max-width: 1040px;
-  width: 92%;
+  width: 100% !important; max-width: 1060px;
   margin: 0 auto;
   align-items: stretch;
   background: transparent !important;
@@ -183,7 +178,7 @@
 .active-vessel-card.orientation-card.inspection-card-wrapper,
 .active-vessel-card.orientation-card.ready-card {
   max-width: 1040px;
-  width: 92% !important;
+  width: 100% !important; max-width: 1060px;
   margin: 0 auto;
   padding: 0 !important;
   background: transparent !important;

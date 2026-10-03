@@ -46,7 +46,7 @@
   z-index: 5;
   width: 100%;
   box-sizing: border-box;
-  padding: 64px 32px 36px 32px !important;
+  padding: 64px var(--zone-pad-right, 12px) 36px var(--zone-pad-left, 12px) !important;
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: smooth;

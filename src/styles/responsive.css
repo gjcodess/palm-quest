@@ -451,12 +451,9 @@
     padding: 6px 12px 6px 8px !important;
   }
 
-  .game-viewport.dialogue-collapsed .stage-center-zone,
-  .dialogue-collapsed .stage-center-zone,
-  .game-viewport.inventory-collapsed .stage-center-zone,
-  .inventory-collapsed .stage-center-zone {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+  .stage-center-zone {
+    padding-left: var(--zone-pad-left, 18px) !important;
+    padding-right: var(--zone-pad-right, 18px) !important;
   }
 
   .active-vessel-card.orientation-card {
@@ -752,7 +749,10 @@
   .game-viewport.dialogue-collapsed .stage-center-zone,
   .game-viewport.inventory-collapsed .stage-center-zone {
     justify-content: flex-start !important;
-    padding: 42px 48px 52px !important;
+    padding-top: 42px !important;
+    padding-bottom: 52px !important;
+    padding-left: var(--zone-pad-left, 46px) !important;
+    padding-right: var(--zone-pad-right, 46px) !important;
     overflow-y: auto !important;
   }
   .stage-content-row { width: 100% !important; max-width: 620px !important; }
@@ -807,9 +807,8 @@
 }
 
 @media screen and (max-width: 700px) and (orientation: landscape) {
-  .stage-center-zone,
-  .game-viewport.dialogue-collapsed .stage-center-zone,
-  .game-viewport.inventory-collapsed .stage-center-zone { padding-left: 42px !important; padding-right: 42px !important; }
+  /* Mobile landscape honors dynamic clearance */
+  .stage-center-zone { padding-left: var(--zone-pad-left, 42px) !important; padding-right: var(--zone-pad-right, 42px) !important; }
   .hero-snack-box { display: none; }
   .title-hero-grid { grid-template-columns: auto 1fr; }
 }
@@ -950,7 +949,10 @@
   .stage-center-zone,
   .game-viewport.dialogue-collapsed .stage-center-zone,
   .game-viewport.inventory-collapsed .stage-center-zone {
-    padding: 38px 9px 24px !important;
+    padding-top: 38px !important;
+    padding-bottom: 24px !important;
+    padding-left: var(--zone-pad-left, 42px) !important;
+    padding-right: var(--zone-pad-right, 42px) !important;
     min-width: 0;
   }
   .btn-recipe-guide-trigger { display: none !important; }
@@ -1001,7 +1003,12 @@
   .subnav-pill { min-width: 0; padding: 4px 5px !important; font-size: .62rem !important; gap: 3px !important; }
   .subnav-pill-icon { font-size: .75rem !important; }
   .orientation-scene .stage-center-zone,
-  .game-viewport .orientation-scene .stage-center-zone { padding: 3px 8px 12px !important; }
+  .game-viewport .orientation-scene .stage-center-zone {
+    padding-top: 3px !important;
+    padding-bottom: 12px !important;
+    padding-left: var(--zone-pad-left, 42px) !important;
+    padding-right: var(--zone-pad-right, 42px) !important;
+  }
   .orientation-card .vessel-title { font-size: .95rem !important; }
   .orientation-card .vessel-badge { font-size: .6rem !important; padding: 2px 6px !important; }
   .orientation-card .vessel-top-badge { font-size: .62rem !important; padding: 2px 7px !important; }

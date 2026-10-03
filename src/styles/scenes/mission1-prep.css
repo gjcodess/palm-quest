@@ -810,16 +810,9 @@
   transition: none !important;
 }
 
-.dialogue-collapsed .prep-scene .stage-center-zone,
-.game-viewport.dialogue-collapsed .prep-scene .stage-center-zone,
-.prep-scene.dialogue-collapsed .stage-center-zone,
-.inventory-collapsed .prep-scene .stage-center-zone,
-.game-viewport.inventory-collapsed .prep-scene .stage-center-zone,
-.prep-scene.inventory-collapsed .stage-center-zone,
-.dialogue-collapsed.inventory-collapsed .prep-scene .stage-center-zone,
-.game-viewport.dialogue-collapsed.inventory-collapsed .prep-scene .stage-center-zone {
-  padding-left: 32px !important;
-  padding-right: 32px !important;
+.prep-scene .stage-center-zone {
+  padding-left: var(--zone-pad-left, 12px) !important;
+  padding-right: var(--zone-pad-right, 12px) !important;
 }
 
 /* 2. Expanded Stage Content Row */
