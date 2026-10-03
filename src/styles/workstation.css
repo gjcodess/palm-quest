@@ -1141,10 +1141,22 @@
 
 .dropzone-guide-pill {
   position: absolute;
-  bottom: 14px;
+  top: 14px;
+  right: 14px;
+  bottom: auto;
+  left: auto;
+  width: auto;
+  max-width: max-content;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(180deg, #10b981 0%, #059669 100%);
   color: #ffffff;
-  padding: 8px 20px;
+  padding: 8px 18px;
   border-radius: var(--radius-pill);
   font-family: var(--font-heading);
   font-size: 0.88rem;
@@ -1152,8 +1164,9 @@
   border: 2px solid #34d399;
   box-shadow: 0 4px 0 #065f46, 0 6px 18px rgba(16, 185, 129, 0.45);
   animation: bouncePill 1.2s infinite ease-in-out;
-  z-index: 6;
+  z-index: 12;
   letter-spacing: 0.3px;
+  cursor: pointer;
 }
 
 @keyframes bouncePill {
