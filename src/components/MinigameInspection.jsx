@@ -309,8 +309,8 @@ export const MinigameInspection = ({
           justifyContent: 'space-between',
           alignItems: 'center',
           marginTop: '14px',
-          marginBottom: 'max(16px, env(safe-area-inset-bottom, 0px))',
-          paddingBottom: '6px',
+          marginBottom: '8px',
+          paddingBottom: 'max(24px, calc(16px + env(safe-area-inset-bottom, 0px)))',
         }}
       >
         <button
