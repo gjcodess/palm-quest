@@ -1,5 +1,6 @@
 const { app, BrowserWindow, net, protocol, shell } = require('electron');
 const path = require('node:path');
+const fs = require('node:fs');
 const { pathToFileURL } = require('node:url');
 
 const scheme = 'palmquest';
@@ -16,7 +17,19 @@ app.whenReady().then(() => {
     const url = new URL(request.url);
     if (url.host !== 'app') return new Response('Not found', { status: 404 });
     const pathname = decodeURIComponent(url.pathname);
-    const file = path.resolve(dist, `.${pathname === '/' ? '/index.html' : pathname}`);
+    let file = path.resolve(dist, `.${pathname === '/' ? '/index.html' : pathname}`);
+    
+    // Fallback if legacy png/jpg or /images/ path is requested
+    if (!fs.existsSync(file)) {
+      const fallbackPathname = pathname
+        .replace(/^\/images\//, '/assets/')
+        .replace(/\.(png|jpe?g)$/i, (m) => m.toLowerCase().includes('cursor') ? m : '.webp');
+      const fallbackFile = path.resolve(dist, `.${fallbackPathname}`);
+      if (fs.existsSync(fallbackFile)) {
+        file = fallbackFile;
+      }
+    }
+
     const relative = path.relative(dist, file);
     if (relative.startsWith('..') || path.isAbsolute(relative)) {
       return new Response('Not found', { status: 404 });

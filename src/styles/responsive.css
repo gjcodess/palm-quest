@@ -39,7 +39,7 @@
     z-index: 9999999;
     background: 
       radial-gradient(circle at 50% 20%, rgba(68, 42, 24, 0.98) 0%, rgba(38, 20, 10, 0.99) 60%, rgba(18, 9, 4, 1) 100%),
-      url('/assets/bg_evaluation_hall.jpg') center / cover no-repeat;
+      url('/assets/bg_evaluation_hall.webp') center / cover no-repeat;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     flex-direction: column;

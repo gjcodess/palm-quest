@@ -15,7 +15,10 @@ export default {
       /^\/tmp(?:\/|$)/,
       /^\/test-results(?:\/|$)/,
       /^\/docx-qa-/,
+      /^\/node_modules(?:\/|$)/,
+      /\.docx$/i,
       /^\/(?:README|USER_MANUAL|ASSET_GENERATION_PROMPTS|walkthrough)/,
+      /^\/(?:capacitor\.config\.json|forge\.config\.js|vite\.config\.js|vercel\.json|\.gitignore)$/,
     ],
   },
   makers: [{

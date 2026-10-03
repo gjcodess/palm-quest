@@ -117,7 +117,7 @@ export const Mission1Prep = () => {
       stepIndex: 0,
       acceptedItems: ['washed_ubod'],
       prompt: 'Select the washed ubod. Put in the pot.',
-      img: '/assets/pot_empty.png',
+      img: '/assets/pot_empty.webp',
       fallbackIcon: '🥣',
       label: 'Empty Cooking Pot',
     },
@@ -125,7 +125,7 @@ export const Mission1Prep = () => {
       stepIndex: 1,
       acceptedItems: ['water_pitcher', 'water', 'portion_water'],
       prompt: 'Select water then drop to the pot.',
-      img: '/assets/pot_with_ubod.png',
+      img: '/assets/pot_with_ubod.webp',
       fallbackIcon: '💧',
       label: 'Cooking Pot with Ubod',
     },
@@ -133,7 +133,7 @@ export const Mission1Prep = () => {
       stepIndex: 2,
       acceptedItems: ['sea_salt', 'salt', 'ing_salt_fresh'],
       prompt: 'Select salt then drop to the pot.',
-      img: '/assets/pot_with_ubod_water.png',
+      img: '/assets/pot_with_ubod_water.webp',
       fallbackIcon: '🧂',
       label: 'Submerged Ubod in Water',
     },
@@ -141,7 +141,7 @@ export const Mission1Prep = () => {
       stepIndex: 3,
       acceptedItems: [],
       prompt: 'Click “Ignite burner” to boil the ubod',
-      img: isBoilingTimerActive ? '/assets/pot_boiling_on_stove.png' : '/assets/pot_with_ubod_water_salt.png',
+      img: isBoilingTimerActive ? '/assets/pot_boiling_on_stove.webp' : '/assets/pot_with_ubod_water_salt.webp',
       fallbackIcon: '♨️',
       label: isBoilingTimerActive ? 'Rolling Boil (100°C)' : 'Seasoned Ubod Ready to Boil',
     },
@@ -151,7 +151,7 @@ export const Mission1Prep = () => {
       prompt: isDrainingActive
         ? 'Select stainless colander then drop to the pot.'
         : 'Select stainless colander then drop to the pot.',
-      img: isDrainingActive ? '/assets/colander_boiled_ubod_draining.png' : '/assets/pot_boiling_done.png',
+      img: isDrainingActive ? '/assets/colander_boiled_ubod_draining.webp' : '/assets/pot_boiling_done.webp',
       fallbackIcon: '🥘',
       label: isDrainingActive ? 'Draining in Colander...' : 'Fork-Tender Boiled Ubod (Ready to Drain)',
     },
@@ -161,7 +161,7 @@ export const Mission1Prep = () => {
       prompt: isCoolingRinseComplete
         ? 'Click “Turn faucet to cool” so the ubod will be cooled and drained'
         : 'Click “Turn faucet to cool” so the ubod will be cooled and drained',
-      img: '/assets/pot_empty.png',
+      img: '/assets/pot_empty.webp',
       fallbackIcon: '✨',
       label: 'Emptied Cooking Pot (Contents Drained)',
     },
@@ -394,7 +394,7 @@ export const Mission1Prep = () => {
           id: 'washed_ubod',
           name: 'Washed Ubod',
           measure: '1 Cup (Sanitized)',
-          img: '/assets/colander_ubod_raw.png',
+          img: '/assets/colander_ubod_raw.webp',
           fallbackIcon: '🥣',
           tooltip: 'Sanitized coconut palm strips, rinsed clean of surface soil & starch residues.',
         };
@@ -485,7 +485,7 @@ export const Mission1Prep = () => {
         : !isUbodInColander
         ? '1 Cup (Fresh Cut)'
         : 'In Sink (Washing)',
-      img: isWashed ? '/assets/colander_ubod_raw.png' : '/assets/ing_ubod_fresh.png',
+      img: isWashed ? '/assets/colander_ubod_raw.webp' : '/assets/ing_ubod_fresh.webp',
       fallbackIcon: '🥥',
       isUsed: isUbodInColander && !isWashed ? true : potStep >= 1,
       isNext: !isUbodInColander ? true : isWashed && potStep === 0,
@@ -512,7 +512,7 @@ export const Mission1Prep = () => {
       id: 'water_pitcher',
       name: 'Potable Water',
       measure: '1 Cup (To Submerge)',
-      img: '/assets/portion_water_1cup.png',
+      img: '/assets/portion_water_1cup.webp',
       fallbackIcon: '💧',
       isUsed: potStep >= 2,
       isNext: potStep === 1,
@@ -522,7 +522,7 @@ export const Mission1Prep = () => {
       id: 'sea_salt',
       name: 'Pure Sea Salt',
       measure: '1 tsp (Pinch)',
-      img: '/assets/ing_salt_fresh.png',
+      img: '/assets/ing_salt_fresh.webp',
       fallbackIcon: '🧂',
       isUsed: potStep >= 3,
       isNext: potStep === 2,
@@ -532,7 +532,7 @@ export const Mission1Prep = () => {
       id: 'colander',
       name: 'Stainless Colander',
       measure: 'Drain & Rinse',
-      img: '/assets/tool_colander_safe.png',
+      img: '/assets/tool_colander_safe.webp',
       fallbackIcon: '🥣',
       isUsed: potStep >= 5,
       isNext: potStep === 4,
@@ -565,18 +565,18 @@ export const Mission1Prep = () => {
   ];
 
   const sinkImgSrc = isWashingActive
-    ? '/assets/sink_colander_washing.png'
+    ? '/assets/sink_colander_washing.webp'
     : isCoolingRinseActive
-    ? '/assets/colander_boiled_ubod_cooling_rinse.png'
+    ? '/assets/colander_boiled_ubod_cooling_rinse.webp'
     : isCoolingRinseComplete
-    ? '/assets/colander_boiled_ubod_ready.png'
+    ? '/assets/colander_boiled_ubod_ready.webp'
     : potStep >= 5
-    ? '/assets/colander_boiled_ubod_draining.png'
+    ? '/assets/colander_boiled_ubod_draining.webp'
     : potStep >= 1
-    ? '/assets/sink_colander_empty.png'
+    ? '/assets/sink_colander_empty.webp'
     : isUbodInColander
-    ? '/assets/sink_colander_ubod.png'
-    : '/assets/sink_colander_empty.png';
+    ? '/assets/sink_colander_ubod.webp'
+    : '/assets/sink_colander_empty.webp';
 
   const sinkStatusText = isWashingActive
     ? 'Click the “Click cross to rinse” to full washed the ubod'
@@ -743,7 +743,7 @@ export const Mission1Prep = () => {
                         filter: isWashingActive ? 'drop-shadow(0 0 14px rgba(59, 130, 246, 0.45))' : undefined,
                       }}
                       onError={(e) => {
-                        e.target.src = '/assets/sink_colander_empty.png';
+                        e.target.src = '/assets/sink_colander_empty.webp';
                       }}
                     />
                   </div>
@@ -929,7 +929,7 @@ export const Mission1Prep = () => {
                         filter: isCoolingRinseActive ? 'drop-shadow(0 0 14px rgba(59, 130, 246, 0.45))' : undefined,
                       }}
                       onError={(e) => {
-                        e.target.src = '/assets/sink_colander_empty.png';
+                        e.target.src = '/assets/sink_colander_empty.webp';
                       }}
                     />
                   </div>

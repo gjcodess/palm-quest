@@ -278,7 +278,7 @@ export const HeaderHUD = () => {
                 {/* Full-width Mini Hero Card: Teacher Mia greeting */}
                 <div className="hud-menu-hero-card">
                   <img
-                    src="/images/teacher_mia_neutral.png"
+                    src="/assets/teacher_mia_neutral.webp"
                     alt="Teacher Mia"
                     className="hud-menu-avatar"
                   />

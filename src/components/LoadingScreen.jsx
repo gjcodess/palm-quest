@@ -2,42 +2,42 @@ import React, { useState, useEffect, useRef } from 'react';
 import { soundManager } from '../audio/soundManager';
 
 const ASSETS_TO_PRELOAD = [
-  '/images/he_lab_workstation.jpg',
-  '/images/bg_stage1_prep.jpg',
-  '/images/bg_stage2_boiling.jpg',
-  '/images/bg_stage3_formulation.jpg',
-  '/images/bg_stage4_dehydration.jpg',
-  '/images/bg_stage5_frying.jpg',
-  '/images/bg_evaluation_hall.jpg',
-  '/images/teacher_mia_neutral.png',
-  '/images/teacher_mia_happy.png',
-  '/images/teacher_mia_thinking.png',
-  '/images/icon_coconut_palm.png',
-  '/images/icon_fresh_ubod.png',
-  '/images/icon_ubod_puree.png',
-  '/assets/colander_ubod_only.png',
-  '/images/icon_puffed_crackers.png',
-  '/assets/platter_crackers_cooled.png',
-  '/assets/pouch_sealed_labeled.png',
-  '/assets/box_of_packaged_crackers.png',
-  '/images/icon_puffed_crackers.png',
-  '/assets/platter_crackers_cooled.png',
-  '/assets/icon_gold_medal_front.png',
-  '/assets/card_step_boiling.png',
-  '/assets/card_step_grinding.png',
-  '/assets/card_step_mixing.png',
-  '/assets/card_step_molding.png',
-  '/assets/card_step_steaming.png',
-  '/assets/card_step_dehydration.png',
-  '/assets/card_step_frying.png',
-  '/assets/card_step_packaging.png',
-  '/assets/bg_prep.jpg',
-  '/assets/bg_boiling.jpg',
-  '/assets/bg_formulation.jpg',
-  '/assets/bg_dehydration.jpg',
-  '/assets/bg_frying.jpg',
-  '/assets/bg_evaluation_hall.jpg',
-  '/assets/processor_lid.png',
+  '/assets/he_lab_workstation.webp',
+  '/assets/bg_stage1_prep.webp',
+  '/assets/bg_stage2_boiling.webp',
+  '/assets/bg_stage3_formulation.webp',
+  '/assets/bg_stage4_dehydration.webp',
+  '/assets/bg_stage5_frying.webp',
+  '/assets/bg_evaluation_hall.webp',
+  '/assets/teacher_mia_neutral.webp',
+  '/assets/teacher_mia_happy.webp',
+  '/assets/teacher_mia_thinking.webp',
+  '/assets/icon_coconut_palm.webp',
+  '/assets/icon_fresh_ubod.webp',
+  '/assets/icon_ubod_puree.webp',
+  '/assets/colander_ubod_only.webp',
+  '/assets/icon_puffed_crackers.webp',
+  '/assets/platter_crackers_cooled.webp',
+  '/assets/pouch_sealed_labeled.webp',
+  '/assets/box_of_packaged_crackers.webp',
+  '/assets/icon_puffed_crackers.webp',
+  '/assets/platter_crackers_cooled.webp',
+  '/assets/icon_gold_medal_front.webp',
+  '/assets/card_step_boiling.webp',
+  '/assets/card_step_grinding.webp',
+  '/assets/card_step_mixing.webp',
+  '/assets/card_step_molding.webp',
+  '/assets/card_step_steaming.webp',
+  '/assets/card_step_dehydration.webp',
+  '/assets/card_step_frying.webp',
+  '/assets/card_step_packaging.webp',
+  '/assets/bg_prep.webp',
+  '/assets/bg_boiling.webp',
+  '/assets/bg_formulation.webp',
+  '/assets/bg_dehydration.webp',
+  '/assets/bg_frying.webp',
+  '/assets/bg_evaluation_hall.webp',
+  '/assets/processor_lid.webp',
 ];
 
 export const LoadingScreen = ({ onLoaded }) => {
@@ -96,18 +96,18 @@ export const LoadingScreen = ({ onLoaded }) => {
     <div className={`loading-screen-backdrop ${isFadingOut ? 'fade-out' : ''}`}>
       {/* Background Animated Floating Blurred Stage Cards */}
       <div className="loading-ambient-particles">
-        <img src="/assets/card_step_boiling.png" alt="Boiling Step" className="particle-card p1" />
-        <img src="/assets/card_step_grinding.png" alt="Grinding Step" className="particle-card p2" />
-        <img src="/assets/card_step_mixing.png" alt="Mixing Step" className="particle-card p3" />
-        <img src="/assets/card_step_molding.png" alt="Molding Step" className="particle-card p4" />
-        <img src="/assets/card_step_steaming.png" alt="Steaming Step" className="particle-card p5" />
-        <img src="/assets/card_step_dehydration.png" alt="Dehydration Step" className="particle-card p6" />
-        <img src="/assets/card_step_frying.png" alt="Frying Step" className="particle-card p7" />
-        <img src="/assets/card_step_packaging.png" alt="Packaging Step" className="particle-card p8" />
-        <img src="/images/icon_fresh_ubod.png" alt="Fresh coconut palm" className="particle-ubod p9" aria-hidden="true" />
-        <img src="/images/icon_ubod_puree.png" alt="Coconut palm puree" className="particle-ubod p10" aria-hidden="true" />
-        <img src="/assets/colander_ubod_only.png" alt="Prepared coconut palm" className="particle-ubod p11" aria-hidden="true" />
-        <img src="/images/icon_puffed_crackers.png" alt="Coconut palm crackers" className="particle-ubod p12" aria-hidden="true" />
+        <img src="/assets/card_step_boiling.webp" alt="Boiling Step" className="particle-card p1" />
+        <img src="/assets/card_step_grinding.webp" alt="Grinding Step" className="particle-card p2" />
+        <img src="/assets/card_step_mixing.webp" alt="Mixing Step" className="particle-card p3" />
+        <img src="/assets/card_step_molding.webp" alt="Molding Step" className="particle-card p4" />
+        <img src="/assets/card_step_steaming.webp" alt="Steaming Step" className="particle-card p5" />
+        <img src="/assets/card_step_dehydration.webp" alt="Dehydration Step" className="particle-card p6" />
+        <img src="/assets/card_step_frying.webp" alt="Frying Step" className="particle-card p7" />
+        <img src="/assets/card_step_packaging.webp" alt="Packaging Step" className="particle-card p8" />
+        <img src="/assets/icon_fresh_ubod.webp" alt="Fresh coconut palm" className="particle-ubod p9" aria-hidden="true" />
+        <img src="/assets/icon_ubod_puree.webp" alt="Coconut palm puree" className="particle-ubod p10" aria-hidden="true" />
+        <img src="/assets/colander_ubod_only.webp" alt="Prepared coconut palm" className="particle-ubod p11" aria-hidden="true" />
+        <img src="/assets/icon_puffed_crackers.webp" alt="Coconut palm crackers" className="particle-ubod p12" aria-hidden="true" />
       </div>
 
       {/* Main Minimalist Clean Loading Container */}
@@ -125,9 +125,9 @@ export const LoadingScreen = ({ onLoaded }) => {
           </div>
 
           <div className="loading-product-feature">
-            <img src="/assets/platter_crackers_cooled.png" alt="Cooled coconut palm crackers" />
-            <img src="/assets/pouch_sealed_labeled.png" alt="Sealed labeled coconut palm crackers" />
-            <img src="/assets/box_of_packaged_crackers.png" alt="Box of packaged coconut palm crackers" />
+            <img src="/assets/platter_crackers_cooled.webp" alt="Cooled coconut palm crackers" />
+            <img src="/assets/pouch_sealed_labeled.webp" alt="Sealed labeled coconut palm crackers" />
+            <img src="/assets/box_of_packaged_crackers.webp" alt="Box of packaged coconut palm crackers" />
           </div>
 
           {/* Loading Progress Bar */}
