@@ -1447,10 +1447,11 @@
     margin-top: 4px !important;
   }
   .workstation-footer:not(.has-custom-footer) {
-    padding: 4px 10px !important;
-    gap: 6px !important;
-    min-height: 36px !important;
-    border-radius: 12px !important;
+    padding: 3px 12px !important;
+    gap: 8px !important;
+    min-height: 40px !important;
+    border-radius: 14px !important;
+    align-items: center !important;
   }
   .workstation-status { font-size: .62rem !important; }
   .workstation-status .status-text,
@@ -1465,7 +1466,22 @@
     height: 8px !important;
     border-width: 1.5px !important;
   }
-  .btn-workstation-action, .btn-primary { font-size: .70rem !important; padding: 5px 10px !important; border-radius: 9px !important; }
+  .btn-workstation-action, .btn-primary, .btn-processor-pulse, .btn-workstation-action.processor-pulse {
+    font-size: .72rem !important;
+    padding: 4px 14px !important;
+    border-radius: 999px !important;
+    min-height: 28px !important;
+    max-height: 32px !important;
+    line-height: 1.2 !important;
+    box-shadow: 0 2.5px 0 #78350f, 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+    flex-shrink: 0 !important;
+  }
+  .btn-workstation-action.processor-pulse, .btn-processor-pulse {
+    box-shadow: 0 2.5px 0 #7c2d12, 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+  }
+  .btn-workstation-action .action-icon, .btn-processor-pulse .action-icon {
+    font-size: .88rem !important;
+  }
   .stage-next-action-wrapper {
     right: max(8px, env(safe-area-inset-right, 0px)) !important;
     bottom: max(18px, calc(10px + env(safe-area-inset-bottom, 0px))) !important;

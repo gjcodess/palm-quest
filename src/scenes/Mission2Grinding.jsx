@@ -91,7 +91,7 @@ export const Mission2Grinding = () => {
       stepIndex: 2,
       acceptedItems: !isLidLocked ? ['processor_lid', 'lid'] : [],
       prompt: isLidLocked
-        ? 'Select the processor safety lid and place it on the food processor.'
+        ? 'Select “high speed puree” for it to be processed blend well.'
         : 'Select the processor safety lid and place it on the food processor.',
       img: isLidLocked ? '/assets/processor_close_lid.webp' : '/assets/processor_with_ubod_salt.webp',
       fallbackIcon: '🔒',
@@ -370,6 +370,8 @@ export const Mission2Grinding = () => {
               statusText={
                 isBlending
                   ? `⚡ Pureeing boiled fibers at high speed... ${blendProgress}%`
+                  : isLidLocked && processorStep === 2
+                  ? 'Select “high speed puree” for it to be processed blend well.'
                   : processorSteps[processorStep]?.prompt || 'Ready'
               }
               specBadge={
