@@ -112,13 +112,13 @@ export const FaucetKnobConsole = ({
       <div className="knob-assembly faucet-knob-assembly">
         {/* Stationary baseplate with OFF tick at 12 o'clock and -FLOW at 3 o'clock */}
         <img
-          src="/assets/faucet_knob_base.png"
+          src="/assets/faucet_knob_base.webp"
           alt="Faucet Escutcheon Baseplate"
           className="knob-base-img"
         />
         {/* 4-Arm Chrome Cross Valve Dial turning from 0deg (OFF) to 90deg (FLOW) */}
         <img
-          src="/assets/faucet_knob_rotor.png"
+          src="/assets/faucet_knob_rotor.webp"
           alt="Chrome Cross Valve Handle"
           className={`knob-rotor-img ${
             isAnyFlowing ? 'turned-high' : 'turned-off'

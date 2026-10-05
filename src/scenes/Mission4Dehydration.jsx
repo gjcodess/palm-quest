@@ -32,7 +32,7 @@ export const Mission4Dehydration = () => {
       setHoldingItem({
         id: 'raw_discs',
         name: `Sliced Discs (${4 - trayDiscs} left)`,
-        img: '/images/icon_raw_discs.png',
+        img: '/assets/icon_raw_discs.webp',
         actionHint: 'Click drying tray to arrange discs',
       });
     }
@@ -74,7 +74,7 @@ export const Mission4Dehydration = () => {
       setHoldingItem({
         id: 'raw_discs',
         name: `Sliced Discs (${4 - count} left)`,
-        img: '/images/icon_raw_discs.png',
+        img: '/assets/icon_raw_discs.webp',
         actionHint: 'Click drying tray to arrange discs',
       });
     }
@@ -142,7 +142,7 @@ export const Mission4Dehydration = () => {
         <div className="active-vessel-card dehydration-workstation">
           <div className="vessel-header">
             <span className="vessel-title">
-              <img src="/images/icon_dehydrator.png" alt="" className="vessel-header-icon" />
+              <img src="/assets/icon_dehydrator.webp" alt="" className="vessel-header-icon" />
               Dehydration Cabinet Station
             </span>
             <span className="vessel-badge">Pillar 2: Dehydration</span>
@@ -205,7 +205,7 @@ export const Mission4Dehydration = () => {
 
           {dehydrateStep === 3 && (
             <div className="dehydrate-complete-banner pop-in">
-              <img src="/images/icon_dried_pellets.png" alt="Dried Pellets" className="dough-img" />
+              <img src="/assets/icon_dried_pellets.webp" alt="Dried Pellets" className="dough-img" />
               <h4>✓ Dehydration Complete (9% Moisture)</h4>
               <p>Raw pellets are glassy, hard, and ready for deep frying</p>
             </div>
@@ -224,13 +224,13 @@ export const Mission4Dehydration = () => {
             className={`drag-card ${holdingItem?.id === 'raw_discs' ? 'lifted selected-tap' : ''} ${trayDiscs >= 4 ? 'used' : ''}`}
             onClick={handleCardClick}
           >
-            <img src="/images/icon_raw_discs.png" alt="Sliced Discs" className="card-icon-img" />
+            <img src="/assets/icon_raw_discs.webp" alt="Sliced Discs" className="card-icon-img" />
             <span className="card-title">Sliced Discs</span>
             <span className="card-measure">{4 - trayDiscs} Available</span>
           </div>
 
           <div className="drag-card used">
-            <img src="/images/icon_fan_airflow.png" alt="Dry Air Fan" className="card-icon-img" />
+            <img src="/assets/icon_fan_airflow.webp" alt="Dry Air Fan" className="card-icon-img" />
             <span className="card-title">Dry Air Fan</span>
             <span className="card-measure">Automated</span>
           </div>

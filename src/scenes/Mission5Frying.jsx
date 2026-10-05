@@ -67,7 +67,7 @@ export const Mission5Frying = () => {
       setHoldingItem({
         id: 'dried_pellets',
         name: 'Dried Pellets (9% Moisture)',
-        img: '/images/icon_dried_pellets.png',
+        img: '/assets/icon_dried_pellets.webp',
         actionHint: 'Click sizzling wok to flash puff!',
       });
     }
@@ -139,7 +139,7 @@ export const Mission5Frying = () => {
         <div className="workstation-card frying-workstation">
           <div className="vessel-header">
             <span className="vessel-title">
-              <img src="/images/icon_frying_wok.png" alt="" className="vessel-header-icon" />
+              <img src="/assets/icon_frying_wok.webp" alt="" className="vessel-header-icon" />
               Deep Frying Wok: Thermal Expansion
             </span>
             <span className="vessel-badge">Pillar 3: Frying</span>
@@ -152,7 +152,7 @@ export const Mission5Frying = () => {
               onClick={fryStep === 1 ? handleDropPellets : (fryStep === 3 || fryStep === 4) ? handleScoopSkimmer : null}
             >
               <div className="wok-graphic">
-                <img src="/images/icon_frying_wok.png" alt="Frying Wok" className="wok-appliance-img" />
+                <img src="/assets/icon_frying_wok.webp" alt="Frying Wok" className="wok-appliance-img" />
 
                 {fryStep === 0 && (
                   <div className="oil-heating-prompt" onClick={handleStartHeating}>
@@ -182,7 +182,7 @@ export const Mission5Frying = () => {
                     </div>
 
                     <div className={`crackers-in-oil ${crackersPuffed ? 'puffed-up' : ''}`}>
-                      <img src="/images/icon_puffed_crackers.png" alt="Puffed Crackers" className="puffed-cracker-img" />
+                      <img src="/assets/icon_puffed_crackers.webp" alt="Puffed Crackers" className="puffed-cracker-img" />
                       <span className="puff-multiplier-tag">3x Starch Expansion! ✨</span>
                     </div>
                   </div>
@@ -193,7 +193,7 @@ export const Mission5Frying = () => {
             {/* Frying Tools Panel */}
             <div className="frying-tools-sidebar">
               <div className="thermometer-gauge">
-                <img src="/images/icon_oil_thermometer.png" alt="Thermometer" className="thermometer-gauge-img" />
+                <img src="/assets/icon_oil_thermometer.webp" alt="Thermometer" className="thermometer-gauge-img" />
                 <div className="therm-bar">
                   <div className="therm-target-band" style={{ bottom: '70%', height: '15%' }} />
                   <div className="therm-fill" style={{ height: `${(oilTemp / 220) * 100}%` }} />
@@ -204,7 +204,7 @@ export const Mission5Frying = () => {
 
               {fryStep >= 3 && (
                 <div className="skimmer-tool-box pop-in" onClick={handleScoopSkimmer}>
-                  <img src="/images/icon_spider_skimmer.png" alt="Skimmer" className="skimmer-tool-img" />
+                  <img src="/assets/icon_spider_skimmer.webp" alt="Skimmer" className="skimmer-tool-img" />
                   <button className="btn-primary btn-skimmer">
                     {fryStep === 4 ? 'Crackers Drained ✓' : 'Scoop with Skimmer!'}
                   </button>
@@ -215,7 +215,7 @@ export const Mission5Frying = () => {
 
           {fryStep === 4 && (
             <div className="frying-complete-banner pop-in">
-              <img src="/images/icon_cracker_platter.png" alt="Platter" className="dough-img" />
+              <img src="/assets/icon_cracker_platter.webp" alt="Platter" className="dough-img" />
               <h4>🎉 Laboratory Complete! Golden Puffed Crackers Ready!</h4>
               <p>3x starch expansion achieved with crispy sensory texture</p>
             </div>
@@ -234,7 +234,7 @@ export const Mission5Frying = () => {
             className={`drag-card ${holdingItem?.id === 'dried_pellets' ? 'lifted selected-tap' : fryStep === 1 ? 'selected-tap pulse' : ''} ${fryStep > 1 ? 'used' : ''}`}
             onClick={fryStep === 1 ? handlePelletsClick : null}
           >
-            <img src="/images/icon_dried_pellets.png" alt="Dried Pellets" className="card-icon-img" />
+            <img src="/assets/icon_dried_pellets.webp" alt="Dried Pellets" className="card-icon-img" />
             <span className="card-title">Dried Pellets</span>
             <span className="card-measure">Glassy 9%</span>
           </div>
@@ -250,20 +250,20 @@ export const Mission5Frying = () => {
                   setHoldingItem({
                     id: 'skimmer',
                     name: 'Spider Skimmer',
-                    img: '/images/icon_spider_skimmer.png',
+                    img: '/assets/icon_spider_skimmer.webp',
                     actionHint: 'Click wok to scoop crackers',
                   });
                 }
               }
             }}
           >
-            <img src="/images/icon_spider_skimmer.png" alt="Spider Skimmer" className="card-icon-img" />
+            <img src="/assets/icon_spider_skimmer.webp" alt="Spider Skimmer" className="card-icon-img" />
             <span className="card-title">Spider Skimmer</span>
             <span className="card-measure">{fryStep >= 4 ? 'Used' : 'Scoop & Drain'}</span>
           </div>
 
           <div className="drag-card used">
-            <img src="/images/icon_cooking_oil.png" alt="Cooking Oil" className="card-icon-img" />
+            <img src="/assets/icon_cooking_oil.webp" alt="Cooking Oil" className="card-icon-img" />
             <span className="card-title">Cooking Oil</span>
             <span className="card-measure">500ml in Wok</span>
           </div>

@@ -18,6 +18,7 @@ export const InventoryTray = ({
 }) => {
   const { holdingItem, setHoldingItem, isInventoryCollapsed, setIsInventoryCollapsed } = useGame();
 
+
   const handleCardClick = (item) => {
     if (item.isUsed) return;
     if (item.disabled && !item.onClick) return;
@@ -62,7 +63,7 @@ export const InventoryTray = ({
           tabIndex={0}
         >
           <div className="inventory-tab-icon-wrapper">
-            <img src="/assets/icon_inventory_crate.png" alt="Inventory" className="inventory-tab-icon-img" />
+            <img src="/assets/icon_inventory_crate.webp" alt="Inventory" className="inventory-tab-icon-img" />
             <span className="inventory-tab-count-pill">{availableCount}</span>
           </div>
           <div className="inventory-tab-label-stack">
@@ -85,7 +86,7 @@ export const InventoryTray = ({
       <div className="rack-header">
         <div className="rack-title-group">
           <div className="rack-icon-box">
-            <img src="/assets/icon_inventory_crate.png" alt="Inventory" className="rack-icon-img" />
+            <img src="/assets/icon_inventory_crate.webp" alt="Inventory" className="rack-icon-img" />
           </div>
           <div className="rack-titles">
             <span className="rack-title-text">{title}</span>

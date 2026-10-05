@@ -259,7 +259,9 @@
    ========================================================================== */
 
 /* Primary Active Mechanical Push-Button (Capsule shape like machine's button) */
-.btn-processor-pulse {
+.btn-processor-pulse,
+.btn-workstation-action.processor-pulse,
+.processor-pulse {
   background: linear-gradient(180deg, #fb923c 0%, #f97316 40%, #ea580c 75%, #c2410c 100%);
   color: #ffffff;
   border: 2px solid #7c2d12;
@@ -288,7 +290,8 @@
   animation: pulse-puree-btn 1.6s infinite alternate ease-in-out;
 }
 
-.btn-processor-pulse:hover:not(.disabled) {
+.btn-processor-pulse:hover:not(.disabled),
+.btn-workstation-action.processor-pulse:hover:not(:disabled) {
   transform: translateY(-1px);
   box-shadow:
     0 4.5px 0 #7c2d12,
@@ -299,7 +302,9 @@
 }
 
 .btn-processor-pulse:active:not(.disabled),
-.btn-processor-pulse.is-active-puree {
+.btn-processor-pulse.is-active-puree,
+.btn-workstation-action.processor-pulse:active:not(:disabled),
+.btn-workstation-action.processor-pulse.action-active {
   transform: translateY(3px);
   box-shadow:
     0 1px 0 #7c2d12,
@@ -309,16 +314,20 @@
   background: linear-gradient(180deg, #ea580c 0%, #c2410c 60%, #9a3412 100%);
 }
 
-.btn-processor-pulse.is-active-puree {
+.btn-processor-pulse.is-active-puree,
+.btn-workstation-action.processor-pulse.action-active {
   animation: puree-motor-vibrate 0.12s infinite alternate ease-in-out;
 }
 
-.btn-processor-pulse.disabled {
+.btn-processor-pulse.disabled,
+.btn-workstation-action.processor-pulse:disabled,
+.btn-workstation-action.processor-pulse.disabled {
   opacity: 0.9;
   cursor: wait;
 }
 
-.btn-processor-pulse .action-icon {
+.btn-processor-pulse .action-icon,
+.btn-workstation-action.processor-pulse .action-icon {
   font-size: 1.05rem;
   line-height: 1;
   display: flex;
@@ -810,16 +819,9 @@
   transition: none !important;
 }
 
-.dialogue-collapsed .prep-scene .stage-center-zone,
-.game-viewport.dialogue-collapsed .prep-scene .stage-center-zone,
-.prep-scene.dialogue-collapsed .stage-center-zone,
-.inventory-collapsed .prep-scene .stage-center-zone,
-.game-viewport.inventory-collapsed .prep-scene .stage-center-zone,
-.prep-scene.inventory-collapsed .stage-center-zone,
-.dialogue-collapsed.inventory-collapsed .prep-scene .stage-center-zone,
-.game-viewport.dialogue-collapsed.inventory-collapsed .prep-scene .stage-center-zone {
-  padding-left: 32px !important;
-  padding-right: 32px !important;
+.prep-scene .stage-center-zone {
+  padding-left: var(--zone-pad-left, 12px) !important;
+  padding-right: var(--zone-pad-right, 12px) !important;
 }
 
 /* 2. Expanded Stage Content Row */

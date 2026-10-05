@@ -20,15 +20,13 @@
   background: transparent !important;
 }
 
-.dialogue-collapsed .results-scene,
-.inventory-collapsed .results-scene,
-.dialogue-collapsed.inventory-collapsed .results-scene {
-  padding-left: 32px !important;
-  padding-right: 32px !important;
+.results-scene {
+  padding-left: var(--zone-pad-left, 12px) !important;
+  padding-right: var(--zone-pad-right, 12px) !important;
 }
 
 .results-container {
-  width: 95%;
+  width: 100% !important;
   max-width: 1140px;
   margin: 0 auto;
   display: flex;

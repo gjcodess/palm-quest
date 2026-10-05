@@ -10,7 +10,7 @@ const STAGE_SCIENCE_FACTS = [
   {
     step: 1,
     name: 'Washing & Hydrothermal Softening',
-    img: '/assets/card_step_boiling.png',
+    img: '/assets/card_step_boiling.webp',
     fallbackIcon: '🥥',
     foodScience:
       'Hydrothermal softening at 100°C breaks down stubborn cellulosic fibers in coconut palm, solubilizing hemicellulose cell walls for smooth pureeing while thermally denaturing polyphenol oxidase (PPO) enzymes to prevent enzymatic browning.',
@@ -18,7 +18,7 @@ const STAGE_SCIENCE_FACTS = [
   {
     step: 2,
     name: 'Pureeing & Fiber Homogenization',
-    img: '/assets/card_step_grinding.png',
+    img: '/assets/card_step_grinding.webp',
     fallbackIcon: '⚡',
     foodScience:
       'High-shear mechanical grinding ruptures parenchymal cells to homogenize boiled palm fibers into a uniform microscopic slurry, preventing grittiness and ensuring consistent hydration with starch polymers.',
@@ -26,7 +26,7 @@ const STAGE_SCIENCE_FACTS = [
   {
     step: 3,
     name: 'Dough Formulation (1:1 Ratio)',
-    img: '/assets/card_step_mixing.png',
+    img: '/assets/card_step_mixing.webp',
     fallbackIcon: '🥣',
     foodScience:
       'The 1:1 formulation of pureed ubod to Erawan pure rice flour creates an optimal balance of insoluble plant fiber and amylose/amylopectin starch chains, providing the viscoelastic dough matrix required for structural steam expansion.',
@@ -34,7 +34,7 @@ const STAGE_SCIENCE_FACTS = [
   {
     step: 4,
     name: 'Rectangular Molding (50mm × 25mm)',
-    img: '/assets/card_step_molding.png',
+    img: '/assets/card_step_molding.webp',
     fallbackIcon: '🥖',
     foodScience:
       'Uniform dimensional geometry (50mm length × 25mm width × 2mm thickness) establishes predictable thermal conductivity and moisture diffusion paths during steaming and dehydration, preventing blistering or raw ungelatinized cores.',
@@ -42,7 +42,7 @@ const STAGE_SCIENCE_FACTS = [
   {
     step: 5,
     name: 'Starch Steaming (Gelatinization)',
-    img: '/assets/card_step_steaming.png',
+    img: '/assets/card_step_steaming.webp',
     fallbackIcon: '♨️',
     foodScience:
       'Moist atmospheric heat at 100°C for 10 minutes drives water into starch granules until they swell and irreversibly burst, transforming crystalline amylose into an elastic gel network that locks the wafer shape.',
@@ -50,7 +50,7 @@ const STAGE_SCIENCE_FACTS = [
   {
     step: 6,
     name: 'Cabinet Dehydration (Moisture < 10%)',
-    img: '/assets/card_step_dehydration.png',
+    img: '/assets/card_step_dehydration.webp',
     fallbackIcon: '☀️',
     foodScience:
       'Convective hot-air drying at 90°C evaporates free water until moisture drops below the critical 10% threshold, transitioning the gelatinized starch gel into a glassy, brittle solid matrix essential for puffing.',
@@ -58,7 +58,7 @@ const STAGE_SCIENCE_FACTS = [
   {
     step: 7,
     name: 'Flash Deep Frying (high-temperature Puffing)',
-    img: '/assets/card_step_frying.png',
+    img: '/assets/card_step_frying.webp',
     fallbackIcon: '🍳',
     foodScience:
       'Immersion in high-temperature hot oil causes tightly trapped residual bound water to instantaneously vaporize into superheated steam. The resulting explosive vapor pressure inflates the starch matrix ~3x into an airy, crispy honeycomb cracker.',
@@ -66,7 +66,7 @@ const STAGE_SCIENCE_FACTS = [
   {
     step: 8,
     name: 'Airtight Packaging & Quality Seal',
-    img: '/assets/card_step_packaging.png',
+    img: '/assets/card_step_packaging.webp',
     fallbackIcon: '📦',
     foodScience:
       'Nitrogen-flushed, heat-sealed aluminum-laminated Kraft barrier pouches block water vapor, oxygen, and UV light penetration, preventing lipid oxidation (rancidity) and preserving crispness over a 6-month shelf life.',
@@ -171,7 +171,7 @@ export const ResultsScene = () => {
             <div className="results-hero-showcase">
               <div className="results-showcase-item">
                 <img
-                  src="/assets/platter_crackers_cooled.png"
+                  src="/assets/platter_crackers_cooled.webp"
                   alt="Freshly Fried Ubod Crackers"
                   className="results-showcase-img"
                 />
@@ -179,7 +179,7 @@ export const ResultsScene = () => {
               </div>
               <div className="results-showcase-item">
                 <img
-                  src="/assets/pouch_sealed_labeled.png"
+                  src="/assets/pouch_sealed_labeled.webp"
                   alt="Branded Kraft Pouch"
                   className="results-showcase-img"
                 />
@@ -187,7 +187,7 @@ export const ResultsScene = () => {
               </div>
               <div className="results-showcase-item">
                 <img
-                  src="/assets/box_of_packaged_crackers.png"
+                  src="/assets/box_of_packaged_crackers.webp"
                   alt="Retail Master Carton"
                   className="results-showcase-img"
                 />

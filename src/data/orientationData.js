@@ -40,7 +40,7 @@ export const PPE_ITEMS = [
     id: "hairnet",
     name: "Sanitary Hairnet",
     icon: "🧢",
-    img: "/assets/ppe_hairnet.png",
+    img: "/assets/ppe_hairnet.webp",
     role: "Restrains stray hair strands from falling into food products.",
     isCorrect: true,
     critical: true
@@ -49,7 +49,7 @@ export const PPE_ITEMS = [
     id: "apron",
     name: "Clean Lab Gown / Apron",
     icon: "🥼",
-    img: "/assets/ppe_clean_apron.png",
+    img: "/assets/ppe_clean_apron.webp",
     role: "Shields clothing fibers and outdoor dust from contaminating sanitized prep surfaces.",
     isCorrect: true,
     critical: true
@@ -58,7 +58,7 @@ export const PPE_ITEMS = [
     id: "distractor_scarf",
     name: "Knitted Wool Scarf",
     icon: "🧣",
-    img: "/assets/distractor_scarf.png",
+    img: "/assets/distractor_scarf.webp",
     role: "Loose knitted cloth that traps dust, sheds loose fibers into food, and poses a burn risk near stoves.",
     isCorrect: false,
     reason: "Teacher mia: You selected the wrong attire! Knitted scarf shouldn’t be use. It can cause hazard like near burns.",
@@ -68,7 +68,7 @@ export const PPE_ITEMS = [
     id: "mask",
     name: "Clear Spit Guard / Mask",
     icon: "😷",
-    img: "/assets/ppe_spit_guard.png",
+    img: "/assets/ppe_spit_guard.webp",
     role: "Prevents oral droplet dispersal while speaking near open food vessels.",
     isCorrect: true,
     critical: true
@@ -77,7 +77,7 @@ export const PPE_ITEMS = [
     id: "distractor_goggles",
     name: "Heavy Chemical Goggles",
     icon: "🥽",
-    img: "/assets/distractor_goggles.png",
+    img: "/assets/distractor_goggles.webp",
     role: "Enclosed chemical lab goggles that fog up from hot cooking steam and obstruct culinary visibility.",
     isCorrect: false,
     reason: "Teacher mia: You selected the wrong attire! Heavy goggles shouldn’t wear because you won’t be able to see clearly.",
@@ -87,7 +87,7 @@ export const PPE_ITEMS = [
     id: "gloves",
     name: "Food-Grade Vinyl Gloves",
     icon: "🧤",
-    img: "/assets/ppe_food_gloves.png",
+    img: "/assets/ppe_food_gloves.webp",
     role: "Maintains sterile contact with ingredients and ready-to-eat crackers.",
     isCorrect: true,
     critical: true
@@ -96,7 +96,7 @@ export const PPE_ITEMS = [
     id: "heat_gloves",
     name: "Thermal Heat Mitts",
     icon: "🧤",
-    img: "/assets/ppe_heat_gloves.png",
+    img: "/assets/ppe_heat_gloves.webp",
     role: "Protects hands from burns during high-heat steaming and deep frying operations.",
     isCorrect: true,
     critical: true
@@ -105,7 +105,7 @@ export const PPE_ITEMS = [
     id: "shoes",
     name: "Non-Slip Safety Shoes",
     icon: "👟",
-    img: "/assets/ppe_shoes.png",
+    img: "/assets/ppe_shoes.webp",
     role: "Closed-toe non-skid footwear prevents slips and protects from hot liquid spills.",
     isCorrect: true,
     critical: true
@@ -128,7 +128,7 @@ export const HANDWASHING_STEPS = [
     action: "Apply Antibacterial Soap",
     desc: "Dispense enough antibacterial soap to cover all hand and palm surfaces.",
     icon: "🧼",
-    img: "/assets/sanitation_handwash_soap.png",
+    img: "/assets/sanitation_handwash_soap.webp",
     isCorrect: true,
     reason: "Soap surfactants emulsify surface oils and trap food residues and microbes."
   },
@@ -201,7 +201,7 @@ export const HANDWASHING_STEPS = [
     action: "Dry with Single-Use Towel",
     desc: "Pat dry thoroughly with clean disposable paper towel; use towel to shut off faucet.",
     icon: "🧻",
-    img: "/assets/sanitation_spray_cloth.png",
+    img: "/assets/sanitation_spray_cloth.webp",
     isCorrect: true,
     reason: "Single-use paper towels dry hands without recontamination and prevent bare-hand faucet contact."
   }

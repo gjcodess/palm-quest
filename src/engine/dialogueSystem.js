@@ -19,10 +19,10 @@ class DialogueSystem {
     this.currentCallback = null;
 
     this.avatars = {
-      neutral: '/images/teacher_mia_neutral.png',
-      happy: '/images/teacher_mia_happy.png',
-      thinking: '/images/teacher_mia_thinking.png',
-      sad: '/images/teacher_mia_sad.png'
+      neutral: '/assets/teacher_mia_neutral.webp',
+      happy: '/assets/teacher_mia_happy.webp',
+      thinking: '/assets/teacher_mia_thinking.webp',
+      sad: '/assets/teacher_mia_sad.webp'
     };
   }
 

@@ -14,11 +14,9 @@
   justify-content: center;
 }
 
-.dialogue-collapsed .sequencing-scene,
-.inventory-collapsed .sequencing-scene,
-.dialogue-collapsed.inventory-collapsed .sequencing-scene {
-  padding-left: 32px !important;
-  padding-right: 32px !important;
+.sequencing-scene {
+  padding-left: var(--zone-pad-left, 12px) !important;
+  padding-right: var(--zone-pad-right, 12px) !important;
 }
 
 .sequencing-page-container {

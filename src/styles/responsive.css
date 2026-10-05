@@ -39,7 +39,7 @@
     z-index: 9999999;
     background: 
       radial-gradient(circle at 50% 20%, rgba(68, 42, 24, 0.98) 0%, rgba(38, 20, 10, 0.99) 60%, rgba(18, 9, 4, 1) 100%),
-      url('/assets/bg_evaluation_hall.jpg') center / cover no-repeat;
+      url('/assets/bg_evaluation_hall.webp') center / cover no-repeat;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     flex-direction: column;
@@ -451,12 +451,9 @@
     padding: 6px 12px 6px 8px !important;
   }
 
-  .game-viewport.dialogue-collapsed .stage-center-zone,
-  .dialogue-collapsed .stage-center-zone,
-  .game-viewport.inventory-collapsed .stage-center-zone,
-  .inventory-collapsed .stage-center-zone {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+  .stage-center-zone {
+    padding-left: var(--zone-pad-left, 18px) !important;
+    padding-right: var(--zone-pad-right, 18px) !important;
   }
 
   .active-vessel-card.orientation-card {
@@ -471,25 +468,25 @@
   .workstation-header,
   .prep-scene .workstation-header,
   .washing-workstation .workstation-header {
-    max-width: 520px !important;
-    width: 100% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    max-width: 520px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .stage-single-workstation,
   .stage-content-row.stage-single-workstation,
   .prep-scene .stage-single-workstation,
   .prep-scene .stage-content-row.stage-single-workstation {
-    max-width: 520px !important;
+    max-width: 520px;
   }
 
   .stage-single-workstation .station-center-card,
   .stage-content-row.stage-single-workstation > .station-center-card,
   .prep-scene .stage-single-workstation .station-center-card,
   .prep-scene .stage-content-row.stage-single-workstation > .station-center-card {
-    max-width: 520px !important;
-    width: 100% !important;
+    max-width: 520px;
+    width: 100%;
   }
 }
 
@@ -670,4 +667,1256 @@
   .dropzone {
     min-height: 140px;
   }
+}
+
+/* Phone browser fallback. The installed Android app requests landscape itself. */
+.screen-restriction-overlay { display: none !important; }
+@media screen and (max-width: 600px) and (orientation: portrait) {
+  .screen-restriction-overlay {
+    display: grid !important;
+    position: fixed;
+    inset: 0;
+    z-index: 9999999;
+    place-items: center;
+    padding: 24px;
+    background: linear-gradient(135deg, #173e2c, #2b180a);
+  }
+  .restriction-modal-card {
+    width: min(100%, 350px);
+    padding: 28px 24px;
+    text-align: center;
+    background: #fffaf0;
+    border: 3px solid #e5ba64;
+    border-radius: 22px;
+    box-shadow: 0 18px 48px #0006;
+  }
+  .restriction-rotate-icon { display: block; font-size: 4rem; line-height: 1; color: #15803d; }
+  .restriction-modal-card h2 { margin: 12px 0 8px; font: 800 1.5rem var(--font-heading); color: #2b180a; }
+  .restriction-modal-card p { margin: 0; line-height: 1.45; color: #5c4228; }
+}
+
+/* Compact landscape layout: the activity gets the full width; guide and tray
+   open over it as scrollable drawers. This includes 800 x 360 phones. */
+@media screen and (max-width: 950px) and (orientation: landscape) {
+  .game-app { height: 100dvh; width: 100%; }
+  .game-viewport, .viewport-layout-grid, .viewport-center-column { min-width: 0; }
+  .viewport-center-column, .viewport-left-column { flex: 1 1 100% !important; width: 100% !important; max-width: 100% !important; }
+  .viewport-mentor-column, .viewport-right-column,
+  .viewport-mentor-column.expanded, .viewport-right-column.expanded {
+    position: absolute !important;
+    inset: 0 auto 0 0;
+    flex: 0 0 0 !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    z-index: 90;
+  }
+  .viewport-right-column, .viewport-right-column.expanded { inset: 0 0 0 auto; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded {
+    position: fixed !important;
+    top: 44px !important;
+    bottom: 7px !important;
+    left: 6px !important;
+    width: min(310px, calc(100vw - 54px)) !important;
+    max-width: min(310px, calc(100vw - 54px)) !important;
+    max-height: none !important;
+    height: auto !important;
+    margin: 0 !important;
+    overflow-y: auto !important;
+  }
+  .viewport-right-column .right-inventory-rack.expanded {
+    position: fixed !important;
+    top: 44px !important;
+    bottom: 7px !important;
+    right: 6px !important;
+    width: min(310px, calc(100vw - 54px)) !important;
+    max-width: min(310px, calc(100vw - 54px)) !important;
+    max-height: none !important;
+    height: auto !important;
+    margin: 0 !important;
+    overflow-y: auto !important;
+  }
+  .left-mentor-sidebar.collapsed, .viewport-mentor-column .left-mentor-sidebar.collapsed,
+  .right-inventory-rack.collapsed {
+    width: 42px !important;
+    height: 112px !important;
+    padding: 6px 3px !important;
+  }
+  .mentor-tab-name, .mentor-tab-sub, .inventory-tab-label-stack { font-size: .62rem !important; }
+  .stage-center-zone,
+  .game-viewport.dialogue-collapsed .stage-center-zone,
+  .game-viewport.inventory-collapsed .stage-center-zone {
+    justify-content: flex-start !important;
+    padding-top: 42px !important;
+    padding-bottom: 52px !important;
+    padding-left: var(--zone-pad-left, 46px) !important;
+    padding-right: var(--zone-pad-right, 46px) !important;
+    overflow-y: auto !important;
+  }
+  .stage-content-row { width: 100% !important; max-width: 620px !important; }
+  .workstation-viewport, .washing-viewport, .molding-qc-viewport,
+  .steaming-qc-viewport, .qc-viewport, .frying-qc-viewport,
+  .packaging-qc-viewport, .dehydration-qc-viewport, .dropzone {
+    height: 190px !important;
+    min-height: 180px !important;
+    max-height: 220px !important;
+  }
+  .container-state-img, .sink-preview-img, .workstation-img, .equipment-img {
+    height: 165px !important;
+    max-height: 180px !important;
+  }
+  .stage-next-action-wrapper { position: fixed; right: max(52px, calc(42px + env(safe-area-inset-right, 0px))); bottom: max(16px, calc(8px + env(safe-area-inset-bottom, 0px))); }
+  .game-hud { height: 42px !important; min-height: 42px; padding: 0 8px !important; }
+  .hud-brand-title { font-size: 1.15rem !important; }
+  .hud-right { gap: 4px !important; }
+  .hud-btn { padding: 4px 6px !important; }
+  .title-scene { padding: 5px 12px 16px; align-items: flex-start; }
+  .title-container { max-width: 720px; }
+  .title-card { padding: 4px 8px !important; }
+  .title-badge { margin-bottom: 2px !important; font-size: .62rem !important; }
+  .game-logo { font-size: clamp(2rem, 6vw, 3rem) !important; margin-bottom: 2px !important; }
+  .game-subtitle { font-size: .8rem !important; margin-bottom: 4px !important; }
+  .title-divider { margin: 0 auto 6px !important; }
+  .title-hero-grid { padding: 6px 10px !important; margin-bottom: 8px !important; gap: 8px !important; }
+  .hero-avatar, .hero-snack { width: 42px !important; height: 42px !important; }
+  .hero-speech-bubble { padding: 6px 10px !important; }
+  .hero-speech-bubble p { font-size: .68rem !important; line-height: 1.2 !important; }
+  .start-form { margin-bottom: 8px !important; }
+  .input-group { margin-bottom: 6px !important; }
+  .input-group label { margin-bottom: 2px !important; font-size: .7rem !important; }
+  .input-group input { padding: 7px 10px !important; font-size: .85rem !important; }
+  .btn-start { padding: 7px 12px !important; font-size: .85rem !important; }
+  .title-quick-links { gap: 5px !important; }
+  .link-btn { padding: 5px 8px !important; font-size: .68rem !important; }
+  .checkpoint-modal-backdrop { padding: 5px 48px; }
+  .checkpoint-modal-card { max-width: 620px; max-height: calc(100dvh - 10px); border-radius: 15px; }
+  .checkpoint-header { padding: 6px 12px; gap: 8px; }
+  .teacher-badge-text { font-size: .74rem; }
+  .checkpoint-stage-tag { font-size: .64rem; padding: 2px 6px; }
+  .checkpoint-body { min-height: 0; overflow-y: auto; padding: 8px 12px; gap: 6px; }
+  .checkpoint-question-title { font-size: .9rem; }
+  .checkpoint-choices-stack { gap: 5px; }
+  .checkpoint-choice-btn { padding: 5px 8px; border-radius: 9px; gap: 7px; }
+  .choice-letter-badge { width: 24px; height: 24px; font-size: .72rem; }
+  .choice-text { font-size: .76rem; }
+  .checkpoint-feedback-box { padding: 7px 9px; }
+  .checkpoint-footer { padding: 5px 12px; }
+  .btn-checkpoint-proceed { padding: 5px 12px; font-size: .8rem; }
+}
+
+@media screen and (max-width: 700px) and (orientation: landscape) {
+  /* Mobile landscape honors dynamic clearance */
+  .stage-center-zone { padding-left: var(--zone-pad-left, 42px) !important; padding-right: var(--zone-pad-right, 42px) !important; }
+  .hero-snack-box { display: none; }
+  .title-hero-grid { grid-template-columns: auto 1fr; }
+}
+
+/* Phone landscape: keep the workstation and both open drawers in the same row. */
+@media screen and (max-width: 950px) and (orientation: landscape),
+       screen and (max-width: 1200px) and (orientation: landscape) and (pointer: coarse),
+       screen and (max-height: 520px) and (orientation: landscape) {
+  .game-hud {
+    flex: 0 0 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    overflow: visible !important;
+    z-index: 120;
+  }
+  .hud-left, .hud-stepper, .game-hud .mission-pill { display: none !important; }
+  .game-hud .hud-right {
+    position: fixed;
+    top: max(7px, env(safe-area-inset-top));
+    right: max(8px, env(safe-area-inset-right));
+    z-index: 120;
+  }
+  .game-app.inventory-open .game-hud .hud-right {
+    right: max(8px, env(safe-area-inset-right)) !important;
+  }
+  .game-hud .hud-btn-menu {
+    width: 42px;
+    height: 38px;
+    padding: 0 !important;
+    border-radius: 12px;
+    justify-content: center;
+    box-shadow: 0 3px 10px #0004;
+  }
+  .game-hud .hud-btn-menu .label { display: none !important; }
+  .game-hud .hud-btn-menu .icon { font-size: 1.15rem; }
+  .hud-menu-panel {
+    top: max(7px, env(safe-area-inset-top)) !important;
+    right: max(7px, env(safe-area-inset-right)) !important;
+    width: min(560px, calc(100vw - 16px)) !important;
+    max-width: calc(100vw - 16px) !important;
+    max-height: calc(100dvh - 14px);
+    border-width: 2px;
+    border-radius: 16px;
+  }
+  .hud-menu-header { padding: 8px 12px 0; }
+  .hud-menu-header-content { gap: 3px; }
+  .hud-menu-top-badge { font-size: .58rem; padding: 1px 7px; }
+  .hud-menu-logo { font-size: 1.16rem; }
+  .hud-menu-close-btn { width: 26px; height: 26px; }
+  .hud-menu-stage-strip { margin-top: 0; padding: 2px 7px; gap: 5px; }
+  .stage-strip-badge, .stage-strip-title { font-size: .62rem; }
+  .hud-menu-divider { height: 2px; margin-top: 6px; }
+  .hud-menu-body { min-height: 0; max-height: none; gap: 7px; padding: 7px 10px 10px; }
+  .hud-menu-progress { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 3px; }
+  .hud-menu-progress-step {
+    min-width: 0;
+    height: 25px;
+    border: 1px solid #d5c3ab;
+    border-radius: 6px;
+    background: #fff;
+    color: #54361e;
+    font: 700 .57rem var(--font-heading);
+    cursor: pointer;
+    padding: 0 1px;
+  }
+  .hud-menu-progress-step.active { background: #15803d; border-color: #116b34; color: #fff; }
+  .hud-menu-progress-step.completed:not(.active) { background: #e1f7e9; border-color: #5dbf80; }
+  .hud-menu-progress-step:disabled { opacity: .46; cursor: default; }
+  .hud-menu-hero-card { display: none; }
+  .hud-menu-grid-columns { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 7px; }
+  .hud-menu-col { min-width: 0; gap: 6px; }
+  .hud-menu-section-title { font-size: .61rem; }
+  .hud-menu-item-btn, .hud-menu-row.sound-setting-card { padding: 5px 7px; gap: 6px; border-radius: 9px; }
+  .menu-btn-icon-box { width: 27px; min-width: 27px; height: 27px; font-size: .95rem; border-radius: 7px; }
+  .menu-item-text strong, .zoom-title-stack strong { font-size: .7rem; }
+  .menu-item-text small, .zoom-title-stack small { font-size: .58rem; }
+  .hud-menu-zoom-card { padding: 6px 7px; gap: 5px; border-radius: 9px; }
+  .hud-menu-zoom-controls { padding: 2px 5px; }
+  .menu-switch-btn { padding: 3px 7px; font-size: .65rem; }
+
+  .viewport-layout-grid { align-items: stretch; }
+  .viewport-center-column, .viewport-left-column,
+  .game-viewport.inventory-collapsed .viewport-center-column,
+  .game-viewport.inventory-collapsed .viewport-left-column {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+  .viewport-mentor-column.expanded, .viewport-right-column.expanded {
+    position: relative !important;
+    inset: auto !important;
+    flex: 0 0 clamp(174px, 25vw, 210px) !important;
+    width: clamp(174px, 25vw, 210px) !important;
+    min-width: 0 !important;
+    max-width: clamp(174px, 25vw, 210px) !important;
+    padding: 5px 3px !important;
+    overflow: hidden !important;
+  }
+  .viewport-mentor-column.collapsed, .viewport-right-column.collapsed {
+    position: relative !important;
+    inset: auto !important;
+    flex: 0 0 0 !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    padding: 0 !important;
+  }
+  .viewport-mentor-column .left-mentor-sidebar.expanded,
+  .viewport-right-column .right-inventory-rack.expanded {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: calc(100% - 4px) !important;
+    max-height: calc(100% - 4px) !important;
+    margin: 0 !important;
+    padding: 7px 6px !important;
+    gap: 5px !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+  }
+  .viewport-right-column .right-inventory-rack.expanded { border-width: 2px !important; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded { border-width: 2px !important; }
+  .rack-title-text, .mentor-title-text { font-size: .75rem !important; }
+  .rack-hint-bar, .mentor-hint-bar { font-size: .6rem !important; padding: 3px 5px !important; }
+  .inventory-vertical-stack { gap: 5px !important; padding: 4px 2px !important; }
+  .right-inventory-rack .drag-card.horizontal-item-card { min-height: 54px !important; padding: 4px 5px !important; gap: 5px !important; }
+  .card-icon-col { width: 30px !important; min-width: 30px !important; height: 30px !important; }
+  .card-icon-col .card-icon-img { width: 25px !important; height: 25px !important; }
+  .card-info-col .card-title { font-size: .68rem !important; }
+  .card-info-col .card-measure, .card-desc-text { font-size: .56rem !important; }
+
+  .stage-center-zone,
+  .game-viewport.dialogue-collapsed .stage-center-zone,
+  .game-viewport.inventory-collapsed .stage-center-zone,
+  .prep-scene .stage-center-zone {
+    padding-top: 8px !important;
+    padding-bottom: max(16px, calc(8px + env(safe-area-inset-bottom, 0px))) !important;
+    padding-left: var(--zone-pad-left, 42px) !important;
+    padding-right: var(--zone-pad-right, 42px) !important;
+    min-width: 0;
+    justify-content: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .btn-recipe-guide-trigger { display: none !important; }
+  .stage-content-row,
+  .stage-single-workstation,
+  .stage-content-row.stage-single-workstation,
+  .prep-scene .stage-single-workstation,
+  .prep-scene .stage-content-row.stage-single-workstation {
+    margin: auto auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+  .station-center-card,
+  .active-vessel-card:not(.orientation-card),
+  .prep-scene .stage-single-workstation .station-center-card,
+  .prep-scene .stage-content-row.stage-single-workstation > .station-center-card {
+    min-width: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  /* Workstation Header Capsules */
+  .workstation-header,
+  .prep-scene .workstation-header,
+  .washing-workstation .workstation-header {
+    padding: 4px 14px !important;
+    margin: 0 0 6px 0 !important;
+    gap: 8px !important;
+    border-radius: 999px !important;
+    box-shadow: 0 2.5px 0 #bda88e, 0 6px 14px rgba(78, 52, 28, 0.08) !important;
+  }
+  .workstation-titles,
+  .prep-scene .workstation-titles {
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    gap: 1px !important;
+  }
+  .workstation-name,
+  .prep-scene .workstation-name {
+    font-size: .84rem !important;
+    line-height: 1.2 !important;
+  }
+  .workstation-sub,
+  .prep-scene .workstation-sub {
+    font-size: .63rem !important;
+    line-height: 1.15 !important;
+  }
+  .workstation-step-badge,
+  .prep-scene .workstation-step-badge {
+    font-size: .62rem !important;
+    padding: 2px 8px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    max-width: 140px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .workstation-step-badge,
+  .prep-scene .workstation-step-badge {
+    display: none !important;
+  }
+
+  /* Workstation Container Flexibility */
+  .multi-state-workstation,
+  .prep-scene .multi-state-workstation,
+  .station-center-card .multi-state-workstation,
+  .washing-workstation {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    flex: 0 1 auto !important;
+    width: 100% !important;
+  }
+
+  /* =========================================================================
+     STAGES 1-8 WORKSTATIONS ONLY (CONSISTENT OPEN-SIDEBAR MAX WIDTH)
+     DOES NOT AFFECT NON-STAGE SCREENS (ORIENTATION, SEQUENCING, RESULTS, EVALUATION)
+     ========================================================================= */
+
+  /* STATE 1: BOTH SIDEBARS COLLAPSED (STAGES 1-8 ONLY) */
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .stage-single-workstation .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .stage-content-row.stage-single-workstation > .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .workstation-header,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .washing-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .multi-state-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .active-vessel-card:not(.orientation-card) {
+    max-width: min(100%, calc(100vw - (2 * clamp(174px, 25vw, 210px)) - 20px)) !important;
+    width: 100% !important;
+  }
+
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .workstation-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .molding-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steaming-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .frying-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .packaging-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .dehydration-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .dropzone,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .workstation-viewport {
+    height: clamp(165px, 46dvh, 215px) !important;
+    min-height: 155px !important;
+    max-height: 220px !important;
+    padding: 0 !important;
+  }
+
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .workstation-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .equipment-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .container-asset-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .prep-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steaming-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steamer-step-0 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steamer-step-1 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steamer-step-2 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steamer-step-3 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steamer-step-4 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steamer-step-5 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-collapsed .steamer-step-6 .container-state-img {
+    height: clamp(155px, 43dvh, 205px) !important;
+    max-height: 210px !important;
+    width: auto !important;
+    max-width: 96% !important;
+    transform: none !important;
+    object-fit: contain !important;
+  }
+
+  /* STATE 2: ONE SIDEBAR EXPANDED, ONE COLLAPSED (STAGES 1-8 ONLY) */
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .stage-single-workstation .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .stage-single-workstation .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .stage-content-row.stage-single-workstation > .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .stage-content-row.stage-single-workstation > .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .workstation-header,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .workstation-header,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .washing-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .washing-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .multi-state-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .multi-state-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .active-vessel-card:not(.orientation-card),
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .active-vessel-card:not(.orientation-card) {
+    max-width: min(100%, calc(100vw - (2 * clamp(174px, 25vw, 210px)) - 20px)) !important;
+    width: 100% !important;
+  }
+
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .workstation-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .workstation-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .molding-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .molding-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steaming-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steaming-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .frying-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .frying-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .packaging-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .packaging-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .dehydration-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .dehydration-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .dropzone,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .dropzone,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .workstation-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .workstation-viewport {
+    height: clamp(165px, 46dvh, 215px) !important;
+    min-height: 155px !important;
+    max-height: 220px !important;
+    padding: 0 !important;
+  }
+
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .workstation-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .workstation-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .equipment-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .equipment-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .container-asset-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .container-asset-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .prep-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .prep-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steaming-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steaming-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steamer-step-0 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steamer-step-0 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steamer-step-1 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steamer-step-1 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steamer-step-2 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steamer-step-2 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steamer-step-3 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steamer-step-3 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steamer-step-4 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steamer-step-4 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steamer-step-5 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steamer-step-5 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-collapsed.inventory-expanded .steamer-step-6 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-collapsed .steamer-step-6 .container-state-img {
+    height: clamp(155px, 43dvh, 205px) !important;
+    max-height: 210px !important;
+    width: auto !important;
+    max-width: 96% !important;
+    transform: none !important;
+    object-fit: contain !important;
+  }
+
+  /* STATE 3: BOTH SIDEBARS EXPANDED (STAGES 1-8 ONLY) */
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .stage-single-workstation,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .station-center-card,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .stage-single-workstation,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .stage-content-row.stage-single-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .stage-single-workstation .station-center-card,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .stage-single-workstation .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .stage-content-row.stage-single-workstation > .station-center-card,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .stage-content-row.stage-single-workstation > .station-center-card,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .workstation-header,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .workstation-header,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .washing-workstation,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .washing-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .multi-state-workstation,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .multi-state-workstation,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .active-vessel-card:not(.orientation-card),
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .active-vessel-card:not(.orientation-card) {
+    max-width: min(100%, calc(100vw - (2 * clamp(174px, 25vw, 210px)) - 20px)) !important;
+    width: 100% !important;
+  }
+
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .workstation-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .workstation-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .washing-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .molding-qc-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .molding-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steaming-qc-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steaming-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .qc-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .frying-qc-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .frying-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .packaging-qc-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .packaging-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .dehydration-qc-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .dehydration-qc-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .dropzone,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .dropzone,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .washing-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .washing-viewport,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .workstation-viewport,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .workstation-viewport {
+    height: clamp(165px, 46dvh, 215px) !important;
+    min-height: 155px !important;
+    max-height: 220px !important;
+    padding: 0 !important;
+  }
+
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .sink-preview-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .workstation-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .workstation-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .equipment-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .equipment-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .container-asset-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .container-asset-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .sink-preview-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .sink-preview-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .prep-scene .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .prep-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steaming-scene .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steaming-scene .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steamer-step-0 .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-0 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steamer-step-1 .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-1 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steamer-step-2 .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-2 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steamer-step-3 .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-3 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steamer-step-4 .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-4 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steamer-step-5 .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-5 .container-state-img,
+  .game-viewport[class*="scene-mission"].dialogue-expanded.inventory-expanded .steamer-step-6 .container-state-img,
+  .game-viewport[class*="scene-mission"]:not(.dialogue-collapsed):not(.inventory-collapsed) .steamer-step-6 .container-state-img {
+    height: clamp(155px, 43dvh, 205px) !important;
+    max-height: 210px !important;
+    width: auto !important;
+    max-width: 96% !important;
+    transform: none !important;
+    object-fit: contain !important;
+  }
+
+  /* Fallback Base for Stages 1-8 Workstations Only */
+  .game-viewport[class*="scene-mission"] .workstation-viewport,
+  .game-viewport[class*="scene-mission"] .washing-viewport,
+  .game-viewport[class*="scene-mission"] .molding-qc-viewport,
+  .game-viewport[class*="scene-mission"] .steaming-qc-viewport,
+  .game-viewport[class*="scene-mission"] .qc-viewport,
+  .game-viewport[class*="scene-mission"] .frying-qc-viewport,
+  .game-viewport[class*="scene-mission"] .packaging-qc-viewport,
+  .game-viewport[class*="scene-mission"] .dehydration-qc-viewport,
+  .game-viewport[class*="scene-mission"] .dropzone,
+  .game-viewport[class*="scene-mission"] .prep-scene .washing-viewport,
+  .game-viewport[class*="scene-mission"] .prep-scene .workstation-viewport {
+    height: clamp(165px, 46dvh, 215px) !important;
+    min-height: 155px !important;
+    max-height: 220px !important;
+    padding: 0 !important;
+  }
+  .game-viewport[class*="scene-mission"] .container-state-img,
+  .game-viewport[class*="scene-mission"] .sink-preview-img,
+  .game-viewport[class*="scene-mission"] .workstation-img,
+  .game-viewport[class*="scene-mission"] .equipment-img,
+  .game-viewport[class*="scene-mission"] .container-asset-img {
+    height: clamp(155px, 43dvh, 205px) !important;
+    max-height: 210px !important;
+    width: auto !important;
+    max-width: 96% !important;
+    transform: none !important;
+    object-fit: contain !important;
+  }
+
+  /* =========================================================================
+     NON-STAGE SCREENS (ORIENTATION, SEQUENCING, RESULTS, EVALUATION):
+     EXPLICITLY PRESERVE WIDE / SPACIOUS LAYOUT
+     ========================================================================= */
+  .orientation-scene .stage-center-zone,
+  .game-viewport.scene-orientation .stage-center-zone {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .orientation-scene .active-vessel-card,
+  .game-viewport.scene-orientation .active-vessel-card,
+  .active-vessel-card.orientation-card,
+  .orientation-card {
+    max-width: min(96vw, 1040px) !important;
+    width: 100% !important;
+  }
+
+  .orientation-cards-grid,
+  .ppe-grid {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .game-viewport.scene-sequencing .sequencing-scene,
+  .game-viewport.scene-sequencing .sequencing-page-container,
+  .game-viewport.scene-results .results-scene,
+  .game-viewport.scene-results .results-page-container,
+  .game-viewport.scene-evaluation .eval-scene-body,
+  .game-viewport.scene-evaluation .evaluation-page-container {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* Hide floating duplicate sink status pill to eliminate console collisions */
+  .sink-status-pill {
+    display: none !important;
+  }
+  .sink-drain-guidance-pill,
+  .sink-cooling-guidance-pill,
+  .dropzone-guide-pill,
+  .spatula-scrape-guide,
+  .lid-interlock-guide {
+    font-size: .62rem !important;
+    padding: 3px 10px !important;
+    top: 6px !important;
+    right: 8px !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: auto !important;
+    max-width: max-content !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 12 !important;
+  }
+  .spatula-wiping-anim,
+  .mold-leveling-anim {
+    width: 58px !important;
+    height: 58px !important;
+  }
+
+  /* Tactile Rotary Consoles & Appliance Aprons on Mobile */
+  .faucet-knob-console,
+  .stove-burner-console,
+  .dehydrator-appliance-console,
+  .prep-scene .faucet-knob-console,
+  .prep-scene .stove-burner-console {
+    min-height: 48px !important;
+    max-height: 58px !important;
+    padding: 4px 12px !important;
+    border-radius: 14px !important;
+    gap: 8px !important;
+    margin-top: 4px !important;
+    border-width: 2px !important;
+    border-bottom-width: 3.5px !important;
+    box-shadow: 0 2px 0 #bda88e, 0 4px 10px rgba(78, 52, 28, 0.08) !important;
+  }
+  .knob-assembly,
+  .faucet-knob-assembly,
+  .dehydrator-dial-assembly {
+    width: 36px !important;
+    height: 36px !important;
+    flex-shrink: 0 !important;
+  }
+  .burner-panel-text,
+  .faucet-panel-text,
+  .dehydrator-panel-text {
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    gap: 1px !important;
+    overflow: hidden !important;
+  }
+  .burner-badge-row {
+    gap: 5px !important;
+  }
+  .burner-led {
+    width: 8px !important;
+    height: 8px !important;
+  }
+  .burner-mode-title,
+  .faucet-title,
+  .dehydrator-mode-title {
+    font-size: .72rem !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .faucet-action-hint,
+  .burner-sub-row span,
+  .dehydrator-action-hint {
+    font-size: .58rem !important;
+    line-height: 1.15 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+  }
+
+  /* Standard Workstation Footers & Action Buttons */
+  .workstation-footer,
+  .prep-scene .workstation-footer {
+    padding: 0 !important;
+    gap: 4px !important;
+    margin-top: 4px !important;
+  }
+  .workstation-footer:not(.has-custom-footer) {
+    padding: 3px 10px !important;
+    gap: 6px !important;
+    min-height: 34px !important;
+    max-height: 38px !important;
+    border-radius: 12px !important;
+    align-items: center !important;
+  }
+  .workstation-status {
+    font-size: .60rem !important;
+    gap: 6px !important;
+  }
+  .workstation-status .status-text,
+  .status-text {
+    font-size: .63rem !important;
+    line-height: 1.2 !important;
+    -webkit-line-clamp: 1 !important;
+    line-clamp: 1 !important;
+  }
+  .status-dot {
+    width: 7px !important;
+    height: 7px !important;
+    border-width: 1.5px !important;
+  }
+  .btn-workstation-action,
+  .btn-primary,
+  .btn-processor-pulse,
+  .btn-workstation-action.processor-pulse {
+    font-size: .62rem !important;
+    padding: 3px 10px !important;
+    border-radius: 999px !important;
+    min-height: 24px !important;
+    max-height: 26px !important;
+    line-height: 1.15 !important;
+    border-width: 1.5px !important;
+    box-shadow: 0 1.5px 0 #78350f, 0 3px 8px rgba(0, 0, 0, 0.18) !important;
+    flex-shrink: 0 !important;
+    letter-spacing: 0.2px !important;
+  }
+  .btn-workstation-action.processor-pulse,
+  .btn-processor-pulse {
+    box-shadow: 0 1.5px 0 #7c2d12, 0 3px 8px rgba(0, 0, 0, 0.18) !important;
+  }
+  .btn-workstation-action .action-icon,
+  .btn-processor-pulse .action-icon {
+    font-size: .68rem !important;
+    margin-right: 2px !important;
+  }
+  .stage-next-action-wrapper {
+    right: max(8px, env(safe-area-inset-right, 0px)) !important;
+    bottom: max(18px, calc(10px + env(safe-area-inset-bottom, 0px))) !important;
+  }
+
+  .orientation-scene .orientation-subnav-container { margin: 5px auto 7px !important; padding: 0 8px !important; }
+  .orientation-subnav { gap: 3px !important; }
+  .subnav-pill { min-width: 0; padding: 4px 5px !important; font-size: .62rem !important; gap: 3px !important; }
+  .subnav-pill-icon { font-size: .75rem !important; }
+  .orientation-scene .stage-center-zone,
+  .game-viewport .orientation-scene .stage-center-zone {
+    padding-top: 3px !important;
+    padding-bottom: max(32px, calc(18px + env(safe-area-inset-bottom, 0px))) !important;
+    padding-left: var(--zone-pad-left, 42px) !important;
+    padding-right: var(--zone-pad-right, 42px) !important;
+  }
+  .orientation-card .vessel-title { font-size: .95rem !important; }
+  .orientation-card .vessel-badge { font-size: .6rem !important; padding: 2px 6px !important; }
+  .orientation-card .vessel-top-badge { font-size: .62rem !important; padding: 2px 7px !important; }
+  .orientation-card .inspection-header-row { padding: 4px 6px !important; gap: 4px; }
+  .orientation-card .item-target-title { font-size: .74rem !important; }
+  .orientation-card .inspection-counter { font-size: .61rem !important; padding: 2px 5px !important; }
+  .orientation-card .inspection-prompt { font-size: .68rem !important; margin: 2px 0 5px !important; }
+  .inspection-card-wrapper .inspection-cards-grid,
+  .inspection-cards-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 5px !important; }
+  .inspection-card-wrapper .inspection-card, .inspection-card { min-width: 0; padding: 5px 3px !important; border-width: 2px; border-radius: 10px !important; }
+  .inspection-card-wrapper .card-img-wrapper, .card-img-wrapper { width: 44px !important; height: 44px !important; margin: 9px 0 2px !important; padding: 3px !important; }
+  .inspection-card-wrapper .card-title, .inspection-card .card-title { font-size: .65rem !important; line-height: 1.1; }
+  .inspection-card-wrapper .card-desc, .inspection-card .card-desc { font-size: .56rem !important; line-height: 1.15; }
+  .card-badge-tag { top: 3px; left: 3px; font-size: .52rem; padding: 1px 4px; }
+  .inspection-card .card-verdict-banner { margin-top: 4px; padding: 2px 3px; font-size: .55rem; }
+  .inspection-actions-row { margin-top: 5px; margin-bottom: 8px !important; padding-bottom: max(24px, calc(16px + env(safe-area-inset-bottom, 0px))) !important; gap: 5px; }
+  .btn-next-inspection, .btn-unselect-inspection { font-size: .67rem; padding: 4px 7px; }
+
+  .floating-item-aura { width: 90px; height: 90px; }
+  .floating-item-graphic-wrap, .floating-item-img { width: 74px; height: 74px; }
+  .floating-item-emoji { font-size: 3rem; }
+  .floating-item-tooltip { top: 40px; padding: 3px 7px; border-radius: 6px; }
+  .floating-item-tooltip .tooltip-name { font-size: .65rem; }
+  .floating-item-tooltip .tooltip-hint { font-size: .54rem; }
+
+  /* Sequencing Scene Compact Mobile Landscape */
+  .sequencing-scene {
+    padding: 6px 12px 24px 12px !important;
+  }
+  .sequencing-page-container {
+    gap: 8px !important;
+  }
+  .sequencing-hero-header {
+    padding: 8px 12px !important;
+    border-radius: 12px !important;
+  }
+  .hero-exam-badge {
+    padding: 2px 8px !important;
+    font-size: .56rem !important;
+  }
+  .hero-exam-title {
+    font-size: .92rem !important;
+    margin: 2px 0 !important;
+  }
+  .hero-exam-desc {
+    font-size: .64rem !important;
+    line-height: 1.25 !important;
+  }
+  .sequencing-activity-card {
+    padding: 8px 10px !important;
+    border-radius: 12px !important;
+  }
+  .sequencing-slots-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+  .sequencing-card {
+    padding: 4px !important;
+    border-radius: 8px !important;
+  }
+  .seq-card-img-wrapper .seq-card-img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .seq-card-title {
+    font-size: .62rem !important;
+    line-height: 1.15 !important;
+    min-height: auto !important;
+  }
+
+  /* ==========================================================================
+     LOADING SCREEN (COMPACT MOBILE LANDSCAPE - NO OVERFLOW OR SCROLLBAR)
+     ========================================================================== */
+  .loading-screen-backdrop {
+    height: 100dvh !important;
+    height: 100vh !important;
+    max-height: 100dvh !important;
+    overflow: hidden !important;
+    padding: max(6px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)) !important;
+  }
+
+  .loading-ambient-particles .particle-card,
+  .loading-ambient-particles .particle-ubod {
+    opacity: 0.22 !important;
+    transform: scale(0.5) !important;
+  }
+
+  .loading-title-container {
+    max-width: min(92vw, 640px) !important;
+    width: 100% !important;
+    margin: auto !important;
+  }
+
+  .loading-card-minimal {
+    padding: 0 4px !important;
+    gap: 0 !important;
+  }
+
+  .loading-title-group {
+    margin-bottom: 2px !important;
+  }
+
+  .loading-game-logo {
+    font-size: clamp(1.8rem, 5.2vw, 2.3rem) !important;
+    margin-bottom: 2px !important;
+    line-height: 1.05 !important;
+  }
+
+  .loading-game-subtitle {
+    font-size: 0.68rem !important;
+    margin-bottom: 4px !important;
+    line-height: 1.2 !important;
+  }
+
+  .loading-title-group .title-divider {
+    height: 2px !important;
+    width: 80px !important;
+    margin: 0 auto 5px !important;
+  }
+
+  .loading-product-feature {
+    width: min(85vw, 360px) !important;
+    height: clamp(50px, 16dvh, 68px) !important;
+    margin: 0 auto 6px !important;
+    gap: 10px !important;
+  }
+
+  .loading-product-feature img {
+    height: 100% !important;
+    width: auto !important;
+    max-height: 68px !important;
+    object-fit: contain !important;
+  }
+
+  .loading-progress-wrapper {
+    max-width: 400px !important;
+    width: 100% !important;
+    margin: 0 auto 6px !important;
+    gap: 3px !important;
+  }
+
+  .loading-progress-header {
+    font-size: 0.68rem !important;
+    padding: 0 4px !important;
+  }
+
+  .progress-label {
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+  }
+
+  .progress-percent {
+    font-size: 0.76rem !important;
+    font-weight: 800 !important;
+  }
+
+  .loading-progress-track {
+    height: 14px !important;
+    border-width: 1.5px !important;
+    padding: 1.5px !important;
+  }
+
+  .loading-footer {
+    min-height: 36px !important;
+  }
+
+  .btn-enter-lab-pulsing {
+    padding: 6px 20px !important;
+    font-size: 0.82rem !important;
+    min-width: 190px !important;
+    max-width: 280px !important;
+    height: 36px !important;
+    border-bottom-width: 3px !important;
+    border-radius: 999px !important;
+  }
+
+  .loading-hint-text {
+    padding: 4px 12px !important;
+    font-size: 0.68rem !important;
+  }
+
+  /* ==========================================================================
+     TITLE SCENE (PROPORTIONATE, CENTERED, BALANCED GAME LANDING LAYOUT)
+     ========================================================================== */
+  .title-scene {
+    height: 100dvh !important;
+    height: 100vh !important;
+    padding: max(8px, env(safe-area-inset-top)) 16px max(14px, env(safe-area-inset-bottom)) 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow-y: auto !important;
+  }
+
+  .title-container {
+    max-width: min(92vw, 540px) !important;
+    width: 100% !important;
+    margin: auto !important;
+  }
+
+  .title-card {
+    padding: 4px 6px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .title-badge {
+    font-size: 0.70rem !important;
+    padding: 3px 14px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .title-card .game-logo {
+    font-size: clamp(2.4rem, 5.8vw, 3rem) !important;
+    margin-bottom: 2px !important;
+    line-height: 1.05 !important;
+  }
+
+  .title-card .game-subtitle {
+    font-size: 0.84rem !important;
+    margin-bottom: 6px !important;
+    line-height: 1.25 !important;
+  }
+
+  .title-card .title-divider {
+    height: 2.5px !important;
+    width: 100px !important;
+    margin: 0 auto 8px !important;
+  }
+
+  .title-hero-grid {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto !important;
+    width: 100% !important;
+    max-width: 520px !important;
+    padding: 8px 14px !important;
+    margin: 0 auto 8px !important;
+    gap: 10px !important;
+    border-radius: 16px !important;
+    border-width: 2px !important;
+    border-bottom-width: 4px !important;
+    align-items: center !important;
+  }
+
+  .hero-avatar-box,
+  .hero-snack-box {
+    gap: 3px !important;
+  }
+
+  .hero-avatar,
+  .hero-snack {
+    width: 48px !important;
+    height: 48px !important;
+    border-width: 2.5px !important;
+  }
+
+  .hero-name,
+  .snack-tag {
+    font-size: 0.66rem !important;
+    white-space: nowrap !important;
+  }
+
+  .hero-speech-bubble {
+    padding: 6px 12px !important;
+    border-radius: 10px !important;
+  }
+
+  .hero-speech-bubble p {
+    font-size: 0.78rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .start-form {
+    width: 100% !important;
+    max-width: 420px !important;
+    margin: 0 auto 6px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .input-group {
+    width: 100% !important;
+    margin-bottom: 6px !important;
+    text-align: center !important;
+  }
+
+  .input-group label {
+    font-size: 0.80rem !important;
+    font-weight: 800 !important;
+    margin-bottom: 3px !important;
+    text-align: center !important;
+  }
+
+  .input-group input {
+    width: 100% !important;
+    height: 38px !important;
+    padding: 6px 14px !important;
+    font-size: 0.92rem !important;
+    border-radius: 12px !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .title-actions {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .btn-start {
+    width: 100% !important;
+    max-width: 360px !important;
+    height: 42px !important;
+    padding: 8px 24px !important;
+    font-size: 1.02rem !important;
+    font-weight: 800 !important;
+    border-radius: 999px !important;
+    border-bottom-width: 4px !important;
+    gap: 8px !important;
+    box-shadow: 0 4px 0 #14532d, 0 8px 20px rgba(22, 101, 52, 0.35) !important;
+  }
+
+  .title-quick-links {
+    width: 100% !important;
+    max-width: 520px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    margin: 6px auto max(10px, env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .link-btn {
+    font-size: 0.68rem !important;
+    padding: 4px 11px !important;
+    border-radius: 999px !important;
+    white-space: nowrap !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+  }
+}
+
+/* Type and feedback sizing for landscape phones, including wider Android WebViews. */
+@media screen and (max-width: 950px) and (orientation: landscape),
+       screen and (max-width: 1200px) and (orientation: landscape) and (pointer: coarse),
+       screen and (max-height: 520px) and (orientation: landscape) {
+  :root { font-size: 14px; }
+
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-identity-row { gap: 5px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-avatar-box { width: 32px; height: 32px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-header-avatar { width: 27px; height: 27px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-name-text { font-size: .76rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-role-text { font-size: .58rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-collapse-btn { width: 24px; height: 24px; font-size: .62rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-stage-badge-strip { padding: 3px 6px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .badge-stage-text { font-size: .62rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-content-viewport { padding: 3px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-tab-panel { gap: 6px; padding: 2px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-speech-card { padding: 7px; gap: 5px; border-radius: 10px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .quote-icon { font-size: .76rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .speech-status-tag { font-size: .58rem; padding: 1px 4px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .speech-replay-btn { font-size: .7rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-speech-body { gap: 4px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-speech-paragraph { font-size: .7rem; line-height: 1.36; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .speech-focus-strip { font-size: .62rem; line-height: 1.25; padding: 4px 5px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .speech-focus-icon { font-size: .7rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-callouts-box { gap: 5px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-callout-item { gap: 5px; padding: 5px 6px; border-radius: 8px; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .callout-icon { font-size: .72rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .callout-title { font-size: .61rem; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .callout-desc { font-size: .61rem; line-height: 1.25; }
+  .viewport-mentor-column .left-mentor-sidebar.expanded .mentor-stage-btn { font-size: .67rem; padding: 5px 7px; }
+
+  .inspection-feedback-box { gap: 6px; padding: 6px 8px; margin-top: 5px !important; font-size: .68rem; line-height: 1.25; border-radius: 9px; }
+  .inspection-feedback-box > div:first-child { font-size: 1rem !important; }
+  .inspection-feedback-box strong { font-size: .72rem !important; margin-bottom: 2px !important; }
+  .inspection-feedback-box p { font-size: .68rem !important; line-height: 1.25 !important; margin-bottom: 3px !important; }
+  .inspection-feedback-box > div:last-child > div { font-size: .64rem !important; padding: 3px 5px !important; }
+  .inspection-actions-row {
+    margin-top: 5px !important;
+    margin-bottom: 8px !important;
+    padding-bottom: max(24px, calc(16px + env(safe-area-inset-bottom, 0px))) !important;
+  }
+  .orientation-btn-row,
+  .hw-sequence-footer {
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+    padding-bottom: max(24px, calc(16px + env(safe-area-inset-bottom, 0px))) !important;
+  }
+  .inspection-actions-row .btn-secondary { padding: 4px 7px !important; font-size: .66rem !important; }
+
+  .feedback-toast {
+    top: max(8px, env(safe-area-inset-top)) !important;
+    z-index: 150 !important;
+    width: min(280px, calc(100vw - 96px));
+    max-width: calc(100vw - 96px);
+    box-sizing: border-box;
+    gap: 6px;
+    padding: 4px 6px;
+    border-width: 1.5px;
+    border-radius: 12px;
+  }
+  .toast-icon-box { width: 24px; height: 24px; border-width: 1.5px; }
+  .toast-icon { font-size: .9rem; }
+  .toast-body { min-width: 0; }
+  .toast-body h4 { font-size: .7rem; letter-spacing: 0; }
+  .toast-body p { font-size: .61rem; line-height: 1.2; margin-top: 1px; }
+  .toast-dismiss-btn { width: 19px; height: 19px; margin-left: auto; font-size: .68rem; }
 }
