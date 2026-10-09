@@ -61,6 +61,7 @@ export const InventoryTray = ({
           title="Click to open Cookware & Ingredients Rack (◀)"
           role="button"
           tabIndex={0}
+          aria-label="Open Inventory Rack"
         >
           <div className="inventory-tab-icon-wrapper">
             <img src="/assets/icon_inventory_crate.webp" alt="Inventory" className="inventory-tab-icon-img" />

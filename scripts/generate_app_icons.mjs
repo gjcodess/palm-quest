@@ -5,11 +5,11 @@ import sharp from 'sharp';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const source = path.join(root, 'public', 'favicon.png');
+const publicDir = path.join(root, 'public');
 const iconDir = path.join(root, 'build-resources');
 const resDir = path.join(root, 'android', 'app', 'src', 'main', 'res');
 
-// ICO accepts PNG image entries. Include small sizes for the taskbar and 256px
-// for Explorer so Windows does not have to shrink one large bitmap everywhere.
+// 1. Windows ICO
 const sizes = [16, 32, 48, 256];
 const images = await Promise.all(sizes.map((size) =>
   sharp(source).resize(size, size).png().toBuffer()
@@ -31,6 +31,7 @@ images.forEach((image, index) => {
 await mkdir(iconDir, { recursive: true });
 await writeFile(path.join(iconDir, 'app.ico'), Buffer.concat([directory, ...images]));
 
+// 2. Android mipmaps
 for (const [density, scale] of Object.entries({ mdpi: 1, hdpi: 1.5, xhdpi: 2, xxhdpi: 3, xxxhdpi: 4 })) {
   const outputDir = path.join(resDir, `mipmap-${density}`);
   const launcherSize = Math.round(48 * scale);
@@ -51,4 +52,17 @@ await writeFile(
   '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">#006B50</color>\n</resources>\n',
 );
 
-console.log('Generated Windows and Android icons from public/favicon.png');
+// 3. PWA Icons (192, 512, maskable, apple-touch)
+await sharp(source).resize(192, 192).png().toFile(path.join(publicDir, 'pwa-192x192.png'));
+await sharp(source).resize(512, 512).png().toFile(path.join(publicDir, 'pwa-512x512.png'));
+await sharp(source).resize(180, 180).png().toFile(path.join(publicDir, 'apple-touch-icon.png'));
+
+const innerArt = await sharp(source).resize(410, 410).png().toBuffer();
+await sharp({
+  create: { width: 512, height: 512, channels: 4, background: '#451a03' },
+})
+  .composite([{ input: innerArt, left: 51, top: 51 }])
+  .png()
+  .toFile(path.join(publicDir, 'maskable-icon-512x512.png'));
+
+console.log('Generated Windows, Android, and PWA icons successfully!');
