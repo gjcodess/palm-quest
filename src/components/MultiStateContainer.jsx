@@ -105,12 +105,17 @@ export const MultiStateContainer = ({
 
   // Tap-to-Place click handler (when holdingItem is active in GameContext)
   const handleContainerClick = () => {
-    if (!holdingItem) return;
+    if (holdingItem) {
+      if (acceptedIds.includes(holdingItem.id)) {
+        handleSuccessfulDrop(holdingItem);
+      } else {
+        triggerErrorFeedback(holdingItem);
+      }
+      return;
+    }
 
-    if (acceptedIds.includes(holdingItem.id)) {
-      handleSuccessfulDrop(holdingItem);
-    } else {
-      triggerErrorFeedback(holdingItem);
+    if (interactiveAction && typeof interactiveAction.onClick === 'function' && !interactiveAction.disabled && !interactiveAction.isLocked) {
+      interactiveAction.onClick();
     }
   };
 

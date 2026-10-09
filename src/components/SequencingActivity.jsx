@@ -7,56 +7,56 @@ const CORRECT_ORDER = [
     id: 'boiling',
     stepNum: 1,
     title: 'Washing & Boiling Ubod',
-    img: '/assets/card_step_boiling.png',
+    img: '/assets/card_step_boiling.webp',
     desc: 'Wash raw ubod strips and boil in salted water until fork-tender.',
   },
   {
     id: 'grinding',
     stepNum: 2,
     title: 'Pureeing & Grinding',
-    img: '/assets/card_step_grinding.png',
+    img: '/assets/card_step_grinding.webp',
     desc: 'Puree boiled ubod with 1 tsp salt in food processor until completely smooth.',
   },
   {
     id: 'mixing',
     stepNum: 3,
     title: 'Paste Formulation',
-    img: '/assets/card_step_mixing.png',
+    img: '/assets/card_step_mixing.webp',
     desc: 'Mix 1:1 ubod puree with rice flour, salt, and gradual water into uniform paste.',
   },
   {
     id: 'molding',
     stepNum: 4,
     title: 'Rectangular Molding',
-    img: '/assets/card_step_molding.png',
+    img: '/assets/card_step_molding.webp',
     desc: 'Portion into silicone mold cavities to form uniform 50mm x 25mm wafers.',
   },
   {
     id: 'steaming',
     stepNum: 5,
     title: 'Starch Steaming (10 min)',
-    img: '/assets/card_step_steaming.png',
+    img: '/assets/card_step_steaming.webp',
     desc: 'Steam molded pieces to gelatinize starches and lock rectangular shape.',
   },
   {
     id: 'dehydration',
     stepNum: 6,
     title: 'Cabinet Dehydration (90°C)',
-    img: '/assets/card_step_dehydration.png',
+    img: '/assets/card_step_dehydration.webp',
     desc: 'Dehydrate for 12 hours on wire mesh trays until moisture is under 10%.',
   },
   {
     id: 'frying',
     stepNum: 7,
     title: 'Flash Deep Frying (10 sec)',
-    img: '/assets/card_step_frying.png',
+    img: '/assets/card_step_frying.webp',
     desc: 'Fry dried chips in high-temperature hot oil for 10 seconds until puffed 3x and golden.',
   },
   {
     id: 'packaging',
     stepNum: 8,
     title: 'Packaging & Labeling',
-    img: '/assets/card_step_packaging.png',
+    img: '/assets/card_step_packaging.webp',
     desc: 'Heat-seal 50g into airtight barrier pouches and pack 8 pouches into retail carton.',
   },
 ];
@@ -80,6 +80,7 @@ export const SequencingActivity = ({ onComplete }) => {
   const [draggedIndex, setDraggedIndex] = useState(null);
   const [dragOverIndex, setDragOverIndex] = useState(null);
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+  const [touchDelta, setTouchDelta] = useState(null);
   const [isSolved, setIsSolved] = useState(() => isAlreadyDone);
   const touchOriginRef = useRef(null);
   // Ref to track the source index throughout the entire drag operation (avoids stale closure issues)
@@ -108,8 +109,20 @@ export const SequencingActivity = ({ onComplete }) => {
         setDragOverIndex(null);
       }
     };
+    const handleGlobalTouchCancel = () => {
+      if (touchOriginRef.current) {
+        touchOriginRef.current = null;
+        setTouchDelta(null);
+        setDraggedIndex(null);
+        setDragOverIndex(null);
+      }
+    };
     window.addEventListener('dragend', handleGlobalDragEnd);
-    return () => window.removeEventListener('dragend', handleGlobalDragEnd);
+    window.addEventListener('touchcancel', handleGlobalTouchCancel);
+    return () => {
+      window.removeEventListener('dragend', handleGlobalDragEnd);
+      window.removeEventListener('touchcancel', handleGlobalTouchCancel);
+    };
   }, []);
 
   // Initialize with a randomized order
@@ -215,51 +228,83 @@ export const SequencingActivity = ({ onComplete }) => {
     setDragOverIndex(null);
   }, []);
 
-  // Touch Drag Handlers (Tablet / Mobile Touch Screens)
+  // Touch Drag Handlers (Tablet / Mobile Touch Screens - with Smooth Scroll & Lift Feedback)
   const handleTouchStart = (e, index) => {
     if (isSolved) return;
     const touch = e.touches[0];
-    touchOriginRef.current = { index, startX: touch.clientX, startY: touch.clientY, hasMoved: false };
+    const isOnHandle = Boolean(e.target.closest('.seq-drag-handle'));
+    touchOriginRef.current = {
+      index,
+      startX: touch.clientX,
+      startY: touch.clientY,
+      hasMoved: false,
+      isScrolling: false,
+      isDragging: false,
+      isOnHandle,
+    };
   };
 
   const handleTouchMove = (e) => {
     if (isSolved || !touchOriginRef.current) return;
+    if (touchOriginRef.current.isScrolling) return;
+
     const touch = e.touches[0];
-    const deltaX = Math.abs(touch.clientX - touchOriginRef.current.startX);
-    const deltaY = Math.abs(touch.clientY - touchOriginRef.current.startY);
+    const diffX = touch.clientX - touchOriginRef.current.startX;
+    const diffY = touch.clientY - touchOriginRef.current.startY;
+    const deltaX = Math.abs(diffX);
+    const deltaY = Math.abs(diffY);
 
-    if (deltaX > 8 || deltaY > 8) {
+    // Determine user intent once finger moves beyond 8px threshold
+    if (!touchOriginRef.current.hasMoved && (deltaX > 8 || deltaY > 8)) {
       touchOriginRef.current.hasMoved = true;
-      if (e.cancelable) e.preventDefault();
-    }
-
-    if (!touchOriginRef.current.hasMoved) return;
-
-    if (draggedIndex === null) {
-      setDraggedIndex(touchOriginRef.current.index);
-    }
-
-    const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
-    if (!targetElement) return;
-
-    const wrapper = targetElement.closest('.sequencing-card-wrapper');
-    if (wrapper && wrapper.dataset.slotIndex !== undefined) {
-      const targetIndex = parseInt(wrapper.dataset.slotIndex, 10);
-      if (!isNaN(targetIndex) && targetIndex >= 0 && targetIndex < items.length) {
-        setDragOverIndex(targetIndex);
+      if (!touchOriginRef.current.isOnHandle && deltaY > deltaX * 1.3) {
+        // Predominantly vertical gesture on card body: let native finger scrolling handle the container freely
+        touchOriginRef.current.isScrolling = true;
+        setDraggedIndex(null);
+        setDragOverIndex(null);
+        setTouchDelta(null);
+        return;
+      } else {
+        // Intentional card drag-to-swap
+        touchOriginRef.current.isDragging = true;
       }
-    } else {
-      setDragOverIndex(null);
+    }
+
+    if (touchOriginRef.current.isDragging) {
+      if (e.cancelable) e.preventDefault();
+
+      if (draggedIndex === null) {
+        setDraggedIndex(touchOriginRef.current.index);
+      }
+
+      setTouchDelta({ x: diffX, y: diffY });
+
+      const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
+      if (!targetElement) return;
+
+      const wrapper = targetElement.closest('.sequencing-card-wrapper');
+      if (wrapper && wrapper.dataset.slotIndex !== undefined) {
+        const targetIndex = parseInt(wrapper.dataset.slotIndex, 10);
+        if (!isNaN(targetIndex) && targetIndex >= 0 && targetIndex < items.length) {
+          setDragOverIndex(targetIndex);
+        }
+      } else {
+        setDragOverIndex(null);
+      }
     }
   };
 
   const handleTouchEnd = (index) => {
-    if (touchOriginRef.current) {
+    if (touchOriginRef.current && !touchOriginRef.current.isScrolling) {
       if (!touchOriginRef.current.hasMoved) {
-        // It was a tap!
+        // Clean tap: select card or swap with previously selected card
         handleCardClick(index);
-      } else if (dragOverIndex !== null && dragOverIndex !== touchOriginRef.current.index) {
-        // Perform swap on touch end (like drop)
+      } else if (
+        touchOriginRef.current.isDragging &&
+        dragOverIndex !== null &&
+        dragOverIndex !== touchOriginRef.current.index
+      ) {
+        // Intentional drag-and-drop completed
         const sourceIndex = touchOriginRef.current.index;
         const targetIndex = dragOverIndex;
         soundManager.playClick();
@@ -271,6 +316,14 @@ export const SequencingActivity = ({ onComplete }) => {
       }
     }
     touchOriginRef.current = null;
+    setTouchDelta(null);
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  };
+
+  const handleTouchCancel = () => {
+    touchOriginRef.current = null;
+    setTouchDelta(null);
     setDraggedIndex(null);
     setDragOverIndex(null);
   };
@@ -316,8 +369,8 @@ export const SequencingActivity = ({ onComplete }) => {
         <h3>Chronological Step Sequencing Assessment</h3>
         <p className="sec-subtitle">
           Arrange all 8 stages, from stage 1 to stage 8. Drag or tap the cards to put in position.
-          <br />
-          <span style={{ fontSize: '0.85rem', color: '#b45309', fontWeight: 700, marginTop: '4px', display: 'inline-block' }}>
+          <span className="sec-tablet-hint">
+            <br />
             💡 <em>Tablet Friendly: Drag cards OR tap a card then tap another to swap positions!</em>
           </span>
         </p>
@@ -355,6 +408,18 @@ export const SequencingActivity = ({ onComplete }) => {
                   style={{
                     borderColor: isSolved ? (isStepCorrect ? '#16a34a' : '#ef4444') : undefined,
                     background: isSolved ? (isStepCorrect ? '#f0fdf4' : '#fef2f2') : undefined,
+                    ...(isDragging && touchDelta
+                      ? {
+                          transform: `translate3d(${touchDelta.x}px, ${touchDelta.y - 28}px, 0) scale(1.08)`,
+                          zIndex: 1000,
+                          pointerEvents: 'none',
+                          boxShadow: '0 18px 36px rgba(43, 24, 16, 0.45), 0 0 0 3px #f59e0b',
+                          transition: 'none',
+                          position: 'relative',
+                          opacity: 0.98,
+                          cursor: 'grabbing',
+                        }
+                      : {}),
                   }}
                   draggable={!isSolved}
                   onDragStart={(e) => handleDragStart(e, index)}
@@ -362,6 +427,7 @@ export const SequencingActivity = ({ onComplete }) => {
                   onTouchStart={(e) => handleTouchStart(e, index)}
                   onTouchMove={handleTouchMove}
                   onTouchEnd={() => handleTouchEnd(index)}
+                  onTouchCancel={handleTouchCancel}
                   onClick={() => handleCardClick(index)}
                   title={!isSolved ? (isSelected ? 'Tap another card to swap' : 'Tap or drag to swap') : 'Sequence verified'}
                 >

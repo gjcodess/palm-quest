@@ -118,7 +118,6 @@ export const GameProvider = ({ children }) => {
 
   // Sidebar collapse states for 3-zone panoramic layout
   const [isDialogueCollapsed, setIsDialogueCollapsed] = useState(() => {
-    if (typeof window !== 'undefined' && window.innerWidth < 1200) return true;
     const assessmentScenes = ['orientation', 'sequencing', 'results', 'evaluation'];
     if (assessmentScenes.includes(scene)) return true;
     return false;
@@ -181,7 +180,7 @@ export const GameProvider = ({ children }) => {
       setIsDialogueCollapsed(true);
       setIsInventoryCollapsed(true);
     } else if (stageScenes.includes(scene)) {
-      // Expand both sidebars by default when entering Stages 1 through 8
+      // In stages 1-8, sidebars should always be showing/expanded unless collapsed by user
       setIsDialogueCollapsed(false);
       setIsInventoryCollapsed(false);
     }

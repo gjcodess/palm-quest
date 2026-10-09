@@ -23,6 +23,72 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
+
+  /* Dynamic clearance for collapsible side panels (minimizes gaps, maximizes center content) */
+  --zone-pad-left: 12px;
+  --zone-pad-right: 12px;
+}
+
+/* Desktop: Clear 58px tabs when collapsed with tight 4px clearance */
+.game-viewport.dialogue-collapsed {
+  --zone-pad-left: 62px;
+}
+.game-viewport.dialogue-expanded {
+  --zone-pad-left: 10px;
+}
+.game-viewport.inventory-collapsed {
+  --zone-pad-right: 62px;
+}
+.game-viewport.inventory-expanded {
+  --zone-pad-right: 10px;
+}
+
+/* Tablet & Compact Desktop (<= 1200px): Clear 48px tabs with 4px gap */
+@media (max-width: 1200px) {
+  .game-viewport.dialogue-collapsed {
+    --zone-pad-left: 52px;
+  }
+  .game-viewport.dialogue-expanded {
+    --zone-pad-left: 8px;
+  }
+  .game-viewport.inventory-collapsed {
+    --zone-pad-right: 52px;
+  }
+  .game-viewport.inventory-expanded {
+    --zone-pad-right: 8px;
+  }
+}
+
+/* Mobile & Phone Landscape (<= 950px): Clear 42px tabs with minimal 4px gap */
+@media screen and (max-width: 950px), screen and (max-height: 520px) {
+  .game-viewport.dialogue-collapsed {
+    --zone-pad-left: 46px;
+  }
+  .game-viewport.dialogue-expanded {
+    --zone-pad-left: 6px;
+  }
+  .game-viewport.inventory-collapsed {
+    --zone-pad-right: 46px;
+  }
+  .game-viewport.inventory-expanded {
+    --zone-pad-right: 6px;
+  }
+}
+
+/* Compact Mobile (<= 700px): Clear 38px tabs with 4px gap */
+@media screen and (max-width: 700px) {
+  .game-viewport.dialogue-collapsed {
+    --zone-pad-left: 42px;
+  }
+  .game-viewport.dialogue-expanded {
+    --zone-pad-left: 4px;
+  }
+  .game-viewport.inventory-collapsed {
+    --zone-pad-right: 42px;
+  }
+  .game-viewport.inventory-expanded {
+    --zone-pad-right: 4px;
+  }
 }
 
 .viewport-layout-grid {
@@ -62,57 +128,57 @@
 .game-viewport.scene-mission1 {
   background: 
     radial-gradient(ellipse at 50% 30%, rgba(253, 251, 247, 0.86) 0%, rgba(245, 238, 226, 0.88) 40%, rgba(234, 219, 199, 0.91) 80%, rgba(223, 206, 183, 0.94) 100%),
-    url('/assets/bg_prep.jpg') center / cover no-repeat;
+    url('/assets/bg_prep.webp') center / cover no-repeat;
 }
 
 .game-viewport.scene-mission2 {
   background: 
     radial-gradient(ellipse at 50% 30%, rgba(254, 252, 249, 0.86) 0%, rgba(247, 239, 228, 0.88) 40%, rgba(237, 220, 200, 0.91) 80%, rgba(223, 206, 183, 0.94) 100%),
-    url('/assets/bg_boiling.jpg') center / cover no-repeat;
+    url('/assets/bg_boiling.webp') center / cover no-repeat;
 }
 
 .game-viewport.scene-mission3,
 .game-viewport.scene-mission4 {
   background: 
     radial-gradient(ellipse at 50% 30%, rgba(253, 250, 244, 0.86) 0%, rgba(245, 236, 224, 0.88) 40%, rgba(233, 216, 194, 0.91) 80%, rgba(222, 197, 169, 0.94) 100%),
-    url('/assets/bg_formulation.jpg') center / cover no-repeat;
+    url('/assets/bg_formulation.webp') center / cover no-repeat;
 }
 
 .game-viewport.scene-mission5 {
   background: 
     radial-gradient(ellipse at 50% 30%, rgba(254, 252, 247, 0.86) 0%, rgba(246, 238, 224, 0.88) 40%, rgba(234, 215, 190, 0.91) 80%, rgba(221, 196, 165, 0.94) 100%),
-    url('/assets/bg_boiling.jpg') center / cover no-repeat;
+    url('/assets/bg_boiling.webp') center / cover no-repeat;
 }
 
 .game-viewport.scene-mission6 {
   background: 
     radial-gradient(ellipse at 50% 30%, rgba(254, 252, 247, 0.86) 0%, rgba(246, 238, 224, 0.88) 40%, rgba(234, 215, 190, 0.91) 80%, rgba(221, 196, 165, 0.94) 100%),
-    url('/assets/bg_dehydration.jpg') center / cover no-repeat;
+    url('/assets/bg_dehydration.webp') center / cover no-repeat;
 }
 
 .game-viewport.scene-mission7 {
   background: 
     radial-gradient(ellipse at 50% 30%, rgba(253, 249, 242, 0.86) 0%, rgba(245, 235, 217, 0.88) 40%, rgba(232, 213, 184, 0.91) 80%, rgba(219, 193, 159, 0.94) 100%),
-    url('/assets/bg_frying.jpg') center / cover no-repeat;
+    url('/assets/bg_frying.webp') center / cover no-repeat;
 }
 
 .game-viewport.scene-mission8 {
   background: 
     radial-gradient(ellipse at 50% 30%, rgba(253, 249, 242, 0.86) 0%, rgba(245, 235, 217, 0.88) 40%, rgba(232, 213, 184, 0.91) 80%, rgba(219, 193, 159, 0.94) 100%),
-    url('/assets/bg_evaluation_hall.jpg') center / cover no-repeat;
+    url('/assets/bg_evaluation_hall.webp') center / cover no-repeat;
 }
 
 .game-viewport.scene-sequencing {
   background: 
     radial-gradient(ellipse at 50% 30%, rgba(253, 251, 247, 0.86) 0%, rgba(245, 238, 226, 0.88) 40%, rgba(234, 219, 199, 0.91) 80%, rgba(223, 206, 183, 0.94) 100%),
-    url('/assets/bg_prep.jpg') center / cover no-repeat;
+    url('/assets/bg_prep.webp') center / cover no-repeat;
 }
 
 .game-viewport.scene-results,
 .game-viewport.scene-evaluation {
   background: 
     radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.86) 0%, rgba(253, 248, 238, 0.88) 55%, rgba(245, 235, 215, 0.94) 100%),
-    url('/assets/bg_evaluation_hall.jpg') center / cover no-repeat;
+    url('/assets/bg_evaluation_hall.webp') center / cover no-repeat;
 }
 
 /* Right Column: Hosts Dedicated Responsive Vertically Centered Sidebars */

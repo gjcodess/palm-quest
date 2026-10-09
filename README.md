@@ -1,6 +1,6 @@
 # 🥥 PALMQuest: Coconut Palm Crackers Virtual Laboratory
 
-A gamified, interactive educational web simulation designed for **Home Economics (HE) Food Technology & Processing** students. Learn the scientific process of valorizing coconut palm (*Ubod ng Niyog*) into nutritious, high-expansion crispy crackers.
+A downloadable, offline educational game for Android and Windows, also available as a web app. It teaches **Home Economics (HE) Food Technology & Processing** students how coconut palm (*Ubod ng Niyog*) becomes crispy crackers.
 
 ---
 
@@ -35,7 +35,9 @@ A gamified, interactive educational web simulation designed for **Home Economics
 - **Framework:** [React 19](https://react.dev/)
 - **Build Tool:** [Vite 8](https://vitejs.dev/)
 - **Styling:** Vanilla CSS with custom Design Tokens (`theme.css`, `game.css`, `responsive.css`)
-- **Typography:** [Fredoka](https://fonts.google.com/specimen/Fredoka) & [Quicksand](https://fonts.google.com/specimen/Quicksand) via Google Fonts
+- **Typography:** Fredoka and Quicksand bundled locally with Fontsource
+- **Android:** Capacitor 8 and Gradle
+- **Windows:** Electron Forge
 - **Audio:** Web Audio API (`soundManager.js`)
 - **Asset Pipeline:** Custom alpha processing with `sharp`
 
@@ -91,7 +93,7 @@ PalmQuest/
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (version 18+ recommended)
+- [Node.js](https://nodejs.org/) 22+
 - `npm` or `yarn` / `pnpm`
 
 ### Installation
@@ -129,6 +131,16 @@ To preview the built production site locally:
 ```bash
 npm run preview
 ```
+
+### Downloadable offline apps
+
+The Android APK and Windows installer include the built game, images, scripts, and fonts. They do not require a server or internet connection to play. The Android app opens in landscape and hides the system bars during play. On compact landscape screens, the guide and inventory open as drawers over the workstation.
+
+- **Android debug APK:** Run `npm run android:sync`, then `cd android` and `gradlew.bat assembleDebug` on Windows. The result is `android/app/build/outputs/apk/debug/PALMQuest.apk`. Android Studio and its SDK/JDK are required. This debug build can be installed directly for testing; distribution should use a signed release build.
+- **Windows installer:** Run `npm run desktop:make`. The result is `out/make/squirrel.windows/x64/PALMQuestSetup.exe`.
+- **Windows unpacked EXE:** The build also creates `out/PALMQuest-win32-x64/PALMQuest.exe`, which must stay with its adjacent files. Share the installer for a normal download.
+
+See [Packaging guide](docs/PACKAGING.md) for build prerequisites, signing, and testing.
 
 ---
 

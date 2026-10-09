@@ -22,7 +22,6 @@ export const TitleScene = () => {
       <div className="title-container">
         {/* Main Banner Card */}
         <div className="title-card">
-          <div className="title-badge">🥥 Home Economics Food Processing Simulation</div>
           <h1 className="game-logo">PALM<span>QUEST</span></h1>
           <p className="game-subtitle">The Coconut Palm Crackers Virtual Laboratory Challenge</p>
           <div className="title-divider" />
@@ -30,14 +29,14 @@ export const TitleScene = () => {
           {/* Hero Artwork Preview */}
           <div className="title-hero-grid">
             <div className="hero-avatar-box">
-              <img src="/images/teacher_mia_neutral.png" alt="Teacher Mia" className="hero-avatar" />
+              <img src="/assets/teacher_mia_neutral.webp" alt="Teacher Mia" className="hero-avatar" />
               <span className="hero-name">Teacher Mia</span>
             </div>
             <div className="hero-speech-bubble">
               <p>“Welcome to our virtual kitchen! Learn how to transform nutritious <strong>Ubod ng Niyog</strong> into delicious, crispy crackers through boiling, dehydration, and frying!”</p>
             </div>
             <div className="hero-snack-box">
-              <img src="/images/icon_puffed_crackers.png" alt="Coconut Palm Crackers" className="hero-snack" />
+              <img src="/assets/icon_puffed_crackers.webp" alt="Coconut Palm Crackers" className="hero-snack" />
               <span className="snack-tag">Golden Crisp Target</span>
             </div>
           </div>

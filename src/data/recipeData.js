@@ -14,7 +14,7 @@ export const RECIPE_DATA = {
       portion: "1 Cup (approx. 150g)",
       purpose: "Core fiber, moisture, and delicate sweet coconut flavor base",
       prepNote: "Harvested from coconut apical meristem, washed, sliced uniformly",
-      img: "/assets/icon_sliced_ubod.png",
+      img: "/assets/icon_sliced_ubod.webp",
       fallbackIcon: "🥥"
     },
     {
@@ -24,7 +24,7 @@ export const RECIPE_DATA = {
       portionRatio: "1:1 Ratio with Boiled Ubod Paste",
       purpose: "Primary starch binder that gelatinizes during steaming and puffs into crispy wafers during frying",
       prepNote: "Finely milled white rice flour (Elephant brand / Erawan)",
-      img: "/assets/icon_tapioca_starch.png",
+      img: "/assets/icon_tapioca_starch.webp",
       fallbackIcon: "🌾"
     },
     {
@@ -33,7 +33,7 @@ export const RECIPE_DATA = {
       portion: "1 Teaspoon per 1 Cup of Ubod (1 tsp total)",
       purpose: "Flavor enhancement, electrolyte balance, and moisture regulator",
       prepNote: "Fine white mineral crystals, measured and leveled",
-      img: "/assets/icon_seasonings.png",
+      img: "/assets/icon_seasonings.webp",
       fallbackIcon: "🧂"
     },
     {
@@ -42,7 +42,7 @@ export const RECIPE_DATA = {
       portion: "4 Cups for boiling + 1 Cup gradual hydration",
       purpose: "Medium for thermal boiling and starch/paste hydration",
       prepNote: "Crystal clear drinking-grade water",
-      img: "/assets/icon_water_pitcher.png",
+      img: "/assets/icon_water_pitcher.webp",
       fallbackIcon: "💧"
     },
     {
@@ -51,7 +51,7 @@ export const RECIPE_DATA = {
       portion: "5 Cups (approx. 1.2 Liters)",
       purpose: "Deep-frying medium providing rapid heat transfer for flash-puffing",
       prepNote: "Pure refined vegetable cooking oil with high smoke point",
-      img: "/assets/icon_cooking_oil.png",
+      img: "/assets/icon_cooking_oil.webp",
       fallbackIcon: "🫗"
     }
   ],

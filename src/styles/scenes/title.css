@@ -10,7 +10,7 @@
   justify-content: center;
   background: 
     radial-gradient(ellipse at 50% 30%, rgba(253, 251, 247, 0.86) 0%, rgba(245, 238, 226, 0.88) 40%, rgba(234, 219, 199, 0.91) 80%, rgba(223, 206, 183, 0.94) 100%),
-    url('/assets/bg_evaluation_hall.jpg') center / cover no-repeat;
+    url('/assets/bg_evaluation_hall.webp') center / cover no-repeat;
   overflow-y: auto;
   padding: var(--space-md);
 }

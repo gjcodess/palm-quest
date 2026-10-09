@@ -566,6 +566,8 @@
   background: linear-gradient(180deg, #fdfcf9 0%, #f7f1e5 100%);
 }
 
+.hud-menu-progress { display: none; }
+
 /* 2-Column Grid Layout */
 .hud-menu-grid-columns {
   display: grid;

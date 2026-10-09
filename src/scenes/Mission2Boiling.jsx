@@ -215,11 +215,11 @@ export const Mission2Boiling = () => {
   };
 
   const getStockpotImg = () => {
-    if (boilStep === 0) return '/images/icon_stockpot.png';
-    if (boilStep === 1) return '/images/icon_stockpot_with_water.png';
-    if (boilStep === 2) return '/images/icon_stockpot_with_boiling_water.png';
-    if (boilStep === 3 || boilStep === 4) return '/images/icon_stockpot_boiling_ubod.png';
-    return '/images/icon_stockpot.png';
+    if (boilStep === 0) return '/assets/icon_stockpot.webp';
+    if (boilStep === 1) return '/assets/icon_stockpot_with_water.webp';
+    if (boilStep === 2) return '/assets/icon_stockpot_with_boiling_water.webp';
+    if (boilStep === 3 || boilStep === 4) return '/assets/icon_stockpot_boiling_ubod.webp';
+    return '/assets/icon_stockpot.webp';
   };
 
   return (
@@ -229,7 +229,7 @@ export const Mission2Boiling = () => {
         <div className="active-vessel-card boiling-workstation">
           <div className="vessel-header">
             <span className="vessel-title">
-              <img src="/images/icon_stockpot.png" alt="" className="vessel-header-icon" />
+              <img src="/assets/icon_stockpot.webp" alt="" className="vessel-header-icon" />
               Stovetop Station: Boiling & Softening
             </span>
             <span className="vessel-badge">Pillar 1: Boiling</span>
@@ -322,13 +322,13 @@ export const Mission2Boiling = () => {
                 <div className="knob-assembly">
                   {/* Stationary faceplate with -HIGH and tick marks */}
                   <img
-                    src="/images/stove_knob_base.png"
+                    src="/assets/stove_knob_base.webp"
                     alt="Knob Faceplate"
                     className="knob-base-img"
                   />
                   {/* Inner rotary cylinder turning from 0deg to 90deg */}
                   <img
-                    src="/images/stove_knob_rotor.png"
+                    src="/assets/stove_knob_rotor.webp"
                     alt="Knob Dial"
                     className={`knob-rotor-img ${boilStep === 2 || boilStep === 3 ? 'turned-high' : 'turned-off'}`}
                   />
@@ -368,7 +368,7 @@ export const Mission2Boiling = () => {
               title="Food Processor / Blender"
             >
               <img
-                src={boilStep >= 5 ? '/images/icon_ubod_puree.png' : '/images/icon_blender.png'}
+                src={boilStep >= 5 ? '/assets/icon_ubod_puree.webp' : '/assets/icon_blender.webp'}
                 alt="Puree Blender"
                 className="blender-img"
               />
@@ -393,12 +393,12 @@ export const Mission2Boiling = () => {
               handleItemClick({
                 id: 'water_pitcher',
                 name: 'Water Pitcher (500ml)',
-                img: '/images/icon_water_pitcher.png',
+                img: '/assets/icon_water_pitcher.webp',
                 actionHint: 'Click stockpot to pour water',
               })
             }
           >
-            <img src="/images/icon_water_pitcher.png" alt="Water Pitcher" className="card-icon-img" />
+            <img src="/assets/icon_water_pitcher.webp" alt="Water Pitcher" className="card-icon-img" />
             <span className="card-title">Water Pitcher</span>
             <span className="card-measure">500ml</span>
           </div>
@@ -410,12 +410,12 @@ export const Mission2Boiling = () => {
               handleItemClick({
                 id: 'sliced_ubod',
                 name: 'Sliced Ubod (200g)',
-                img: '/images/icon_prep_bowl_filled.png',
+                img: '/assets/icon_prep_bowl_filled.webp',
                 actionHint: 'Click stockpot to add ubod',
               })
             }
           >
-            <img src="/images/icon_prep_bowl_filled.png" alt="Sliced Ubod" className="card-icon-img" />
+            <img src="/assets/icon_prep_bowl_filled.webp" alt="Sliced Ubod" className="card-icon-img" />
             <span className="card-title">Sliced Ubod</span>
             <span className="card-measure">200g</span>
           </div>

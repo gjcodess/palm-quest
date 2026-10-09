@@ -74,8 +74,8 @@ PalmQuest is designed to run locally or over a campus network without requiring 
 | Feature | Requirement / Recommendation |
 | :--- | :--- |
 | **Platform** | Modern Web Browser (Google Chrome, Microsoft Edge, Mozilla Firefox, Safari 16+) |
-| **Minimum Display Width** | **768 pixels** (Dedicated desktop, laptop, or landscape tablet display required) |
-| **Screen Restriction** | Mobile phones or screens under 768px trigger a responsive restriction overlay |
+| **Mobile Display** | Landscape phone supported; tested layout at 800 × 360 and 667 × 375 pixels |
+| **Screen Orientation** | Android app requests landscape; phone browser in portrait asks you to rotate |
 | **Audio Hardware** | Stereo speakers or headphones (Procedural Web Audio synthesizer enabled) |
 | **Input Methods** | Mouse Pointer, Trackpad, or Capacitive Touchscreen (Full Touch Support) |
 | **Runtime Port** | `http://localhost:5173/` (Vite Development Server) |
@@ -469,9 +469,9 @@ Students who meet laboratory competency standards unlock the official **Departme
 
 ### 🛠️ Troubleshooting & FAQ
 
-#### Q: The game says "Wide Screen Display Required" and blocks my screen.
-* **Cause:** Your browser window width is under 768px, or you are holding a mobile phone in portrait orientation.
-* **Fix:** Maximize your browser window, or rotate your tablet to **landscape mode**. The interactive multi-column lab layout requires at least 768 horizontal pixels.
+#### Q: The game asks me to rotate my phone.
+* **Cause:** The web app is open in a phone browser in portrait orientation.
+* **Fix:** Rotate the phone to landscape. The installed Android app requests landscape when it opens. On a compact screen, tap the side tabs to open Teacher Mia's guide and the item rack.
 
 #### Q: How do I zoom in or out if items look too large or small on my laptop?
 * **Fix:** Click **≡ Menu** in the top-right corner of the HUD, then click the **🔍+ (Zoom In)** or **🔍- (Zoom Out)** buttons. Click **100%** to reset to default physical scale.

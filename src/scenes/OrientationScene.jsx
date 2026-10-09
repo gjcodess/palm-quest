@@ -618,6 +618,17 @@ export const OrientationScene = () => {
             />
           </div>
         )}
+
+        {/* Bottom clearance spacer so action buttons have comfortable breathing room above the screen edge */}
+        <div
+          className="orientation-bottom-spacer"
+          style={{
+            height: 'max(32px, calc(20px + env(safe-area-inset-bottom, 0px)))',
+            flexShrink: 0,
+            width: '100%',
+            pointerEvents: 'none',
+          }}
+        />
       </div>
 
       {/* Right Sidebar Checklist */}

@@ -80,13 +80,13 @@ export const StoveBurnerConsole = ({
       <div className="knob-assembly">
         {/* Stationary baseplate with OFF red tick at 12 o'clock and -HIGH at 3 o'clock */}
         <img
-          src="/assets/stove_knob_base.png"
+          src="/assets/stove_knob_base.webp"
           alt="Knob Baseplate"
           className="knob-base-img"
         />
         {/* Rotary dial turning from 0deg (OFF) to 90deg (HIGH) */}
         <img
-          src="/assets/stove_knob_rotor.png"
+          src="/assets/stove_knob_rotor.webp"
           alt="Knob Rotor"
           className={`knob-rotor-img ${
             burning ? 'turned-high' : 'turned-off'

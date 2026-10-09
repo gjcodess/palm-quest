@@ -75,7 +75,7 @@ export const Mission2Grinding = () => {
       stepIndex: 0,
       acceptedItems: ['boiled_ubod'],
       prompt: 'Select the drained ubod from the bowl and place it in the food processor.',
-      img: '/assets/processor_empty.png',
+      img: '/assets/processor_empty.webp',
       fallbackIcon: '⚙️',
       label: 'Processor Bowl & S-Blade',
     },
@@ -83,7 +83,7 @@ export const Mission2Grinding = () => {
       stepIndex: 1,
       acceptedItems: ['salt_portion', 'salt'],
       prompt: 'Select one teaspoon of salt then drop to the food processor.',
-      img: '/assets/processor_with_boiled_ubod.png',
+      img: '/assets/processor_with_boiled_ubod.webp',
       fallbackIcon: '🧂',
       label: 'Loaded Ubod in Bowl',
     },
@@ -91,9 +91,9 @@ export const Mission2Grinding = () => {
       stepIndex: 2,
       acceptedItems: !isLidLocked ? ['processor_lid', 'lid'] : [],
       prompt: isLidLocked
-        ? 'Select the processor safety lid and place it on the food processor.'
+        ? 'Select “high speed puree” for it to be processed blend well.'
         : 'Select the processor safety lid and place it on the food processor.',
-      img: isLidLocked ? '/assets/processor_close_lid.png' : '/assets/processor_with_ubod_salt.png',
+      img: isLidLocked ? '/assets/processor_close_lid.webp' : '/assets/processor_with_ubod_salt.webp',
       fallbackIcon: '🔒',
       label: isLidLocked ? 'Lid Locked & Ready to Puree' : 'Ubod + Salt (Awaiting Safety Lid)',
     },
@@ -101,7 +101,7 @@ export const Mission2Grinding = () => {
       stepIndex: 3,
       acceptedItems: [],
       prompt: 'Select “High-Speed Puree” to blend the mixture well.',
-      img: '/assets/processor_running_blur.png',
+      img: '/assets/processor_running_blur.webp',
       fallbackIcon: '🌪️',
       label: 'High-Speed Pureeing',
     },
@@ -109,7 +109,7 @@ export const Mission2Grinding = () => {
       stepIndex: 4,
       acceptedItems: ['spatula', 'red_spatula'],
       prompt: 'Select the spatula and drop to the food processor.',
-      img: '/assets/processor_open_paste.png',
+      img: '/assets/processor_open_paste.webp',
       fallbackIcon: '🥣',
       label: 'Silky Ubod Paste (Ready to Scrape)',
     },
@@ -117,7 +117,7 @@ export const Mission2Grinding = () => {
       stepIndex: 5,
       acceptedItems: [],
       prompt: 'Select “Proceed to Stage 3: Paste Formulation.”',
-      img: '/assets/bowl_ubod_paste_fresh.png',
+      img: '/assets/bowl_ubod_paste_fresh.webp',
       fallbackIcon: '✨',
       label: 'Pureed Ubod Paste (1 Cup Collected)',
     },
@@ -239,7 +239,7 @@ export const Mission2Grinding = () => {
       id: 'boiled_ubod',
       name: 'Drained Boiled Ubod',
       measure: '1 Cup (Cooked)',
-      img: '/assets/colander_ubod_only.png',
+      img: '/assets/colander_ubod_only.webp',
       fallbackIcon: '🥥',
       isUsed: processorStep >= 1,
       isNext: processorStep === 0,
@@ -249,7 +249,7 @@ export const Mission2Grinding = () => {
       id: 'salt_portion',
       name: 'Measured Sea Salt',
       measure: '1 tsp (Per 1 Cup Ubod)',
-      img: '/assets/portion_salt_1tsp.png',
+      img: '/assets/portion_salt_1tsp.webp',
       fallbackIcon: '🧂',
       isUsed: processorStep >= 2,
       isNext: processorStep === 1,
@@ -259,7 +259,7 @@ export const Mission2Grinding = () => {
       id: 'processor_lid',
       name: 'Processor Safety Lid',
       measure: 'Interlock Cover',
-      img: '/assets/processor_lid.png',
+      img: '/assets/processor_lid.webp',
       fallbackIcon: '🔒',
       isUsed: isLidLocked || processorStep >= 3,
       isNext: processorStep === 2 && !isLidLocked,
@@ -269,7 +269,7 @@ export const Mission2Grinding = () => {
       id: 'spatula',
       name: 'Red Spatula',
       measure: 'Scrape & Transfer',
-      img: '/assets/tool_spatula_red.png',
+      img: '/assets/tool_spatula_red.webp',
       fallbackIcon: '🥄',
       isUsed: processorStep >= 5,
       isNext: processorStep === 4,
@@ -370,6 +370,8 @@ export const Mission2Grinding = () => {
               statusText={
                 isBlending
                   ? `⚡ Pureeing boiled fibers at high speed... ${blendProgress}%`
+                  : isLidLocked && processorStep === 2
+                  ? 'Ready to blend:'
                   : processorSteps[processorStep]?.prompt || 'Ready'
               }
               specBadge={
@@ -427,7 +429,7 @@ export const Mission2Grinding = () => {
               {isScraping && (
                 <div className="spatula-scraping-overlay">
                   <img
-                    src="/assets/tool_spatula_red.png"
+                    src="/assets/tool_spatula_red.webp"
                     alt="Scraping Spatula"
                     className="spatula-wiping-anim"
                   />

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Analytics } from '@vercel/analytics/react';
 import { useGame } from './context/GameContext';
 import { HeaderHUD } from './components/HeaderHUD';
 import { TeacherMiaSidebar } from './components/TeacherMiaSidebar';
@@ -76,7 +75,7 @@ export const App = () => {
   }
 
   return (
-    <div className="game-app">
+    <div className={`game-app ${isInventoryCollapsed ? 'inventory-closed' : 'inventory-open'}`}>
       <ScreenRestrictionOverlay />
       <HeaderHUD />
       <main
@@ -132,7 +131,6 @@ export const App = () => {
       <SystemOverviewModal />
       <ConfirmModal />
       <FloatingItemCursor />
-      <Analytics />
     </div>
   );
 };

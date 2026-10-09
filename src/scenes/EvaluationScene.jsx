@@ -40,20 +40,20 @@ export const EvaluationScene = () => {
         {/* Header Banner */}
         <div className="eval-header-card">
           <div className="cert-ribbon">
-            <img src="/assets/icon_gold_medal_front.png" alt="Medal" className="eval-ribbon-medal-img" />
+            <img src="/assets/icon_gold_medal_front.webp" alt="Medal" className="eval-ribbon-medal-img" />
             <span>LABORATORY MASTERY ACHIEVED</span>
           </div>
           <div className="eval-hero-showcase">
             <div className="eval-showcase-item">
-              <img src="/assets/platter_crackers_cooled.png" alt="Freshly Fried Ubod Crackers" className="eval-showcase-img" />
+              <img src="/assets/platter_crackers_cooled.webp" alt="Freshly Fried Ubod Crackers" className="eval-showcase-img" />
               <span className="eval-showcase-label">Golden Crisp Ubod Crunch</span>
             </div>
             <div className="eval-showcase-item">
-              <img src="/assets/pouch_sealed_labeled.png" alt="Branded Kraft Pouch" className="eval-showcase-img" />
+              <img src="/assets/pouch_sealed_labeled.webp" alt="Branded Kraft Pouch" className="eval-showcase-img" />
               <span className="eval-showcase-label">Airtight Stand-Up Pouch (50g)</span>
             </div>
             <div className="eval-showcase-item">
-              <img src="/assets/box_of_packaged_crackers.png" alt="Retail Master Carton" className="eval-showcase-img" />
+              <img src="/assets/box_of_packaged_crackers.webp" alt="Retail Master Carton" className="eval-showcase-img" />
               <span className="eval-showcase-label">Retail Display Box (8 Pouches)</span>
             </div>
           </div>
@@ -130,7 +130,7 @@ export const EvaluationScene = () => {
                 </div>
 
                 <div className="cert-seal-block">
-                  <img src="/images/icon_certificate_seal.png" alt="Official Seal" className="cert-gold-seal-img" />
+                  <img src="/assets/icon_certificate_seal.webp" alt="Official Seal" className="cert-gold-seal-img" />
                   <span className="cert-date">{currentDate}</span>
                 </div>
 

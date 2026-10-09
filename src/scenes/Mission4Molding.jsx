@@ -71,7 +71,7 @@ export const Mission4Molding = () => {
       stepIndex: 0,
       acceptedItems: ['dough_bowl', 'dough_portion', 'measuring_spoon'],
       prompt: 'Select the mixture and place it in the mold.',
-      img: '/assets/molder_empty.png',
+      img: '/assets/molder_empty.webp',
       fallbackIcon: '🌸',
       label: 'Clean 24-Cavity Silicone Mold',
     },
@@ -79,7 +79,7 @@ export const Mission4Molding = () => {
       stepIndex: 1,
       acceptedItems: ['dough_bowl', 'dough_portion', 'measuring_spoon'],
       prompt: 'Select the leveling spatula.',
-      img: '/assets/molder_single_piece.png',
+      img: '/assets/molder_single_piece.webp',
       fallbackIcon: '🧈',
       label: '1 Cavity Calibrated (3 tsp)',
     },
@@ -87,7 +87,7 @@ export const Mission4Molding = () => {
       stepIndex: 2,
       acceptedItems: ['leveling_spatula', 'spatula'],
       prompt: 'Cavities filled! Select the Leveling Spatula to scrape and level flat',
-      img: '/assets/molder_partially_filled.png',
+      img: '/assets/molder_partially_filled.webp',
       fallbackIcon: '🥄',
       label: 'Cavities Portioned (Unleveled)',
     },
@@ -95,7 +95,7 @@ export const Mission4Molding = () => {
       stepIndex: 3,
       acceptedItems: [],
       prompt: 'All 24 rectangular crackers uniformly leveled and ready for steaming!',
-      img: '/assets/molder_completely_filled.png',
+      img: '/assets/molder_completely_filled.webp',
       fallbackIcon: '✨',
       label: 'All 24 Pieces Uniform & Leveled',
     },
@@ -173,7 +173,7 @@ export const Mission4Molding = () => {
       id: 'dough_bowl',
       name: 'Ubod Dough',
       measure: '3 tsp Standard Portion',
-      img: '/assets/mixing_bowl_ubod_only.png',
+      img: '/assets/mixing_bowl_ubod_only.webp',
       fallbackIcon: '🥣',
       isUsed: moldStep >= 2,
       isNext: moldStep < 2,
@@ -183,7 +183,7 @@ export const Mission4Molding = () => {
       id: 'leveling_spatula',
       name: 'Leveling Spatula',
       measure: 'Flat Edge Scraper',
-      img: '/assets/tool_spatula_red.png',
+      img: '/assets/tool_spatula_red.webp',
       fallbackIcon: '📐',
       isUsed: moldStep >= 3,
       isNext: moldStep === 2,
@@ -295,7 +295,7 @@ export const Mission4Molding = () => {
               {isLeveling && (
                 <div className="mold-scraping-overlay">
                   <img
-                    src="/assets/tool_spatula_red.png"
+                    src="/assets/tool_spatula_red.webp"
                     alt="Leveling Spatula"
                     className="mold-leveling-anim"
                   />
