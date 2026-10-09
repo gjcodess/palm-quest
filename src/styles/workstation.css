@@ -1793,14 +1793,16 @@
   font-family: inherit;
 }
 
-.checkpoint-choice-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  border-color: #f59e0b;
-  border-bottom-color: #d97706;
-  box-shadow:
-    0 4px 0 #d97706,
-    0 6px 16px rgba(245, 158, 11, 0.2);
-  background: #fffdf5;
+@media (hover: hover) and (pointer: fine) and (min-width: 951px) and (min-height: 521px) {
+  .checkpoint-choice-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    border-color: #f59e0b;
+    border-bottom-color: #d97706;
+    box-shadow:
+      0 4px 0 #d97706,
+      0 6px 16px rgba(245, 158, 11, 0.2);
+    background: #fffdf5;
+  }
 }
 
 .checkpoint-choice-btn:active:not(:disabled) {

@@ -7,6 +7,10 @@
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
   background: transparent !important;
   padding: 8px 32px 36px 32px !important;
   box-sizing: border-box;
@@ -208,6 +212,14 @@
   color: #451a03;
 }
 
+.sec-tablet-hint {
+  font-size: 0.85rem;
+  color: #b45309;
+  font-weight: 700;
+  margin-top: 4px;
+  display: inline-block;
+}
+
 /* Timeline Container & Grid */
 .sequencing-timeline-container {
   width: 100%;
@@ -245,8 +257,22 @@
 }
 
 .sequencing-card-wrapper.is-drag-origin {
-  opacity: 0.40;
-  transform: scale(0.95);
+  position: relative;
+  z-index: 10;
+}
+
+.sequencing-card-wrapper.is-drag-origin::after {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px dashed #d97706;
+  border-radius: 12px;
+  background: rgba(245, 158, 11, 0.08);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .sequencing-card-wrapper.drag-over-target {
@@ -336,7 +362,7 @@
   -webkit-user-select: none;
   -webkit-touch-callout: none !important;
   -webkit-user-drag: element !important;
-  touch-action: none;
+  touch-action: pan-y;
   transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
@@ -470,7 +496,8 @@
   box-sizing: border-box;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  pointer-events: none;
+  cursor: grab;
+  touch-action: none;
 }
 
 .grip-dots {
@@ -660,7 +687,9 @@
 /* 15.6-Inch Laptops & Medium Displays (max-height: 880px) */
 @media (max-height: 880px) {
   .sequencing-scene {
-    padding: 16px 20px 40px;
+    padding: 10px 24px 28px 24px;
+    padding-left: var(--zone-pad-left, 24px) !important;
+    padding-right: var(--zone-pad-right, 24px) !important;
   }
 
   .sequencing-page-container {
@@ -726,12 +755,19 @@
     padding: 12px 28px;
     font-size: 1rem;
   }
+
+  .btn-reshuffle {
+    padding: 10px 20px;
+    font-size: 0.88rem;
+  }
 }
 
 /* 14-Inch Laptops & Compact Viewports (max-height: 740px) */
 @media (max-height: 740px) {
   .sequencing-scene {
-    padding: 10px 14px 30px;
+    padding: 8px 18px 24px 18px;
+    padding-left: var(--zone-pad-left, 18px) !important;
+    padding-right: var(--zone-pad-right, 18px) !important;
   }
 
   .sequencing-page-container {
@@ -792,5 +828,10 @@
   .btn-check-sequence {
     padding: 10px 22px;
     font-size: 0.94rem;
+  }
+
+  .btn-reshuffle {
+    padding: 8px 16px;
+    font-size: 0.82rem;
   }
 }
