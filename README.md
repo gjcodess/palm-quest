@@ -152,3 +152,6 @@ See [Packaging guide](docs/PACKAGING.md) for build prerequisites, signing, and t
   - Strict adherence to personal protective equipment (PPE) and food hygiene.
   - Understanding gelatinization, retrogradation, and thermal puffing in snack processing.
   - Moisture control standards for shelf-stable dehydrated food products.
+# Google Play promo images
+
+Open `/promo-generator/` on the local Vite server to use the PALMQuest Creative Studio. It includes editable captions, screenshot replacement, color palettes, individual 24-bit PNG downloads, and selected-image ZIP exports. See [the studio guide](docs/PROMO_STUDIO.md) for formats and publishing notes.
