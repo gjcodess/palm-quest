@@ -1,4 +1,4 @@
-package org.palmquest.app;
+package com.gjcodess.palmquest;
 
 import com.getcapacitor.BridgeActivity;
 import android.view.View;

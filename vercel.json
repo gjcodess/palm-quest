@@ -1,6 +1,22 @@
 {
   "rewrites": [
     {
+      "source": "/privacy",
+      "destination": "/privacy/index.html"
+    },
+    {
+      "source": "/privacy/",
+      "destination": "/privacy/index.html"
+    },
+    {
+      "source": "/promo-generator",
+      "destination": "/promo-generator/index.html"
+    },
+    {
+      "source": "/promo-generator/(.*)",
+      "destination": "/promo-generator/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

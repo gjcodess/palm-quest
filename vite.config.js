@@ -4,6 +4,14 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
   base: './',
+  build: {
+    rolldownOptions: {
+      input: {
+        game: 'index.html',
+        promo: 'promo-generator/index.html',
+      },
+    },
+  },
   plugins: [
     react(),
     VitePWA({
@@ -50,6 +58,7 @@ export default defineConfig({
         ],
       },
       workbox: {
+        navigateFallbackDenylist: [/^\/privacy(?:\/|$)/],
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff,woff2,mp3,ogg,wav}'],
         maximumFileSizeToCacheInBytes: 15 * 1024 * 1024,
         runtimeCaching: [
@@ -90,13 +99,29 @@ export default defineConfig({
       },
     }),
     {
+      name: 'promo-page-without-game-pwa',
+      enforce: 'post',
+      transformIndexHtml: {
+        order: 'post',
+        handler(html, context) {
+          if (!context.path.includes('/promo-generator/')) return html;
+          // The game owns its PWA. The separate studio must not register a
+          // service worker relative to its own subdirectory.
+          return html
+            .replace(/<link rel="manifest"[^>]*>/g, '')
+            .replace(/<script id="vite-plugin-pwa:register-sw"[^>]*>[\s\S]*?<\/script>/g, '');
+        },
+      },
+    },
+    {
       name: 'legacy-image-fallback',
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
           if (req.url) {
-            req.url = req.url
-              .replace(/^\/images\//, '/assets/')
-              .replace(/\.(png|jpe?g)$/i, (m) => m.toLowerCase().includes('cursor') ? m : '.webp');
+            req.url = req.url.replace(/^\/images\//, '/assets/');
+            if (req.url.startsWith('/assets/')) {
+              req.url = req.url.replace(/\.(png|jpe?g)$/i, (m) => m.toLowerCase().includes('cursor') ? m : '.webp');
+            }
           }
           next();
         });
@@ -104,9 +129,10 @@ export default defineConfig({
       configurePreviewServer(server) {
         server.middlewares.use((req, res, next) => {
           if (req.url) {
-            req.url = req.url
-              .replace(/^\/images\//, '/assets/')
-              .replace(/\.(png|jpe?g)$/i, (m) => m.toLowerCase().includes('cursor') ? m : '.webp');
+            req.url = req.url.replace(/^\/images\//, '/assets/');
+            if (req.url.startsWith('/assets/')) {
+              req.url = req.url.replace(/\.(png|jpe?g)$/i, (m) => m.toLowerCase().includes('cursor') ? m : '.webp');
+            }
           }
           next();
         });
