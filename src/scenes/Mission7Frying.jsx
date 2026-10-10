@@ -21,13 +21,15 @@ export const Mission7Frying = () => {
       stageNum: 7,
       stageTitle: STAGE_QUESTIONS.mission7.stageTitle,
       question: STAGE_QUESTIONS.mission7.question,
-      selectedOptionId: selectedChoice.displayLetter || selectedChoice.selectedOptionId || selectedChoice.id,
+      selectedOptionId: selectedChoice.id,
+      selectedDisplayLetter: selectedChoice.displayLetter,
       selectedText: selectedChoice.text,
       isCorrect: selectedChoice.isCorrect,
       reason: selectedChoice.reason,
       explanation: STAGE_QUESTIONS.mission7.explanation,
       choices: choicesList,
-      correctOptionId: correctChoice?.displayLetter || correctChoice?.id?.toUpperCase() || 'A',
+      correctOptionId: correctChoice?.id,
+      correctDisplayLetter: correctChoice?.displayLetter,
     });
     setIsCheckpointOpen(false);
   };

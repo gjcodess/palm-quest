@@ -72,7 +72,7 @@ export const CheckpointQuestionModal = ({
       onComplete(
         {
           ...currentChoice,
-          selectedOptionId: currentChoice.displayLetter,
+          selectedOptionId: currentChoice.id,
         },
         randomizedChoices
       );
