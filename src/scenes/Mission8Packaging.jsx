@@ -1,3 +1,5 @@
+import { useActivityInterval } from '../hooks/useActivityInterval';
+import { useSessionState } from '../hooks/useSessionState';
 import React, { useState, useEffect } from 'react';
 import { useGame } from '../context/GameContext';
 import { soundManager } from '../audio/soundManager';
@@ -8,7 +10,7 @@ import { CheckpointQuestionModal } from '../components/CheckpointQuestionModal';
 import { STAGE_QUESTIONS } from '../data/stageQuestionsData';
 
 export const Mission8Packaging = () => {
-  const { setScene, unlockBadge, speak, showToast, completeMission, holdingItem, setHoldingItem, missionsCompleted, maxUnlockedStage, stageAnswers, recordStageAnswer } = useGame();
+  const { isRestoringSession, setScene, unlockBadge, speak, showToast, completeMission, holdingItem, setHoldingItem, missionsCompleted, maxUnlockedStage, stageAnswers, recordStageAnswer } = useGame();
 
   const isAlreadyCompleted = Boolean(missionsCompleted?.mission8);
   const [isCheckpointOpen, setIsCheckpointOpen] = useState(() => !isAlreadyCompleted && !stageAnswers?.mission8);
@@ -20,13 +22,15 @@ export const Mission8Packaging = () => {
       stageNum: 8,
       stageTitle: STAGE_QUESTIONS.mission8.stageTitle,
       question: STAGE_QUESTIONS.mission8.question,
-      selectedOptionId: selectedChoice.displayLetter || selectedChoice.selectedOptionId || selectedChoice.id,
+      selectedOptionId: selectedChoice.id,
+      selectedDisplayLetter: selectedChoice.displayLetter,
       selectedText: selectedChoice.text,
       isCorrect: selectedChoice.isCorrect,
       reason: selectedChoice.reason,
       explanation: STAGE_QUESTIONS.mission8.explanation,
       choices: choicesList,
-      correctOptionId: correctChoice?.displayLetter || correctChoice?.id?.toUpperCase() || 'A',
+      correctOptionId: correctChoice?.id,
+      correctDisplayLetter: correctChoice?.displayLetter,
     });
     setIsCheckpointOpen(false);
   };
@@ -36,11 +40,12 @@ export const Mission8Packaging = () => {
   // 1: Pouch filled with crackers -> accept brand_label OR click "Seal & Apply Label"
   // 2: Branded commercial pouch -> accept retail_box OR click "Pack into Retail Carton" (8 pouches)
   // 3: Retail countertop display box packed (8 pouches) -> complete
-  const [packStep, setPackStep] = useState(() => (isAlreadyCompleted ? 3 : 0));
-  const [isSealing, setIsSealing] = useState(false);
-  const [sealProgress, setSealProgress] = useState(0);
+  const [packStep, setPackStep] = useSessionState('mission8.packStep', () => (isAlreadyCompleted ? 3 : 0));
+  const [isSealing, setIsSealing] = useSessionState('mission8.isSealing', false);
+  const [sealProgress, setSealProgress] = useSessionState('mission8.sealProgress', 0);
 
   useEffect(() => {
+    if (isRestoringSession && !isAlreadyCompleted) return;
     if (isAlreadyCompleted) {
       speak(
         'Stage 8 complete.',
@@ -132,12 +137,12 @@ export const Mission8Packaging = () => {
     setHoldingItem(null);
     showToast('Sealing & Labeling...', 'Applying thermal impulse clamp & product label...', 'info');
 
-    let current = 0;
-    const interval = setInterval(() => {
-      current += 25;
+  };
+
+  useActivityInterval(isSealing, () => {
+      const current = sealProgress + 25;
       setSealProgress(current);
       if (current >= 100) {
-        clearInterval(interval);
         setIsSealing(false);
         setPackStep(2);
         soundManager.playSuccess();
@@ -153,8 +158,7 @@ export const Mission8Packaging = () => {
           }
         );
       }
-    }, 250);
-  };
+  }, 250);
 
   const handlePackIntoBox = () => {
     soundManager.playSuccess();
@@ -264,6 +268,7 @@ export const Mission8Packaging = () => {
 
       {/* Stage 8 Pre-Check Question Modal */}
       <CheckpointQuestionModal
+        persistenceKey="mission8.checkpoint"
         isOpen={isCheckpointOpen}
         stageTitle={STAGE_QUESTIONS.mission8.stageTitle}
         question={STAGE_QUESTIONS.mission8.question}

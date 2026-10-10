@@ -1,4 +1,6 @@
+import { useSessionState } from '../hooks/useSessionState';
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useGame } from '../context/GameContext';
 import { soundManager } from '../audio/soundManager';
 import { HANDWASHING_STEPS } from '../data/orientationData';
@@ -32,7 +34,7 @@ export const HandwashingSequenceActivity = ({
   };
 
   // 10 Total Cards (7 correct steps + 3 distractors)
-  const [pool, setPool] = useState(() => {
+  const [pool, setPool] = useSessionState('handwashing.pool', () => {
     if (initialPool && Array.isArray(initialPool)) return initialPool;
     if (initialSlots && Array.isArray(initialSlots)) {
       const placedIds = new Set(initialSlots.filter(Boolean).map((s) => s.id));
@@ -42,7 +44,7 @@ export const HandwashingSequenceActivity = ({
   });
 
   // 7 Sequence Slots (null or step object)
-  const [slots, setSlots] = useState(() => {
+  const [slots, setSlots] = useSessionState('handwashing.slots', () => {
     if (initialSlots && Array.isArray(initialSlots) && initialSlots.length === 7) {
       return initialSlots;
     }
@@ -59,6 +61,18 @@ export const HandwashingSequenceActivity = ({
   const [draggedPoolItem, setDraggedPoolItem] = useState(null);
   const [isDragOverPool, setIsDragOverPool] = useState(false);
   const touchOriginRef = useRef(null);
+  const [touchPreview, setTouchPreview] = useState(null);
+  const suppressClickUntilRef = useRef(0);
+
+  const setLiftedDragImage = (e) => {
+    const preview = e.currentTarget.cloneNode(true);
+    preview.className = 'hw-drag-preview';
+    preview.setAttribute('aria-hidden', 'true');
+    Object.assign(preview.style, { position: 'fixed', left: '-1000px', top: '0', width: '190px' });
+    document.body.appendChild(preview);
+    e.dataTransfer.setDragImage(preview, 95, 110);
+    setTimeout(() => preview.remove(), 0);
+  };
 
   // Notify parent of updates
   const notifyChange = (newSlots, newPool) => {
@@ -206,6 +220,7 @@ export const HandwashingSequenceActivity = ({
   // ==========================================
   const handleSlotDragStart = (e, index) => {
     if (isLocked || !slots[index]) return;
+    setLiftedDragImage(e);
     setSelectedSlotIndex(null);
     setSelectedPoolId(null);
     const dragData = { source: 'slot', index, id: slots[index].id, item: slots[index] };
@@ -222,6 +237,7 @@ export const HandwashingSequenceActivity = ({
 
   const handlePoolDragStart = (e, item) => {
     if (isLocked) return;
+    setLiftedDragImage(e);
     setSelectedSlotIndex(null);
     setSelectedPoolId(null);
     const dragData = { source: 'pool', id: item.id, item };
@@ -379,9 +395,17 @@ export const HandwashingSequenceActivity = ({
   // Tablet Touch Drag Handlers (Dynamic Reorder)
   // ==========================================
   const handleTouchStart = (e, index) => {
-    if (isLocked || !slots[index]) return;
+    touchOriginRef.current = null;
+    if (isLocked || isVerified || !slots[index] || e.target.closest('button')) return;
     const touch = e.touches[0];
-    touchOriginRef.current = { index, startX: touch.clientX, startY: touch.clientY, hasMoved: false };
+    touchOriginRef.current = { source: 'slot', index, item: slots[index], startX: touch.clientX, startY: touch.clientY, hasMoved: false };
+  };
+
+  const handlePoolTouchStart = (e, item) => {
+    touchOriginRef.current = null;
+    if (isLocked || isVerified || !e.target.closest('.hw-touch-drag-handle')) return;
+    const touch = e.touches[0];
+    touchOriginRef.current = { source: 'pool', item, startX: touch.clientX, startY: touch.clientY, hasMoved: false };
   };
 
   const handleTouchMove = (e) => {
@@ -397,7 +421,10 @@ export const HandwashingSequenceActivity = ({
 
     if (!touchOriginRef.current.hasMoved) return;
 
-    if (draggedSlotIndex === null) {
+    setTouchPreview({ item: touchOriginRef.current.item, x: touch.clientX, y: touch.clientY });
+    if (touchOriginRef.current.source === 'pool') {
+      setDraggedPoolItem(touchOriginRef.current.item);
+    } else if (draggedSlotIndex === null) {
       setDraggedSlotIndex(touchOriginRef.current.index);
     }
 
@@ -405,6 +432,7 @@ export const HandwashingSequenceActivity = ({
     if (!targetElement) return;
 
     const wrapper = targetElement.closest('.hw-slot-box');
+    setIsDragOverPool(touchOriginRef.current.source === 'slot' && Boolean(targetElement.closest('.hw-pool-section')));
     if (wrapper && wrapper.dataset.slotIndex !== undefined) {
       const targetIndex = parseInt(wrapper.dataset.slotIndex, 10);
       if (!isNaN(targetIndex) && targetIndex >= 0 && targetIndex < slots.length) {
@@ -415,12 +443,14 @@ export const HandwashingSequenceActivity = ({
     }
   };
 
-  const handleTouchEnd = (index) => {
+  const handleTouchEnd = () => {
     if (touchOriginRef.current) {
-      if (!touchOriginRef.current.hasMoved) {
-        // Tap-to-swap
-        handleSlotClick(index);
-      } else if (dragOverSlotIndex !== null && dragOverSlotIndex !== touchOriginRef.current.index) {
+      // Simple taps use onClick once; dragging must not trigger a second action.
+      if (touchOriginRef.current.hasMoved && touchOriginRef.current.source === 'pool' && dragOverSlotIndex !== null) {
+        placeItemInSlot(touchOriginRef.current.item, dragOverSlotIndex);
+      } else if (touchOriginRef.current.hasMoved && isDragOverPool) {
+        removeItemFromSlot(touchOriginRef.current.index);
+      } else if (touchOriginRef.current.hasMoved && dragOverSlotIndex !== null && dragOverSlotIndex !== touchOriginRef.current.index) {
         const sourceIndex = touchOriginRef.current.index;
         const targetIndex = dragOverSlotIndex;
         soundManager.playClick();
@@ -432,12 +462,20 @@ export const HandwashingSequenceActivity = ({
         notifyChange(newSlots, pool);
       }
     }
-    touchOriginRef.current = null;
-    setDraggedSlotIndex(null);
-    setDragOverSlotIndex(null);
+    handleTouchCancel();
   };
 
-  const [isVerified, setIsVerified] = useState(() => isLocked);
+  const handleTouchCancel = () => {
+    if (touchOriginRef.current?.hasMoved) suppressClickUntilRef.current = Date.now() + 500;
+    touchOriginRef.current = null;
+    setTouchPreview(null);
+    setDraggedSlotIndex(null);
+    setDraggedPoolItem(null);
+    setDragOverSlotIndex(null);
+    setIsDragOverPool(false);
+  };
+
+  const [isVerified, setIsVerified] = useSessionState('handwashing.isVerified', () => isLocked);
 
   const handleReset = () => {
     if (isLocked || isVerified) {
@@ -544,7 +582,7 @@ export const HandwashingSequenceActivity = ({
               className={`hw-slot-box ${item ? 'filled' : 'empty'} ${isSelected ? 'selected' : ''} ${
                 isDragging ? 'is-dragging-slot is-drag-origin' : ''
               } ${isHoverTarget ? 'drag-over-target' : ''} ${isLocked || isVerified ? 'is-locked' : ''}${verifyClass}`}
-              onClick={() => handleSlotClick(idx)}
+              onClick={() => { if (Date.now() >= suppressClickUntilRef.current) handleSlotClick(idx); }}
               onDragOver={(e) => handleSlotDragOver(e, idx)}
               onDragEnter={(e) => handleSlotDragEnter(e, idx)}
               onDragLeave={(e) => handleSlotDragLeave(e, idx)}
@@ -554,7 +592,8 @@ export const HandwashingSequenceActivity = ({
               onDragEnd={handleDragEnd}
               onTouchStart={(e) => handleTouchStart(e, idx)}
               onTouchMove={handleTouchMove}
-              onTouchEnd={() => handleTouchEnd(idx)}
+              onTouchEnd={handleTouchEnd}
+              onTouchCancel={handleTouchCancel}
             >
               <div className="slot-top-row">
                 <div className="slot-number-tag">Step {idx + 1}</div>
@@ -698,7 +737,11 @@ export const HandwashingSequenceActivity = ({
                     draggable
                     onDragStart={(e) => handlePoolDragStart(e, item)}
                     onDragEnd={handleDragEnd}
-                    onClick={() => handlePoolCardClick(item)}
+                    onClick={() => { if (Date.now() >= suppressClickUntilRef.current) handlePoolCardClick(item); }}
+                    onTouchStart={(e) => handlePoolTouchStart(e, item)}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                    onTouchCancel={handleTouchCancel}
                     role="button"
                     tabIndex={0}
                   >
@@ -706,10 +749,10 @@ export const HandwashingSequenceActivity = ({
                       <h5 className="pool-card-action">{item.action}</h5>
                     </div>
                     <p className="pool-card-desc">{item.desc}</p>
-                    <div className="pool-card-hint">
+                    <div className="pool-card-hint hw-touch-drag-handle">
                       {selectedSlotIndex !== null
                         ? 'Assign to Step ' + (selectedSlotIndex + 1)
-                        : 'Tap or Drag to place'}
+                        : '⋮⋮ Drag here or tap to place'}
                     </div>
                   </div>
                 );
@@ -717,6 +760,18 @@ export const HandwashingSequenceActivity = ({
             </div>
           )}
         </div>
+      )}
+
+      {touchPreview && createPortal(
+        <div
+          className="hw-drag-preview hw-touch-preview"
+          aria-hidden="true"
+          style={{ left: touchPreview.x, top: touchPreview.y }}
+        >
+          <strong>{touchPreview.item.action}</strong>
+          <p>{touchPreview.item.desc}</p>
+        </div>,
+        document.body
       )}
 
       {/* Action Footer */}

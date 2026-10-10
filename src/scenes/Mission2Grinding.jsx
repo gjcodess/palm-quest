@@ -1,3 +1,5 @@
+import { useActivityInterval } from '../hooks/useActivityInterval';
+import { useSessionState } from '../hooks/useSessionState';
 import React, { useState, useEffect } from 'react';
 import { useGame } from '../context/GameContext';
 import { soundManager } from '../audio/soundManager';
@@ -8,7 +10,7 @@ import { CheckpointQuestionModal } from '../components/CheckpointQuestionModal';
 import { STAGE_QUESTIONS } from '../data/stageQuestionsData';
 
 export const Mission2Grinding = () => {
-  const { setScene, speak, showToast, completeMission, holdingItem, setHoldingItem, unlockBadge, missionsCompleted, maxUnlockedStage, stageAnswers, recordStageAnswer } = useGame();
+  const { isRestoringSession, setScene, speak, showToast, completeMission, holdingItem, setHoldingItem, unlockBadge, missionsCompleted, maxUnlockedStage, stageAnswers, recordStageAnswer } = useGame();
 
   const isAlreadyCompleted = Boolean(missionsCompleted?.mission2);
   const [isCheckpointOpen, setIsCheckpointOpen] = useState(() => !isAlreadyCompleted && !stageAnswers?.mission2);
@@ -20,13 +22,15 @@ export const Mission2Grinding = () => {
       stageNum: 2,
       stageTitle: STAGE_QUESTIONS.mission2.stageTitle,
       question: STAGE_QUESTIONS.mission2.question,
-      selectedOptionId: selectedChoice.displayLetter || selectedChoice.selectedOptionId || selectedChoice.id,
+      selectedOptionId: selectedChoice.id,
+      selectedDisplayLetter: selectedChoice.displayLetter,
       selectedText: selectedChoice.text,
       isCorrect: selectedChoice.isCorrect,
       reason: selectedChoice.reason,
       explanation: STAGE_QUESTIONS.mission2.explanation,
       choices: choicesList,
-      correctOptionId: correctChoice?.displayLetter || correctChoice?.id?.toUpperCase() || 'A',
+      correctOptionId: correctChoice?.id,
+      correctDisplayLetter: correctChoice?.displayLetter,
     });
     setIsCheckpointOpen(false);
   };
@@ -38,13 +42,14 @@ export const Mission2Grinding = () => {
   // 3: Blending active (spinning vortex)
   // 4: Smooth ubod paste ready -> action: scrape into prep bowl
   // 5: Complete
-  const [processorStep, setProcessorStep] = useState(() => (isAlreadyCompleted ? 5 : 0));
-  const [blendProgress, setBlendProgress] = useState(0);
-  const [isBlending, setIsBlending] = useState(false);
-  const [isLidLocked, setIsLidLocked] = useState(() => isAlreadyCompleted);
+  const [processorStep, setProcessorStep] = useSessionState('mission2.processorStep', () => (isAlreadyCompleted ? 5 : 0));
+  const [blendProgress, setBlendProgress] = useSessionState('mission2.blendProgress', 0);
+  const [isBlending, setIsBlending] = useSessionState('mission2.isBlending', false);
+  const [isLidLocked, setIsLidLocked] = useSessionState('mission2.isLidLocked', () => isAlreadyCompleted);
   const [isScraping, setIsScraping] = useState(false);
 
   useEffect(() => {
+    if (isRestoringSession && !isAlreadyCompleted) return;
     if (isAlreadyCompleted) {
       speak(
         'Stage 2 complete.',
@@ -185,12 +190,12 @@ export const Mission2Grinding = () => {
     setProcessorStep(3);
     showToast('Pureeing Active!', 'High-speed S-blade pureeing ubod fibers...', 'info');
 
-    let current = 0;
-    const interval = setInterval(() => {
-      current += 20;
+  };
+
+  useActivityInterval(isBlending, () => {
+      const current = blendProgress + 20;
       setBlendProgress(current);
       if (current >= 100) {
-        clearInterval(interval);
         setIsBlending(false);
         setProcessorStep(4);
         soundManager.playSuccess();
@@ -206,8 +211,7 @@ export const Mission2Grinding = () => {
           }
         );
       }
-    }, 600);
-  };
+  }, 600);
 
   const handleScrapePaste = () => {
     if (isScraping || processorStep !== 4) return;
@@ -334,6 +338,7 @@ export const Mission2Grinding = () => {
 
       {/* Stage 2 Pre-Check Question Modal */}
       <CheckpointQuestionModal
+        persistenceKey="mission2.checkpoint"
         isOpen={isCheckpointOpen}
         stageTitle={STAGE_QUESTIONS.mission2.stageTitle}
         question={STAGE_QUESTIONS.mission2.question}

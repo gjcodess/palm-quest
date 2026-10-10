@@ -1,12 +1,20 @@
+import { useSessionState } from '../hooks/useSessionState';
+import { clearSession, readSession } from '../utils/sessionStorage';
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { soundManager } from '../audio/soundManager.js';
 
 const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
-  const [scene, setScene] = useState('title');
+  const [scene, saveScene] = useSessionState('game.scene', 'title');
+  const [restoredScene, setRestoredScene] = useState(() => readSession()['game.scene'] || null);
+  const isRestoringSession = restoredScene === scene && scene !== 'title';
+  const setScene = (nextScene) => {
+    setRestoredScene(null);
+    saveScene(nextScene);
+  };
   const [studentName, setStudentName] = useState(() => localStorage.getItem('palmquest_name') || '');
-  const [stageAnswers, setStageAnswers] = useState({
+  const [stageAnswers, setStageAnswers] = useSessionState('game.stageAnswers', {
     mission1: null,
     mission2: null,
     mission3: null,
@@ -24,11 +32,11 @@ export const GameProvider = ({ children }) => {
     }));
   };
 
-  const [badges, setBadges] = useState([]);
+  const [badges, setBadges] = useSessionState('game.badges', []);
   const [isMuted, setIsMuted] = useState(() => soundManager.isMuted);
 
   // Diagnostic & Formative Assessment Tracking (Pre-Test & Post-Test)
-  const [assessmentResults, setAssessmentResults] = useState({
+  const [assessmentResults, setAssessmentResults] = useSessionState('game.assessmentResults', {
     preTest: {
       ppe: null, // { selectedIds: [], correctCount: 0, totalCorrect: 6, distractorsPicked: [] }
       handwashing: null, // { submittedSteps: [], correctSequence: [], score: 0, distractorsPicked: [] }
@@ -93,7 +101,7 @@ export const GameProvider = ({ children }) => {
     }));
   };
 
-  const [dialogue, setDialogue] = useState({
+  const [dialogue, setDialogue] = useSessionState('game.dialogue', {
     visible: false,
     text: '',
     avatar: 'neutral', // 'neutral', 'happy', 'thinking'
@@ -129,7 +137,7 @@ export const GameProvider = ({ children }) => {
   });
 
   const [stageKey, setStageKey] = useState(0);
-  const [maxUnlockedStage, setMaxUnlockedStage] = useState(0);
+  const [maxUnlockedStage, setMaxUnlockedStage] = useSessionState('game.maxUnlockedStage', 0);
 
   // Zoom level state (default 1.0 = 100% true physical scale)
   const [zoomLevel, setZoomLevel] = useState(1);
@@ -193,6 +201,8 @@ export const GameProvider = ({ children }) => {
   const restartStage = (targetScene = scene) => {
     soundManager.playClick();
     setHoldingItem(null);
+    setRestoredScene(null);
+    clearSession(targetScene);
     resetStageScore(targetScene);
     setStageKey(prev => prev + 1);
     showToast('Stage Reset', 'Workstation progress has been reset. You can restart the activity.', 'info');
@@ -208,7 +218,7 @@ export const GameProvider = ({ children }) => {
     onConfirm: null,
   });
 
-  const [missionsCompleted, setMissionsCompleted] = useState({
+  const [missionsCompleted, setMissionsCompleted] = useSessionState('game.missionsCompleted', {
     orientation: false,
     mission1: false,
     mission2: false,
@@ -356,6 +366,8 @@ export const GameProvider = ({ children }) => {
   };
 
   const resetGame = () => {
+    clearSession();
+    setRestoredScene(null);
     setStageAnswers({
       mission1: null,
       mission2: null,
@@ -402,6 +414,7 @@ export const GameProvider = ({ children }) => {
     <GameContext.Provider
       value={{
         scene,
+        isRestoringSession,
         setScene,
         studentName,
         saveStudentName,

@@ -1,3 +1,5 @@
+import { useActivityInterval } from '../hooks/useActivityInterval';
+import { useSessionState } from '../hooks/useSessionState';
 import React, { useState, useEffect } from 'react';
 import { useGame } from '../context/GameContext';
 import { soundManager } from '../audio/soundManager';
@@ -8,7 +10,7 @@ import { RecipeReferenceDrawer } from '../components/RecipeReferenceDrawer';
 import { STAGE_QUESTIONS } from '../data/stageQuestionsData';
 
 export const Mission3Mixing = () => {
-  const { setScene, unlockBadge, speak, showToast, completeMission, holdingItem, setHoldingItem, missionsCompleted, maxUnlockedStage, stageAnswers, recordStageAnswer } = useGame();
+  const { isRestoringSession, setScene, unlockBadge, speak, showToast, completeMission, holdingItem, setHoldingItem, missionsCompleted, maxUnlockedStage, stageAnswers, recordStageAnswer } = useGame();
 
   const isAlreadyCompleted = Boolean(missionsCompleted?.mission3);
   const [isCheckpointOpen, setIsCheckpointOpen] = useState(() => !isAlreadyCompleted && !stageAnswers?.mission3);
@@ -20,13 +22,15 @@ export const Mission3Mixing = () => {
       stageNum: 3,
       stageTitle: STAGE_QUESTIONS.mission3.stageTitle,
       question: STAGE_QUESTIONS.mission3.question,
-      selectedOptionId: selectedChoice.displayLetter || selectedChoice.selectedOptionId || selectedChoice.id,
+      selectedOptionId: selectedChoice.id,
+      selectedDisplayLetter: selectedChoice.displayLetter,
       selectedText: selectedChoice.text,
       isCorrect: selectedChoice.isCorrect,
       reason: selectedChoice.reason,
       explanation: STAGE_QUESTIONS.mission3.explanation,
       choices: choicesList,
-      correctOptionId: correctChoice?.displayLetter || correctChoice?.id?.toUpperCase() || 'A',
+      correctOptionId: correctChoice?.id,
+      correctDisplayLetter: correctChoice?.displayLetter,
     });
     setIsCheckpointOpen(false);
   };
@@ -39,12 +43,13 @@ export const Mission3Mixing = () => {
   // 4: All ingredients in bowl -> action: fold & mix paste
   // 5: Mixing in progress
   // 6: Smooth uniform paste ready
-  const [bowlStep, setBowlStep] = useState(() => (isAlreadyCompleted ? 6 : 0));
-  const [kneadProgress, setKneadProgress] = useState(0);
-  const [isKneading, setIsKneading] = useState(false);
-  const [quizSelected, setQuizSelected] = useState(null);
+  const [bowlStep, setBowlStep] = useSessionState('mission3.bowlStep', () => (isAlreadyCompleted ? 6 : 0));
+  const [kneadProgress, setKneadProgress] = useSessionState('mission3.kneadProgress', 0);
+  const [isKneading, setIsKneading] = useSessionState('mission3.isKneading', false);
+  const [quizSelected, setQuizSelected] = useSessionState('mission3.quizSelected', null);
 
   useEffect(() => {
+    if (isRestoringSession && !isAlreadyCompleted) return;
     if (isAlreadyCompleted) {
       speak(
         'Stage 3 complete.',
@@ -202,15 +207,15 @@ export const Mission3Mixing = () => {
     soundManager.playMix();
     showToast('Mixing Active!', 'Gently folding dough into uniform consistency...', 'info');
 
-    let current = 0;
-    const interval = setInterval(() => {
-      current += 20;
+  };
+
+  useActivityInterval(isKneading, () => {
+      const current = kneadProgress + 20;
       setKneadProgress(current);
       if (current < 100) {
         soundManager.playMix();
       }
       if (current >= 100) {
-        clearInterval(interval);
         setIsKneading(false);
         setBowlStep(6);
         setHoldingItem(null);
@@ -229,8 +234,7 @@ export const Mission3Mixing = () => {
           }
         );
       }
-    }, 600);
-  };
+  }, 600);
 
   const stage3Inventory = [
     {
@@ -340,6 +344,7 @@ export const Mission3Mixing = () => {
 
       {/* Stage 3 Pre-Check Question Modal */}
       <CheckpointQuestionModal
+        persistenceKey="mission3.checkpoint"
         isOpen={isCheckpointOpen}
         stageTitle={STAGE_QUESTIONS.mission3.stageTitle}
         question={STAGE_QUESTIONS.mission3.question}

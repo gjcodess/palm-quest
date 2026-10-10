@@ -1,3 +1,4 @@
+import { useSessionState } from '../hooks/useSessionState';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { soundManager } from '../audio/soundManager';
 import { useGame } from '../context/GameContext';
@@ -65,7 +66,7 @@ export const SequencingActivity = ({ onComplete }) => {
   const { unlockBadge, showToast, missionsCompleted, recordPostTestSequence, assessmentResults } = useGame();
   const isAlreadyDone = Boolean(missionsCompleted?.sequencing);
 
-  const [items, setItems] = useState(() => {
+  const [items, setItems] = useSessionState('sequencing.items', () => {
     // If previously submitted in this session, restore submitted items
     if (assessmentResults?.postTest?.sequencing?.submittedItems) {
       return [...assessmentResults.postTest.sequencing.submittedItems];
@@ -81,7 +82,7 @@ export const SequencingActivity = ({ onComplete }) => {
   const [dragOverIndex, setDragOverIndex] = useState(null);
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
   const [touchDelta, setTouchDelta] = useState(null);
-  const [isSolved, setIsSolved] = useState(() => isAlreadyDone);
+  const [isSolved, setIsSolved] = useSessionState('sequencing.isSolved', () => isAlreadyDone);
   const touchOriginRef = useRef(null);
   // Ref to track the source index throughout the entire drag operation (avoids stale closure issues)
   const dragSourceRef = useRef(null);

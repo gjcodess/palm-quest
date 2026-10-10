@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
+import { useSessionState } from '../hooks/useSessionState';
 import { soundManager } from '../audio/soundManager';
+import { formatStageFeedback } from '../utils/stageFeedback';
 
 /**
  * Fisher-Yates shuffle algorithm for fair, unbiased choice randomization
@@ -32,25 +34,36 @@ export const CheckpointQuestionModal = ({
   explanation = '',
   onComplete,
   stageTitle = 'Food Technology Checkpoint',
+  persistenceKey = `checkpoint.${question}`,
 }) => {
-  const [selectedId, setSelectedId] = useState(null);
-  const [isAnswered, setIsAnswered] = useState(false);
-  const [randomizedChoices, setRandomizedChoices] = useState(() =>
+  const [selectedId, setSelectedId] = useSessionState(`${persistenceKey}.selectedId`, null);
+  const [isAnswered, setIsAnswered] = useSessionState(`${persistenceKey}.isAnswered`, false);
+  const [randomizedChoices, setRandomizedChoices] = useSessionState(`${persistenceKey}.choices`, () =>
     isOpen && Array.isArray(choices) && choices.length > 0 ? shuffleChoices(choices) : []
   );
+  const previousQuestionRef = useRef(question);
 
   useEffect(() => {
-    if (isOpen && Array.isArray(choices) && choices.length > 0) {
+    if (isOpen && Array.isArray(choices) && choices.length > 0 &&
+      (randomizedChoices.length === 0 || previousQuestionRef.current !== question)) {
       setSelectedId(null);
       setIsAnswered(false);
       setRandomizedChoices(shuffleChoices(choices));
     }
+    previousQuestionRef.current = question;
   }, [isOpen, question]);
 
   if (!isOpen) return null;
 
   const currentChoice = randomizedChoices.find((c) => c.id === selectedId);
   const correctChoice = randomizedChoices.find((c) => c.isCorrect);
+  const feedbackReason = formatStageFeedback(currentChoice?.reason || (currentChoice?.isCorrect
+    ? 'This aligns with commercial food processing standards.'
+    : 'This choice is not aligned with standard processing parameters.'), currentChoice);
+  const principleExplanation = formatStageFeedback(explanation, correctChoice);
+  const normalizeFeedback = (text) => text.trim().replace(/\s+/g, ' ').toLowerCase();
+  const hasAdditionalExplanation = Boolean(principleExplanation.trim()) &&
+    normalizeFeedback(principleExplanation) !== normalizeFeedback(feedbackReason);
 
   const handleSelect = (choice) => {
     if (isAnswered) return; // Prevent changing after initial click
@@ -72,7 +85,7 @@ export const CheckpointQuestionModal = ({
       onComplete(
         {
           ...currentChoice,
-          selectedOptionId: currentChoice.displayLetter,
+          selectedOptionId: currentChoice.id,
         },
         randomizedChoices
       );
@@ -163,14 +176,14 @@ export const CheckpointQuestionModal = ({
                     : '⚠️ Scientific Principle Alert'}
                 </strong>
                 <p style={{ marginBottom: '6px' }}>
-                  {currentChoice.reason || (currentChoice.isCorrect ? 'This aligns with commercial food processing standards.' : 'This choice is not aligned with standard processing parameters.')}
+                  {feedbackReason}
                 </p>
-                {explanation && (
+                {hasAdditionalExplanation && (
                   <div className="feedback-science-principle" style={{ marginTop: '8px', paddingTop: '8px', borderTop: '1px dashed currentColor', opacity: 0.95 }}>
                     <span style={{ fontWeight: 800, textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.04em', display: 'block', marginBottom: '2px' }}>
                       Food Science Principle:
                     </span>
-                    <span>{explanation}</span>
+                    <span>{principleExplanation}</span>
                   </div>
                 )}
               </div>
@@ -195,5 +208,3 @@ export const CheckpointQuestionModal = ({
     </div>
   );
 };
-
-

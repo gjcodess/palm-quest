@@ -1,3 +1,4 @@
+import { useSessionState } from '../hooks/useSessionState';
 import React, { useState, useEffect } from 'react';
 import { useGame } from '../context/GameContext';
 import { soundManager } from '../audio/soundManager';
@@ -8,7 +9,7 @@ import { RecipeReferenceDrawer } from '../components/RecipeReferenceDrawer';
 import { STAGE_QUESTIONS } from '../data/stageQuestionsData';
 
 export const Mission4Molding = () => {
-  const { setScene, unlockBadge, speak, showToast, completeMission, holdingItem, setHoldingItem, missionsCompleted, maxUnlockedStage, stageAnswers, recordStageAnswer } = useGame();
+  const { isRestoringSession, setScene, unlockBadge, speak, showToast, completeMission, holdingItem, setHoldingItem, missionsCompleted, maxUnlockedStage, stageAnswers, recordStageAnswer } = useGame();
 
   const isAlreadyCompleted = Boolean(missionsCompleted?.mission4);
   const [isCheckpointOpen, setIsCheckpointOpen] = useState(() => !isAlreadyCompleted && !stageAnswers?.mission4);
@@ -20,13 +21,15 @@ export const Mission4Molding = () => {
       stageNum: 4,
       stageTitle: STAGE_QUESTIONS.mission4.stageTitle,
       question: STAGE_QUESTIONS.mission4.question,
-      selectedOptionId: selectedChoice.displayLetter || selectedChoice.selectedOptionId || selectedChoice.id,
+      selectedOptionId: selectedChoice.id,
+      selectedDisplayLetter: selectedChoice.displayLetter,
       selectedText: selectedChoice.text,
       isCorrect: selectedChoice.isCorrect,
       reason: selectedChoice.reason,
       explanation: STAGE_QUESTIONS.mission4.explanation,
       choices: choicesList,
-      correctOptionId: correctChoice?.displayLetter || correctChoice?.id?.toUpperCase() || 'A',
+      correctOptionId: correctChoice?.id,
+      correctDisplayLetter: correctChoice?.displayLetter,
     });
     setIsCheckpointOpen(false);
   };
@@ -36,11 +39,12 @@ export const Mission4Molding = () => {
   // 1: 1 Cavity Calibrated -> accept measuring spoon OR quick fill button
   // 2: 24 Cavities Filled (Unleveled) -> accept leveling spatula
   // 3: 24 Cavities Completely Leveled -> Complete!
-  const [moldStep, setMoldStep] = useState(() => (isAlreadyCompleted ? 3 : 0));
+  const [moldStep, setMoldStep] = useSessionState('mission4.moldStep', () => (isAlreadyCompleted ? 3 : 0));
   const [isLeveling, setIsLeveling] = useState(false);
-  const [quizSelected, setQuizSelected] = useState(null);
+  const [quizSelected, setQuizSelected] = useSessionState('mission4.quizSelected', null);
 
   useEffect(() => {
+    if (isRestoringSession && !isAlreadyCompleted) return;
     if (isAlreadyCompleted) {
       speak(
         'Stage 4 complete.',
@@ -238,6 +242,7 @@ export const Mission4Molding = () => {
 
       {/* Stage 4 Pre-Check Question Modal */}
       <CheckpointQuestionModal
+        persistenceKey="mission4.checkpoint"
         isOpen={isCheckpointOpen}
         stageTitle={STAGE_QUESTIONS.mission4.stageTitle}
         question={STAGE_QUESTIONS.mission4.question}
