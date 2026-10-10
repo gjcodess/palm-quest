@@ -4,7 +4,7 @@ PALMQuest uses one Vite build for the website, Android Capacitor app, and Window
 
 ## Android APK
 
-Install Node.js 22+, Android Studio, and an Android SDK. Use Android Studio's JDK 21 when building with Gradle. The package ID is `org.palmquest.app`; agree on a permanent ID before a public release, since changing it later makes Android treat the build as a separate app.
+Install Node.js 22+, Android Studio, and an Android SDK. Use Android Studio's JDK 21 when building with Gradle. The package ID is `com.gjcodess.palmquest`; agree on a permanent ID before a public release, since changing it later makes Android treat the build as a separate app.
 
 ```powershell
 npm install
