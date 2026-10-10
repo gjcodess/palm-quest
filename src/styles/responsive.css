@@ -985,7 +985,62 @@
     flex-direction: column !important;
     align-items: center !important;
   }
-  .btn-recipe-guide-trigger { display: none !important; }
+  /* Reserve a top row so the reference sits above the centered workstation. */
+  .workstation-scene:not(.orientation-scene) .stage-center-zone {
+    padding-top: 48px !important;
+  }
+  .btn-recipe-guide-trigger {
+    display: inline-flex !important;
+    position: absolute !important;
+    top: 8px !important;
+    right: var(--zone-pad-right, 42px) !important;
+    max-width: min(220px, 100%);
+    min-height: 32px;
+    margin: 0;
+    gap: 5px;
+    padding: 3px 7px !important;
+    border-radius: 8px;
+    border-bottom-width: 3px;
+    box-shadow: 0 2px 0 #b45309, 0 3px 8px rgba(180, 83, 9, 0.18);
+  }
+  .btn-recipe-guide-trigger .trigger-label {
+    font-size: .68rem;
+    white-space: normal;
+    text-align: left;
+    line-height: 1.15;
+    min-width: 0;
+  }
+  .btn-recipe-guide-trigger .trigger-icon-box { width: 20px; height: 20px; font-size: .75rem; border-radius: 5px; }
+  .btn-recipe-guide-trigger .trigger-action-badge { display: none; }
+  .recipe-drawer-backdrop { padding: 12px !important; }
+  .recipe-drawer-card {
+    max-height: calc(100dvh - 24px);
+    border-radius: 16px;
+  }
+  .recipe-drawer-header {
+    padding: 8px 12px;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .drawer-title-group { min-width: 0; }
+  .drawer-badge { font-size: .6rem; }
+  .drawer-title { font-size: .95rem; line-height: 1.2; }
+  .btn-drawer-close { width: 30px; height: 30px; flex-shrink: 0; font-size: .85rem; }
+  .recipe-drawer-body { padding: 10px 12px; gap: 10px; min-height: 0; }
+  .drawer-section-title { font-size: .78rem; margin-bottom: 6px; }
+  .drawer-recipe-grid { gap: 6px; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+  .drawer-recipe-pill { padding: 6px 8px; gap: 6px; }
+  .drawer-recipe-pill .pill-emoji { font-size: 1rem; }
+  .drawer-recipe-pill .pill-name { font-size: .66rem; }
+  .drawer-recipe-pill .pill-amount { font-size: .75rem; }
+  .drawer-safety-list { gap: 6px; }
+  .drawer-safety-row { font-size: .72rem; padding: 6px 8px; gap: 7px; line-height: 1.35; }
+  .drawer-safety-row .safety-icon { font-size: .95rem; }
+  .drawer-tip-box { padding: 7px 9px; gap: 7px; }
+  .drawer-tip-box .tip-icon { font-size: 1rem; }
+  .drawer-tip-box .tip-text { font-size: .72rem; line-height: 1.35; }
+  .recipe-drawer-footer { padding: 7px 12px; flex-shrink: 0; }
+  .btn-drawer-ok { font-size: .78rem; padding: 6px 16px; min-height: 32px; border-radius: 9px; }
   .stage-content-row,
   .stage-single-workstation,
   .stage-content-row.stage-single-workstation,

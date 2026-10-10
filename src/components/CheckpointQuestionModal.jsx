@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { soundManager } from '../audio/soundManager';
+import { formatStageFeedback } from '../utils/stageFeedback';
 
 /**
  * Fisher-Yates shuffle algorithm for fair, unbiased choice randomization
@@ -51,6 +52,13 @@ export const CheckpointQuestionModal = ({
 
   const currentChoice = randomizedChoices.find((c) => c.id === selectedId);
   const correctChoice = randomizedChoices.find((c) => c.isCorrect);
+  const feedbackReason = formatStageFeedback(currentChoice?.reason || (currentChoice?.isCorrect
+    ? 'This aligns with commercial food processing standards.'
+    : 'This choice is not aligned with standard processing parameters.'), currentChoice);
+  const principleExplanation = formatStageFeedback(explanation, correctChoice);
+  const normalizeFeedback = (text) => text.trim().replace(/\s+/g, ' ').toLowerCase();
+  const hasAdditionalExplanation = Boolean(principleExplanation.trim()) &&
+    normalizeFeedback(principleExplanation) !== normalizeFeedback(feedbackReason);
 
   const handleSelect = (choice) => {
     if (isAnswered) return; // Prevent changing after initial click
@@ -163,14 +171,14 @@ export const CheckpointQuestionModal = ({
                     : '⚠️ Scientific Principle Alert'}
                 </strong>
                 <p style={{ marginBottom: '6px' }}>
-                  {currentChoice.reason || (currentChoice.isCorrect ? 'This aligns with commercial food processing standards.' : 'This choice is not aligned with standard processing parameters.')}
+                  {feedbackReason}
                 </p>
-                {explanation && (
+                {hasAdditionalExplanation && (
                   <div className="feedback-science-principle" style={{ marginTop: '8px', paddingTop: '8px', borderTop: '1px dashed currentColor', opacity: 0.95 }}>
                     <span style={{ fontWeight: 800, textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.04em', display: 'block', marginBottom: '2px' }}>
                       Food Science Principle:
                     </span>
-                    <span>{explanation}</span>
+                    <span>{principleExplanation}</span>
                   </div>
                 )}
               </div>
@@ -195,5 +203,3 @@ export const CheckpointQuestionModal = ({
     </div>
   );
 };
-
-

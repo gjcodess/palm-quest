@@ -119,7 +119,7 @@ export const OrientationScene = () => {
           note: 'Safety Check: Examine blades, cords, and surfaces for cracks, rust, or electrical hazards.',
           hint: isAlreadyCompleted
             ? 'Pre-Test is submitted and locked.'
-            : 'Select the requested item from Options A, B, or C. You can change your choice before continuing.',
+            : 'Select the requested item from Options A, B, or C. Choose carefully: your first answer is final.',
           hideButton: true,
         }
       );
@@ -134,7 +134,7 @@ export const OrientationScene = () => {
           note: 'Check color, texture, expiration, and packaging integrity for all ingredients.',
           hint: isAlreadyCompleted
             ? 'Pre-Test is submitted and locked.'
-            : 'Select the fresh, sanitary option for each ingredient.',
+            : 'Select the fresh, sanitary option for each ingredient. Choose carefully: your first answer is final.',
           hideButton: true,
         }
       );

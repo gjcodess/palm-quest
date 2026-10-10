@@ -6,7 +6,7 @@ import { soundManager } from '../audio/soundManager';
  * MinigameInspection: Diagnostic safety inspection assessment component
  * Learners identify the requested item from one correct option and two plausible distractors.
  * In assessment mode:
- * - Learners make choices freely without blocking.
+ * - The first choice for each item is final, even when it is incorrect.
  * - Previous choices are saved and remembered when returning to this screen.
  * - When pre-test is completed (isLocked = true), choices are read-only.
  */
@@ -35,6 +35,8 @@ export const MinigameInspection = ({
     }
     return map;
   });
+  // Guard immediately, including multiple input events before React renders.
+  const answersRef = React.useRef(answers);
 
   // Keep the three options stable for each item while still randomizing their positions.
   const [pairsByItemId, setPairsByItemId] = useState(() => {
@@ -68,7 +70,7 @@ export const MinigameInspection = ({
   const isLastItem = currentIndex + 1 >= items.length;
   const currentPair = pairsByItemId[currentItem?.id] || [];
   const currentAnswer = answers[currentItem?.id] || null;
-  const selectedSide = currentAnswer?.selectedSide || null;
+  const isAnswerLocked = isLocked || Boolean(currentAnswer);
   const targetTypeLabel = mode === 'tools' ? 'Correct Tool' : 'Correct Ingredient';
   const targetTypePlural = mode === 'tools' ? 'tools' : 'ingredients';
 
@@ -77,7 +79,7 @@ export const MinigameInspection = ({
     speak(
       `Inspect these three ${targetTypePlural}. Select the option that best matches the required item for this task.`,
       'neutral',
-      { hint: isLocked ? 'Pre-Test is completed. You are reviewing your submitted choices.' : 'Compare the name, shape, material, and intended use of all three options.' }
+      { hint: isLocked ? 'Pre-Test is completed. You are reviewing your submitted choices.' : 'Compare all three options carefully. Your first answer is final.' }
     );
   }, [currentIndex, currentItem, isLocked, targetTypePlural]);
 
@@ -100,6 +102,7 @@ export const MinigameInspection = ({
       }
       return;
     }
+    if (!currentItem || answersRef.current[currentItem.id]) return;
 
     if (card.isCorrect) {
       soundManager.playSuccess();
@@ -110,12 +113,12 @@ export const MinigameInspection = ({
     speak(
       card.isCorrect
         ? `Correct! ${card.name} is the requested ${currentItem.name.toLowerCase()}.`
-        : `That is ${card.name}, but it is not the requested ${currentItem.name.toLowerCase()}. Look for the intended item.`,
+        : `That is ${card.name}, but it is not the requested ${currentItem.name.toLowerCase()}. The requested item is ${currentItem.correctOption.name}.`,
       card.isCorrect ? 'happy' : 'thinking',
       {
         badge: card.isCorrect ? 'Correct Choice' : 'Check the Target',
         note: card.isCorrect ? card.reason : `Requested item: ${currentItem.correctOption.name}.`,
-        hint: 'You can change your choice before moving to the next item.',
+        hint: 'Your first answer has been recorded and cannot be changed. Review the feedback, then continue.',
       }
     );
 
@@ -135,21 +138,11 @@ export const MinigameInspection = ({
       distractorOptions: currentItem.distractors,
     };
     const updatedAnswers = {
-      ...answers,
+      ...answersRef.current,
       [currentItem.id]: answerObj,
     };
 
-    setAnswers(updatedAnswers);
-    if (onAnswersChange) {
-      onAnswersChange(Object.values(updatedAnswers));
-    }
-  };
-
-  const handleUnselect = () => {
-    if (isLocked) return;
-    soundManager.playClick();
-    const updatedAnswers = { ...answers };
-    delete updatedAnswers[currentItem.id];
+    answersRef.current = updatedAnswers;
     setAnswers(updatedAnswers);
     if (onAnswersChange) {
       onAnswersChange(Object.values(updatedAnswers));
@@ -157,6 +150,7 @@ export const MinigameInspection = ({
   };
 
   const handleNextItem = () => {
+    if (!isLocked && (!currentAnswer || (isLastItem && answeredCount !== items.length))) return;
     soundManager.playClick();
     if (isLastItem) {
       if (onComplete) {
@@ -197,15 +191,18 @@ export const MinigameInspection = ({
       </div>
 
       <p className="inspection-prompt">
-        {isLocked
-          ? 'Review your selection for this target below:'
-          : 'Click Option A, B, or C to identify the requested item:'}
+        {isAnswerLocked
+          ? 'Your answer is locked. Review your selection below, then continue.'
+          : 'Choose carefully: your first answer is final. Click Option A, B, or C to identify the requested item:'}
       </p>
 
       {/* Comparison Grid */}
       <div className="inspection-cards-grid">
         {currentPair.map((card, idx) => {
-          const isSelected = selectedSide === card.side;
+          // Display positions can change when the activity is revisited.
+          const isSelected = currentAnswer?.chosen?.id
+            ? currentAnswer.chosen.id === card.id
+            : currentAnswer?.selectedSide === card.side;
           const isCorrect = card.isCorrect;
 
           let cardClass = 'inspection-card';
@@ -216,7 +213,7 @@ export const MinigameInspection = ({
             cardClass += isCorrect ? ' card-safe-reference' : ' choice-dimmed';
           }
 
-          if (isLocked) cardClass += ' is-locked-view';
+          if (isAnswerLocked) cardClass += ' is-locked-view';
 
           return (
             <div
@@ -224,8 +221,15 @@ export const MinigameInspection = ({
               className={cardClass}
               onClick={() => handleCardClick(card)}
               role="button"
-              tabIndex={0}
-              style={{ cursor: isLocked ? 'default' : 'pointer' }}
+              tabIndex={isAnswerLocked ? -1 : 0}
+              aria-disabled={isAnswerLocked}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleCardClick(card);
+                }
+              }}
+              style={{ cursor: isAnswerLocked ? 'default' : 'pointer' }}
             >
               <div className="card-badge-tag">{card.optionLabel}</div>
               <div className="card-img-wrapper">
@@ -266,6 +270,8 @@ export const MinigameInspection = ({
                       : '⚠️ Not the Requested Item'
                     : currentAnswer && isCorrect
                     ? '✓ Correct Target'
+                    : isAnswerLocked
+                    ? 'Answer Locked'
                     : '👆 Click to Select & Check'}
                 </span>
               </div>
@@ -326,8 +332,8 @@ export const MinigameInspection = ({
           <button
             className="btn-primary btn-gold btn-next-inspection"
             onClick={handleNextItem}
-            disabled={!isLocked && !currentAnswer && !isLastItem}
-            style={{ opacity: !isLocked && !currentAnswer && !isLastItem ? 0.6 : 1 }}
+            disabled={!isLocked && (!currentAnswer || (isLastItem && answeredCount !== items.length))}
+            style={{ opacity: !isLocked && (!currentAnswer || (isLastItem && answeredCount !== items.length)) ? 0.6 : 1 }}
           >
             <span>
               {isLastItem

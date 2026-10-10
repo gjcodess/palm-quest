@@ -5,6 +5,7 @@ import { ResultsSidebar } from '../components/ResultsSidebar';
 import { PPE_ITEMS, HANDWASHING_STEPS } from '../data/orientationData';
 import { TOOL_INSPECTION_ITEMS, INGREDIENT_INSPECTION_ITEMS } from '../data/inspectionData';
 import { STAGE_QUESTIONS } from '../data/stageQuestionsData';
+import { formatStageFeedback } from '../utils/stageFeedback';
 import { getSelectedStageChoice, getPipelinePlacement } from '../utils/assessmentReview';
 
 const STAGE_SCIENCE_FACTS = [
@@ -671,7 +672,9 @@ export const ResultsScene = () => {
                           <span>🔬</span>
                           <strong>Food Science Principle & Quality Control Lesson:</strong>
                         </div>
-                        <p className="stage-rationale-text">{qData.explanation}</p>
+                        <p className="stage-rationale-text">
+                          {formatStageFeedback(qData.explanation, activeChoices.find((choice) => choice.isCorrect))}
+                        </p>
                       </div>
                     </div>
                   </div>
