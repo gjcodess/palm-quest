@@ -5,6 +5,8 @@ import { ResultsSidebar } from '../components/ResultsSidebar';
 import { PPE_ITEMS, HANDWASHING_STEPS } from '../data/orientationData';
 import { TOOL_INSPECTION_ITEMS, INGREDIENT_INSPECTION_ITEMS } from '../data/inspectionData';
 import { STAGE_QUESTIONS } from '../data/stageQuestionsData';
+import { formatStageFeedback } from '../utils/stageFeedback';
+import { getSelectedStageChoice, getPipelinePlacement } from '../utils/assessmentReview';
 
 const STAGE_SCIENCE_FACTS = [
   {
@@ -126,8 +128,6 @@ export const ResultsScene = () => {
 
   // Pre-Test PPE Audit Data
   const ppeAudit = assessmentResults?.preTest?.ppe;
-  const ppeDistractors = Array.isArray(ppeAudit?.distractorsPicked) ? ppeAudit.distractorsPicked : [];
-  const ppeCorrectSelected = Array.isArray(ppeAudit?.correctSelected) ? ppeAudit.correctSelected : [];
 
   // Pre-Test Handwashing Audit Data
   const handwashAudit = assessmentResults?.preTest?.handwashing;
@@ -288,7 +288,9 @@ export const ResultsScene = () => {
                   <div
                     key={item.id}
                     className={`ppe-audit-item ${
-                      isCorrect && wasSelected
+                      !ppeAudit
+                        ? ''
+                        : isCorrect && wasSelected
                         ? 'item-correct'
                         : isCorrect && !wasSelected
                         ? 'item-missed'
@@ -305,16 +307,17 @@ export const ResultsScene = () => {
                       <p className="ppe-audit-role">{item.role}</p>
 
                       <div className="ppe-audit-verdict-wrap">
-                        {isCorrect && wasSelected && (
+                        {!ppeAudit && <span>No selection recorded</span>}
+                        {ppeAudit && isCorrect && wasSelected && (
                           <span className="ppe-audit-verdict verdict-good">✓ You Equipped This (Required Standard)</span>
                         )}
-                        {isCorrect && !wasSelected && (
+                        {ppeAudit && isCorrect && !wasSelected && (
                           <span className="ppe-audit-verdict verdict-warn">⚠️ Missed Required Gear (Standard)</span>
                         )}
-                        {isDistractor && wasSelected && (
+                        {ppeAudit && isDistractor && wasSelected && (
                           <span className="ppe-audit-verdict verdict-bad">🚫 Selected Hazard: {item.reason}</span>
                         )}
-                        {isDistractor && !wasSelected && (
+                        {ppeAudit && isDistractor && !wasSelected && (
                           <span className="ppe-audit-verdict verdict-good">✓ Correctly Avoided Hazard</span>
                         )}
                       </div>
@@ -387,7 +390,7 @@ export const ResultsScene = () => {
                     );
                   })
                 ) : (
-                  <div className="no-data-msg">Handwashing sequence recorded via interactive workstation.</div>
+                  <div className="no-data-msg">No handwashing sequence recorded.</div>
                 )}
               </div>
 
@@ -451,24 +454,28 @@ export const ResultsScene = () => {
                     const recorded = toolAudit.find((t) => t.id === item.id);
                     const isCorrect = recorded !== undefined
                       ? Boolean(recorded.isCorrect ?? recorded.isSafe)
-                      : true;
+                      : null;
                     const selectedName = recorded?.chosen?.name;
 
                     return (
-                      <tr key={item.id} className={isCorrect ? 'row-pass' : 'row-fail'}>
+                      <tr key={item.id} className={isCorrect === null ? '' : isCorrect ? 'row-pass' : 'row-fail'}>
                         <td>
                           <strong>{item.name}</strong>
                         </td>
                         <td>{item.correctOption?.name || 'Requested Tool'}</td>
                         <td style={{ textAlign: 'center' }}>
-                          {isCorrect ? (
+                          {isCorrect === null ? (
+                            <span>No selection recorded</span>
+                          ) : isCorrect ? (
                             <span className="badge-safe">✓ CORRECT TARGET</span>
                           ) : (
                             <span className="badge-hazard">⚠️ DIFFERENT ITEM</span>
                           )}
                         </td>
                         <td>
-                          {isCorrect
+                          {isCorrect === null
+                            ? 'No inspection answer recorded.'
+                            : isCorrect
                             ? item.correctOption?.reason
                             : `Selected: ${selectedName || 'No selection'}. Requested: ${item.correctOption?.name}.`}
                         </td>
@@ -523,24 +530,28 @@ export const ResultsScene = () => {
                     const recorded = ingredientAudit.find((i) => i.id === item.id);
                     const isCorrect = recorded !== undefined
                       ? Boolean(recorded.isCorrect ?? recorded.isSafe)
-                      : true;
+                      : null;
                     const selectedName = recorded?.chosen?.name;
 
                     return (
-                      <tr key={item.id} className={isCorrect ? 'row-pass' : 'row-fail'}>
+                      <tr key={item.id} className={isCorrect === null ? '' : isCorrect ? 'row-pass' : 'row-fail'}>
                         <td>
                           <strong>{item.name}</strong>
                         </td>
                         <td>{item.correctOption?.name}</td>
                         <td style={{ textAlign: 'center' }}>
-                          {isCorrect ? (
+                          {isCorrect === null ? (
+                            <span>No selection recorded</span>
+                          ) : isCorrect ? (
                             <span className="badge-safe">✓ CORRECT TARGET</span>
                           ) : (
                             <span className="badge-hazard">⚠️ DIFFERENT INGREDIENT</span>
                           )}
                         </td>
                         <td>
-                          {isCorrect
+                          {isCorrect === null
+                            ? 'No inspection answer recorded.'
+                            : isCorrect
                             ? item.correctOption?.reason
                             : `Selected: ${selectedName || 'No selection'}. Requested: ${item.correctOption?.name}.`}
                         </td>
@@ -585,8 +596,9 @@ export const ResultsScene = () => {
                 const qData = STAGE_QUESTIONS[stageKey];
                 const studentAnswer = stageAnswers?.[stageKey];
                 const isAnswered = Boolean(studentAnswer);
-                const isCorrect = Boolean(studentAnswer?.isCorrect);
                 const activeChoices = studentAnswer?.choices || qData.choices;
+                const selectedChoice = getSelectedStageChoice(studentAnswer, activeChoices);
+                const isCorrect = Boolean(selectedChoice?.isCorrect);
 
                 return (
                   <div key={stageKey} className="stage-question-review-card">
@@ -622,7 +634,7 @@ export const ResultsScene = () => {
                             const choiceLetter = choice.displayLetter || choice.id?.toUpperCase();
                             const isThisCorrect = choice.isCorrect;
                             const isThisUserSelected =
-                              studentAnswer?.selectedOptionId?.toLowerCase() === choice.id?.toLowerCase();
+                              selectedChoice?.id === choice.id;
 
                             let cardClass = 'choice-review-card';
                             if (isThisCorrect) {
@@ -660,7 +672,9 @@ export const ResultsScene = () => {
                           <span>🔬</span>
                           <strong>Food Science Principle & Quality Control Lesson:</strong>
                         </div>
-                        <p className="stage-rationale-text">{qData.explanation}</p>
+                        <p className="stage-rationale-text">
+                          {formatStageFeedback(qData.explanation, activeChoices.find((choice) => choice.isCorrect))}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -689,8 +703,8 @@ export const ResultsScene = () => {
 
             <div className="stage-science-cards-stack">
               {STAGE_SCIENCE_FACTS.map((stage) => {
-                const userStageAtPos = sequenceSubmitted[stage.step - 1];
-                const wasCorrectAtPos = userStageAtPos?.step === stage.step;
+                const placement = getPipelinePlacement(sequenceAudit, stage.step);
+                const wasCorrectAtPos = placement.isCorrect;
 
                 return (
                   <div key={stage.step} className="stage-science-card">
@@ -709,7 +723,9 @@ export const ResultsScene = () => {
                           >
                             {wasCorrectAtPos
                               ? '✓ You Ordered This Correctly'
-                              : `⚠️ Placed at Position: ${userStageAtPos?.title || 'Misplaced'}`}
+                              : placement.position === null
+                              ? 'No selection recorded'
+                              : `⚠️ You Placed This at Position ${placement.position}`}
                           </span>
                         )}
                       </div>
