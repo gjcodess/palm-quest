@@ -140,6 +140,9 @@ export const AboutUsModal = () => {
         </div>
 
         <div className="modal-footer">
+          <a href="https://palm-quest.vercel.app/privacy/" target="_blank" rel="noopener noreferrer" className="contact-link" style={{ marginRight: 'auto' }}>
+            Privacy Policy ↗
+          </a>
           <button className="btn-primary" onClick={closeModal}>
             Return to Virtual Laboratory
           </button>
