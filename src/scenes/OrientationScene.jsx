@@ -1,3 +1,4 @@
+import { useSessionState } from '../hooks/useSessionState';
 import React, { useState, useEffect } from 'react';
 import { useGame } from '../context/GameContext';
 import { soundManager } from '../audio/soundManager';
@@ -27,10 +28,10 @@ export const OrientationScene = () => {
   const lockedClicksRef = React.useRef(0);
 
   // PRE-TEST Sub-phases: 'ppe' | 'sanitation' | 'tool_inspection' | 'ingredient_inspection'
-  const [phase, setPhase] = useState('ppe');
+  const [phase, setPhase] = useSessionState('orientation.phase', 'ppe');
 
   // PPE states (selection tracking for all 8 items in bank)
-  const [ppeEquipped, setPpeEquipped] = useState(() => {
+  const [ppeEquipped, setPpeEquipped] = useSessionState('orientation.ppeEquipped', () => {
     const savedPpe = assessmentResults?.preTest?.ppe?.selectedIds;
     if (savedPpe && Array.isArray(savedPpe)) {
       const map = {};
@@ -52,26 +53,26 @@ export const OrientationScene = () => {
   });
 
   // Handwashing state persistence
-  const [handwashData, setHandwashData] = useState(() => {
+  const [handwashData, setHandwashData] = useSessionState('orientation.handwashData', () => {
     return assessmentResults?.preTest?.handwashing || null;
   });
 
   // Tool inspection state persistence
-  const [toolAnswers, setToolAnswers] = useState(() => {
+  const [toolAnswers, setToolAnswers] = useSessionState('orientation.toolAnswers', () => {
     return assessmentResults?.preTest?.toolSafety || [];
   });
 
   // Ingredient inspection state persistence
-  const [ingredientAnswers, setIngredientAnswers] = useState(() => {
+  const [ingredientAnswers, setIngredientAnswers] = useSessionState('orientation.ingredientAnswers', () => {
     return assessmentResults?.preTest?.qualityInspection || [];
   });
 
   // Sub-phase completion states for subnav checkmarks
-  const [ppeDone, setPpeDone] = useState(() => isAlreadyCompleted || Boolean(assessmentResults?.preTest?.ppe));
-  const [isPpeVerified, setIsPpeVerified] = useState(() => isAlreadyCompleted || Boolean(assessmentResults?.preTest?.ppe));
-  const [handwashingDone, setHandwashingDone] = useState(() => isAlreadyCompleted || Boolean(assessmentResults?.preTest?.handwashing));
-  const [toolSafetyDone, setToolSafetyDone] = useState(() => isAlreadyCompleted || (assessmentResults?.preTest?.toolSafety?.length || 0) > 0);
-  const [qualityInspectionDone, setQualityInspectionDone] = useState(() => isAlreadyCompleted || (assessmentResults?.preTest?.qualityInspection?.length || 0) > 0);
+  const [ppeDone, setPpeDone] = useSessionState('orientation.ppeDone', () => isAlreadyCompleted || Boolean(assessmentResults?.preTest?.ppe));
+  const [isPpeVerified, setIsPpeVerified] = useSessionState('orientation.isPpeVerified', () => isAlreadyCompleted || Boolean(assessmentResults?.preTest?.ppe));
+  const [handwashingDone, setHandwashingDone] = useSessionState('orientation.handwashingDone', () => isAlreadyCompleted || Boolean(assessmentResults?.preTest?.handwashing));
+  const [toolSafetyDone, setToolSafetyDone] = useSessionState('orientation.toolSafetyDone', () => isAlreadyCompleted || (assessmentResults?.preTest?.toolSafety?.length || 0) > 0);
+  const [qualityInspectionDone, setQualityInspectionDone] = useSessionState('orientation.qualityInspectionDone', () => isAlreadyCompleted || (assessmentResults?.preTest?.qualityInspection?.length || 0) > 0);
 
   useEffect(() => {
     if (phase === 'ppe') {

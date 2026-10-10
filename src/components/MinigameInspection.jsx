@@ -1,3 +1,4 @@
+import { useSessionState } from '../hooks/useSessionState';
 import React, { useState, useEffect } from 'react';
 import { useGame } from '../context/GameContext';
 import { soundManager } from '../audio/soundManager';
@@ -20,7 +21,7 @@ export const MinigameInspection = ({
   mode = "tools", // "tools" | "ingredients"
 }) => {
   const { speak, setIsDialogueCollapsed } = useGame();
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useSessionState(`inspection.${mode}.currentIndex`, 0);
   const lockedClicksRef = React.useRef(0);
 
   // Map of answers keyed by item id: { [itemId]: { chosen, isCorrect, selectedSide, optionLabel } }

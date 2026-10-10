@@ -1,3 +1,5 @@
+import { useActivityInterval } from '../hooks/useActivityInterval';
+import { useSessionState } from '../hooks/useSessionState';
 import React, { useState, useEffect } from 'react';
 import { useGame } from '../context/GameContext';
 import { soundManager } from '../audio/soundManager';
@@ -9,7 +11,7 @@ import { CheckpointQuestionModal } from '../components/CheckpointQuestionModal';
 import { STAGE_QUESTIONS } from '../data/stageQuestionsData';
 
 export const Mission5Steaming = () => {
-  const { setScene, unlockBadge, speak, showToast, completeMission, holdingItem, setHoldingItem, missionsCompleted, maxUnlockedStage, stageAnswers, recordStageAnswer } = useGame();
+  const { isRestoringSession, setScene, unlockBadge, speak, showToast, completeMission, holdingItem, setHoldingItem, missionsCompleted, maxUnlockedStage, stageAnswers, recordStageAnswer } = useGame();
 
   const isAlreadyCompleted = Boolean(missionsCompleted?.mission5);
   const [isCheckpointOpen, setIsCheckpointOpen] = useState(() => !isAlreadyCompleted && !stageAnswers?.mission5);
@@ -42,11 +44,12 @@ export const Mission5Steaming = () => {
   // 4: Steaming in progress (10-minute countdown)
   // 5: Steaming complete -> accept silicone heat mitts to transfer to cooling rack
   // 6: Transferred to cooling rack -> Complete!
-  const [steamerStep, setSteamerStep] = useState(() => (isAlreadyCompleted ? 6 : 0));
-  const [steamProgress, setSteamProgress] = useState(0);
-  const [isSteaming, setIsSteaming] = useState(false);
+  const [steamerStep, setSteamerStep] = useSessionState('mission5.steamerStep', () => (isAlreadyCompleted ? 6 : 0));
+  const [steamProgress, setSteamProgress] = useSessionState('mission5.steamProgress', 0);
+  const [isSteaming, setIsSteaming] = useSessionState('mission5.isSteaming', false);
 
   useEffect(() => {
+    if (isRestoringSession && !isAlreadyCompleted) return;
     if (isAlreadyCompleted) {
       speak(
         'Stage 5 complete.',
@@ -189,12 +192,12 @@ export const Mission5Steaming = () => {
     setSteamerStep(4);
     showToast('Steamer Ignited!', '100°C steam gelatinizing starch matrix...', 'info');
 
-    let current = 0;
-    const interval = setInterval(() => {
-      current += 20;
+  };
+
+  useActivityInterval(isSteaming, () => {
+      const current = steamProgress + 20;
       setSteamProgress(current);
       if (current >= 100) {
-        clearInterval(interval);
         setIsSteaming(false);
         setSteamerStep(5);
         soundManager.playSuccess();
@@ -210,8 +213,7 @@ export const Mission5Steaming = () => {
           }
         );
       }
-    }, 600);
-  };
+  }, 600);
 
   const handleTransferToCoolingRack = () => {
     soundManager.playClick();
@@ -333,6 +335,7 @@ export const Mission5Steaming = () => {
 
       {/* Stage 5 Pre-Check Question Modal */}
       <CheckpointQuestionModal
+        persistenceKey="mission5.checkpoint"
         isOpen={isCheckpointOpen}
         stageTitle={STAGE_QUESTIONS.mission5.stageTitle}
         question={STAGE_QUESTIONS.mission5.question}

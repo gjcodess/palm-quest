@@ -1,3 +1,5 @@
+import { useActivityInterval } from '../hooks/useActivityInterval';
+import { useSessionState } from '../hooks/useSessionState';
 import React, { useState, useEffect } from 'react';
 import { useGame } from '../context/GameContext';
 import { soundManager } from '../audio/soundManager';
@@ -8,7 +10,7 @@ import { CheckpointQuestionModal } from '../components/CheckpointQuestionModal';
 import { STAGE_QUESTIONS } from '../data/stageQuestionsData';
 
 export const Mission6Dehydration = () => {
-  const { setScene, unlockBadge, speak, showToast, completeMission, holdingItem, setHoldingItem, missionsCompleted, stageAnswers, recordStageAnswer } = useGame();
+  const { isRestoringSession, setScene, unlockBadge, speak, showToast, completeMission, holdingItem, setHoldingItem, missionsCompleted, stageAnswers, recordStageAnswer } = useGame();
 
   const isAlreadyCompleted = Boolean(missionsCompleted?.mission6);
   const [isCheckpointOpen, setIsCheckpointOpen] = useState(() => !isAlreadyCompleted && !stageAnswers?.mission6);
@@ -41,11 +43,12 @@ export const Mission6Dehydration = () => {
   // 4: Dehydrating at 90°C for ~12 hours
   // 5: Completely dehydrated pieces -> accept storage_container (Step 18: clean dry container)
   // 6: Dried pieces transferred to clean, dry container -> complete & proceed to frying
-  const [dehydrateStep, setDehydrateStep] = useState(() => (isAlreadyCompleted ? 6 : 0));
-  const [dehydrateProgress, setDehydrateProgress] = useState(0);
-  const [isDehydrating, setIsDehydrating] = useState(false);
+  const [dehydrateStep, setDehydrateStep] = useSessionState('mission6.dehydrateStep', () => (isAlreadyCompleted ? 6 : 0));
+  const [dehydrateProgress, setDehydrateProgress] = useSessionState('mission6.dehydrateProgress', 0);
+  const [isDehydrating, setIsDehydrating] = useSessionState('mission6.isDehydrating', false);
 
   useEffect(() => {
+    if (isRestoringSession && !isAlreadyCompleted) return;
     if (isAlreadyCompleted) {
       speak(
         'Stage 6 complete.',
@@ -203,13 +206,13 @@ export const Mission6Dehydration = () => {
       }
     );
 
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += 20;
+  };
+
+  useActivityInterval(isDehydrating, () => {
+      const progress = dehydrateProgress + 20;
       setDehydrateProgress(progress);
 
       if (progress >= 100) {
-        clearInterval(interval);
         setIsDehydrating(false);
         setDehydrateStep(5);
         soundManager.playSuccess();
@@ -225,8 +228,7 @@ export const Mission6Dehydration = () => {
           }
         );
       }
-    }, 650);
-  };
+  }, 650);
 
   const handleTransferToStorage = () => {
     soundManager.playClick();
@@ -370,6 +372,7 @@ export const Mission6Dehydration = () => {
 
       {/* Stage 6 Pre-Check Question Modal */}
       <CheckpointQuestionModal
+        persistenceKey="mission6.checkpoint"
         isOpen={isCheckpointOpen}
         stageTitle={STAGE_QUESTIONS.mission6.stageTitle}
         question={STAGE_QUESTIONS.mission6.question}

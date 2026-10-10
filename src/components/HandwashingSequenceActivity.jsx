@@ -1,3 +1,4 @@
+import { useSessionState } from '../hooks/useSessionState';
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useGame } from '../context/GameContext';
@@ -33,7 +34,7 @@ export const HandwashingSequenceActivity = ({
   };
 
   // 10 Total Cards (7 correct steps + 3 distractors)
-  const [pool, setPool] = useState(() => {
+  const [pool, setPool] = useSessionState('handwashing.pool', () => {
     if (initialPool && Array.isArray(initialPool)) return initialPool;
     if (initialSlots && Array.isArray(initialSlots)) {
       const placedIds = new Set(initialSlots.filter(Boolean).map((s) => s.id));
@@ -43,7 +44,7 @@ export const HandwashingSequenceActivity = ({
   });
 
   // 7 Sequence Slots (null or step object)
-  const [slots, setSlots] = useState(() => {
+  const [slots, setSlots] = useSessionState('handwashing.slots', () => {
     if (initialSlots && Array.isArray(initialSlots) && initialSlots.length === 7) {
       return initialSlots;
     }
@@ -474,7 +475,7 @@ export const HandwashingSequenceActivity = ({
     setIsDragOverPool(false);
   };
 
-  const [isVerified, setIsVerified] = useState(() => isLocked);
+  const [isVerified, setIsVerified] = useSessionState('handwashing.isVerified', () => isLocked);
 
   const handleReset = () => {
     if (isLocked || isVerified) {

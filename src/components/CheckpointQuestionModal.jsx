@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
+import { useSessionState } from '../hooks/useSessionState';
 import { soundManager } from '../audio/soundManager';
 import { formatStageFeedback } from '../utils/stageFeedback';
 
@@ -33,19 +34,23 @@ export const CheckpointQuestionModal = ({
   explanation = '',
   onComplete,
   stageTitle = 'Food Technology Checkpoint',
+  persistenceKey = `checkpoint.${question}`,
 }) => {
-  const [selectedId, setSelectedId] = useState(null);
-  const [isAnswered, setIsAnswered] = useState(false);
-  const [randomizedChoices, setRandomizedChoices] = useState(() =>
+  const [selectedId, setSelectedId] = useSessionState(`${persistenceKey}.selectedId`, null);
+  const [isAnswered, setIsAnswered] = useSessionState(`${persistenceKey}.isAnswered`, false);
+  const [randomizedChoices, setRandomizedChoices] = useSessionState(`${persistenceKey}.choices`, () =>
     isOpen && Array.isArray(choices) && choices.length > 0 ? shuffleChoices(choices) : []
   );
+  const previousQuestionRef = useRef(question);
 
   useEffect(() => {
-    if (isOpen && Array.isArray(choices) && choices.length > 0) {
+    if (isOpen && Array.isArray(choices) && choices.length > 0 &&
+      (randomizedChoices.length === 0 || previousQuestionRef.current !== question)) {
       setSelectedId(null);
       setIsAnswered(false);
       setRandomizedChoices(shuffleChoices(choices));
     }
+    previousQuestionRef.current = question;
   }, [isOpen, question]);
 
   if (!isOpen) return null;

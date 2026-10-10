@@ -17,6 +17,15 @@ Output: `android/app/build/outputs/apk/debug/PALMQuest.apk`. Copy this APK to a 
 
 For public distribution, create a signing key and signed **release** APK or AAB in Android Studio (`Build > Generate Signed Bundle / APK`). Keep the signing key and password safe; future updates need the same key. Sync after every web change, then rebuild the APK.
 
+Laboratory progress is saved locally as it changes. Reopening after the Android
+process is recreated restores the current stage, workstation steps, answers,
+and incomplete pre-test/post-test activities. Active workstation timers continue
+from their saved progress. Restarting a stage clears that stage's workstation;
+starting a new batch clears session progress while keeping the student's name.
+To verify on a device, switch to another app and return, then repeat after
+closing and reopening PALMQuest. Confirm that an incorrect inspection answer
+stays locked and that an active timer finishes after restoration.
+
 ## Windows installer
 
 ```powershell

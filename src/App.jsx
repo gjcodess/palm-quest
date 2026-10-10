@@ -30,8 +30,9 @@ import { SequencingScene } from './scenes/SequencingScene';
 import { ResultsScene } from './scenes/ResultsScene';
 
 export const App = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const { scene, stageKey, isDialogueCollapsed, isInventoryCollapsed, effectiveZoom } = useGame();
+  // A restored session goes directly back to its activity.
+  const [isLoading, setIsLoading] = useState(() => scene === 'title');
 
   const renderScene = () => {
     switch (scene) {

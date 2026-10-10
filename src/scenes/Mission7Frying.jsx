@@ -1,3 +1,5 @@
+import { useActivityInterval } from '../hooks/useActivityInterval';
+import { useSessionState } from '../hooks/useSessionState';
 import React, { useState, useEffect } from 'react';
 import { useGame } from '../context/GameContext';
 import { soundManager } from '../audio/soundManager';
@@ -9,7 +11,7 @@ import { RecipeReferenceDrawer } from '../components/RecipeReferenceDrawer';
 import { STAGE_QUESTIONS } from '../data/stageQuestionsData';
 
 export const Mission7Frying = () => {
-  const { setScene, unlockBadge, speak, showToast, completeMission, holdingItem, setHoldingItem, missionsCompleted, stageAnswers, recordStageAnswer } = useGame();
+  const { isRestoringSession, setScene, unlockBadge, speak, showToast, completeMission, holdingItem, setHoldingItem, missionsCompleted, stageAnswers, recordStageAnswer } = useGame();
 
   const isAlreadyCompleted = Boolean(missionsCompleted?.mission7);
   const [isCheckpointOpen, setIsCheckpointOpen] = useState(() => !isAlreadyCompleted && !stageAnswers?.mission7);
@@ -42,14 +44,15 @@ export const Mission7Frying = () => {
   // 4: Flash puff complete (10s) -> accept colander / tongs to lift & drain
   // 5: Crackers in colander draining excess oil -> action: allow to cool completely / transfer to platter
   // 6: Cooled & Crispy on Platter -> Complete!
-  const [fryStep, setFryStep] = useState(() => (isAlreadyCompleted ? 6 : 0));
-  const [oilTemp, setOilTemp] = useState(() => (isAlreadyCompleted ? 180 : 25));
-  const [isHeatingOil, setIsHeatingOil] = useState(false);
-  const [puffProgress, setPuffProgress] = useState(0);
-  const [isPuffing, setIsPuffing] = useState(false);
+  const [fryStep, setFryStep] = useSessionState('mission7.fryStep', () => (isAlreadyCompleted ? 6 : 0));
+  const [oilTemp, setOilTemp] = useSessionState('mission7.oilTemp', () => (isAlreadyCompleted ? 180 : 25));
+  const [isHeatingOil, setIsHeatingOil] = useSessionState('mission7.isHeatingOil', false);
+  const [puffProgress, setPuffProgress] = useSessionState('mission7.puffProgress', 0);
+  const [isPuffing, setIsPuffing] = useSessionState('mission7.isPuffing', false);
   const isBurnerOn = isHeatingOil || fryStep === 2 || fryStep === 3;
 
   useEffect(() => {
+    if (isRestoringSession && !isAlreadyCompleted) return;
     if (isAlreadyCompleted) {
       speak(
         'Stage 7 complete.',
@@ -164,12 +167,12 @@ export const Mission7Frying = () => {
     setIsHeatingOil(true);
     showToast('Burner Ignited!', 'Preheating 5 cups vegetable oil over medium heat...', 'info');
 
-    let current = 25;
-    const interval = setInterval(() => {
-      current += 31;
+  };
+
+  useActivityInterval(isHeatingOil, () => {
+      const current = oilTemp + 31;
       setOilTemp(Math.min(180, current));
       if (current >= 180) {
-        clearInterval(interval);
         setOilTemp(180);
         setIsHeatingOil(false);
         setFryStep(2);
@@ -186,8 +189,7 @@ export const Mission7Frying = () => {
           }
         );
       }
-    }, 400);
-  };
+  }, 400);
 
   const handleStartFlashFrying = () => {
     soundManager.playSizzle();
@@ -206,12 +208,12 @@ export const Mission7Frying = () => {
       }
     );
 
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += 20;
+  };
+
+  useActivityInterval(isPuffing, () => {
+      const progress = puffProgress + 20;
       setPuffProgress(progress);
       if (progress >= 100) {
-        clearInterval(interval);
         setIsPuffing(false);
         setFryStep(4);
         soundManager.playSuccess();
@@ -227,8 +229,7 @@ export const Mission7Frying = () => {
           }
         );
       }
-    }, 400);
-  };
+  }, 400);
 
   const handleLiftToColander = () => {
     soundManager.playClick();
@@ -367,6 +368,7 @@ export const Mission7Frying = () => {
 
       {/* Stage 7 Pre-Check Question Modal */}
       <CheckpointQuestionModal
+        persistenceKey="mission7.checkpoint"
         isOpen={isCheckpointOpen}
         stageTitle={STAGE_QUESTIONS.mission7.stageTitle}
         question={STAGE_QUESTIONS.mission7.question}

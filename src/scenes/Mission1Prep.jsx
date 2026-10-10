@@ -1,3 +1,5 @@
+import { useActivityInterval } from '../hooks/useActivityInterval';
+import { useSessionState } from '../hooks/useSessionState';
 import React, { useState, useEffect } from 'react';
 import { useGame } from '../context/GameContext';
 import { soundManager } from '../audio/soundManager';
@@ -10,7 +12,7 @@ import { CheckpointQuestionModal } from '../components/CheckpointQuestionModal';
 import { STAGE_QUESTIONS } from '../data/stageQuestionsData';
 
 export const Mission1Prep = () => {
-  const { setScene, speak, showToast, completeMission, holdingItem, setHoldingItem, unlockBadge, missionsCompleted, maxUnlockedStage, stageAnswers, recordStageAnswer, recordMistake } = useGame();
+  const { isRestoringSession, setScene, speak, showToast, completeMission, holdingItem, setHoldingItem, unlockBadge, missionsCompleted, maxUnlockedStage, stageAnswers, recordStageAnswer, recordMistake } = useGame();
 
   const isAlreadyCompleted = Boolean(missionsCompleted?.mission1);
   const [isCheckpointOpen, setIsCheckpointOpen] = useState(() => !isAlreadyCompleted && !stageAnswers?.mission1);
@@ -39,21 +41,21 @@ export const Mission1Prep = () => {
   // 1. isUbodInColander (false -> place raw_ubod into sink colander -> becomes sink_colander_ubod)
   // 2. isWashingActive (running water animation with sink_colander_washing)
   // 3. isWashed (true -> ubod sanitized, ready to load in pot)
-  const [isUbodInColander, setIsUbodInColander] = useState(() => isAlreadyCompleted);
-  const [isWashed, setIsWashed] = useState(() => isAlreadyCompleted);
+  const [isUbodInColander, setIsUbodInColander] = useSessionState('mission1.isUbodInColander', () => isAlreadyCompleted);
+  const [isWashed, setIsWashed] = useSessionState('mission1.isWashed', () => isAlreadyCompleted);
   const [isWashingActive, setIsWashingActive] = useState(false);
 
   // Pot state: 0: empty, 1: +ubod, 2: +water, 3: +salt, 4: boiling complete, 5: drained in sink
-  const [potStep, setPotStep] = useState(() => (isAlreadyCompleted ? 5 : 0));
-  const [isBoilingTimerActive, setIsBoilingTimerActive] = useState(false);
-  const [boilProgress, setBoilProgress] = useState(0);
+  const [potStep, setPotStep] = useSessionState('mission1.potStep', () => (isAlreadyCompleted ? 5 : 0));
+  const [isBoilingTimerActive, setIsBoilingTimerActive] = useSessionState('mission1.isBoilingTimerActive', false);
+  const [boilProgress, setBoilProgress] = useSessionState('mission1.boilProgress', 0);
 
   // Post-Boil Step 6: Cooling Rinse & Residue Wash in Sink
   const [isCoolingRinseActive, setIsCoolingRinseActive] = useState(false);
-  const [isCoolingRinseComplete, setIsCoolingRinseComplete] = useState(() => isAlreadyCompleted);
+  const [isCoolingRinseComplete, setIsCoolingRinseComplete] = useSessionState('mission1.isCoolingRinseComplete', () => isAlreadyCompleted);
 
   // Single-workstation sequential phase: 'wash' -> 'boil' -> 'drain_rinse'
-  const [currentPhase, setCurrentPhase] = useState(() => {
+  const [currentPhase, setCurrentPhase] = useSessionState('mission1.currentPhase', () => {
     if (isAlreadyCompleted || potStep >= 5) return 'drain_rinse';
     if (isWashed || potStep >= 1) return 'boil';
     return 'wash';
@@ -61,6 +63,11 @@ export const Mission1Prep = () => {
 
   // Active colander draining transition state
   const [isDrainingActive, setIsDrainingActive] = useState(false);
+
+  useEffect(() => {
+    // Recover a reload between the completed rinse and its delayed phase change.
+    if (isRestoringSession && isWashed && currentPhase === 'wash') setCurrentPhase('boil');
+  }, [isRestoringSession, isWashed, currentPhase]);
 
   // Error Shake & Nudge Feedback
   const [sinkShake, setSinkShake] = useState(false);
@@ -88,6 +95,7 @@ export const Mission1Prep = () => {
   };
 
   useEffect(() => {
+    if (isRestoringSession && !isAlreadyCompleted) return;
     if (isAlreadyCompleted) {
       speak(
         'Stage 1 complete.',
@@ -267,12 +275,12 @@ export const Mission1Prep = () => {
     setIsBoilingTimerActive(true);
     showToast('Step 6', 'Click “Ignite burner” to boil the ubod', 'info');
 
-    let current = 0;
-    const interval = setInterval(() => {
-      current += 20;
+  };
+
+  useActivityInterval(isBoilingTimerActive, () => {
+      const current = boilProgress + 20;
       setBoilProgress(current);
       if (current >= 100) {
-        clearInterval(interval);
         setIsBoilingTimerActive(false);
         setPotStep(4);
         soundManager.playSuccess();
@@ -288,8 +296,7 @@ export const Mission1Prep = () => {
           }
         );
       }
-    }, 600);
-  };
+  }, 600);
 
   const handleDrainUbod = () => {
     if (isDrainingActive) return;
@@ -618,6 +625,7 @@ export const Mission1Prep = () => {
 
       {/* Stage 1 Pre-Check Question Modal */}
       <CheckpointQuestionModal
+        persistenceKey="mission1.checkpoint"
         isOpen={isCheckpointOpen}
         stageTitle={STAGE_QUESTIONS.mission1.stageTitle}
         question={STAGE_QUESTIONS.mission1.question}
