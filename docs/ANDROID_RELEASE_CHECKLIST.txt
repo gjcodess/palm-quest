@@ -1,0 +1,10 @@
+PALMQuest Android release checklist
+
+1. Confirm the package ID and increment versionCode for a new Play release.
+2. Run npm install and npm run android:sync after web changes.
+3. Build a signed release AAB with Android Studio's JDK 21.
+4. Keep the upload key and signing credentials outside this repository.
+5. Test the package on a phone and tablet, including an offline run.
+6. Check that in-progress activities restore after closing and reopening the app.
+
+Build commands, signing setup, and output paths are documented in PACKAGING.md.
