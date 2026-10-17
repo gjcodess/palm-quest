@@ -1,5 +1,12 @@
 apply plugin: 'com.android.application'
 
+// Signing credentials stay outside the repository. Override the location in CI.
+def uploadPropertiesFile = new File(System.getenv('PALMQUEST_SIGNING_PROPERTIES') ?: new File(System.getProperty('user.home'), '.android/palmquest-upload.properties').path)
+def uploadProperties = new Properties()
+if (uploadPropertiesFile.exists()) {
+    uploadPropertiesFile.withInputStream { uploadProperties.load(it) }
+}
+
 android {
     namespace = "com.gjcodess.palmquest"
     compileSdk = rootProject.ext.compileSdkVersion
@@ -16,8 +23,19 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+        if (uploadPropertiesFile.exists()) {
+            upload {
+                storeFile file(uploadProperties['storeFile'])
+                storePassword uploadProperties['storePassword']
+                keyAlias uploadProperties['keyAlias']
+                keyPassword uploadProperties['keyPassword']
+            }
+        }
+    }
     buildTypes {
         release {
+            if (uploadPropertiesFile.exists()) signingConfig signingConfigs.upload
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
