@@ -454,6 +454,192 @@
   color: #0f766e;
 }
 
+/* Learning Corner reference, opened from the title screen. */
+.modal-card.learning-corner-modal-card {
+  max-width: 920px;
+  max-height: min(92vh, 900px);
+}
+
+.learning-corner-tabs {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  padding: 14px 18px;
+  flex-shrink: 0;
+  background: #f6ead8;
+  border-bottom: 2px solid #dfcfb9;
+}
+
+.learning-corner-tab {
+  min-width: 0;
+  min-height: 42px;
+  grid-column: span 2;
+  border: 1px solid #d5c3ab;
+  border-radius: 12px;
+  padding: 8px 14px;
+  background: #fffdf8;
+  color: #5c3e21;
+  font-family: var(--font-heading);
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.25;
+  box-shadow: 0 2px 0 #d5c3ab;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.learning-corner-tab:nth-child(n + 4) {
+  grid-column: span 3;
+}
+
+.learning-corner-tab:hover,
+.learning-corner-tab:focus-visible {
+  border-color: #16a34a;
+  color: #166534;
+  transform: translateY(-1px);
+}
+
+.learning-corner-tab:focus-visible {
+  outline: 3px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+.learning-corner-tab.active {
+  background: linear-gradient(180deg, #16a34a, #15803d);
+  border-color: #166534;
+  color: #ffffff;
+  box-shadow: 0 2px 0 #166534;
+}
+
+.learning-corner-body {
+  min-height: 0;
+  overscroll-behavior: contain;
+  scrollbar-color: #c5ad8a #f7f1e5;
+}
+
+.learning-corner-section h3 {
+  margin: 0 0 12px;
+  color: #166534;
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+.learning-corner-section h4 {
+  margin: 26px 0 10px;
+  padding-left: 10px;
+  border-left: 4px solid #f59e0b;
+  color: #854d0e;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+}
+
+.learning-corner-section p {
+  margin: 0 0 14px;
+  line-height: 1.65;
+}
+
+.learning-corner-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 16px 0 24px;
+  border: 1px solid #cbb699;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(90, 60, 30, 0.08);
+}
+
+.learning-corner-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.learning-corner-table th,
+.learning-corner-table td {
+  border-bottom: 1px solid #e5d8c5;
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: top;
+  white-space: pre-line;
+}
+
+.learning-corner-table th + th,
+.learning-corner-table td + td {
+  border-left: 1px solid #e5d8c5;
+}
+
+.learning-corner-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.learning-corner-table tbody tr:nth-child(even) {
+  background: #fffaf0;
+}
+
+.learning-corner-table th {
+  background: #166534;
+  color: #ffffff;
+  font-family: var(--font-heading);
+}
+
+.learning-corner-table td:first-child {
+  width: 31%;
+  font-weight: 700;
+  color: #166534;
+}
+
+.learning-corner-callout {
+  padding: 12px 16px;
+  margin: 18px 0;
+  border: 1px solid #fbbf24;
+  border-radius: 12px;
+  background: #fffbeb;
+  color: #713f12;
+}
+
+.learning-corner-section p.learning-corner-callout {
+  margin: 18px 0;
+}
+
+@media (max-width: 640px) {
+  .modal-card.learning-corner-modal-card {
+    max-height: 96vh;
+  }
+
+  .learning-corner-tabs {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(165px, max-content);
+    gap: 6px;
+    padding: 8px;
+    overflow-x: auto;
+    scrollbar-color: #c5ad8a #f6ead8;
+  }
+
+  .learning-corner-tab {
+    grid-column: auto;
+    min-height: 40px;
+    font-size: 0.75rem;
+    padding: 7px 8px;
+  }
+
+  .learning-corner-tab:nth-child(n + 4),
+  .learning-corner-tab:last-child {
+    grid-column: auto;
+  }
+
+  .learning-corner-body {
+    padding: 16px;
+  }
+
+  .learning-corner-table {
+    font-size: 0.8rem;
+    min-width: 530px;
+  }
+}
+
 /* ==========================================================================
    ABOUT US MODAL STYLES
    ========================================================================== */

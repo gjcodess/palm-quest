@@ -74,6 +74,9 @@ export const TitleScene = () => {
             <button className="btn-secondary link-btn" onClick={() => openModal('science')}>
               🔬 Science Concepts
             </button>
+            <button className="btn-secondary link-btn" onClick={() => openModal('learning-corner')}>
+              📚 Learning Corner
+            </button>
             <button className="btn-secondary link-btn" onClick={() => openModal('recipe')}>
               📖 Recipe & Standards
             </button>

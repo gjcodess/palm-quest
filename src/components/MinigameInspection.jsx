@@ -77,6 +77,23 @@ export const MinigameInspection = ({
 
   useEffect(() => {
     if (!currentItem) return;
+    const recordedAnswer = answersRef.current[currentItem.id];
+    if (recordedAnswer) {
+      const chosen = [currentItem.correctOption, ...(currentItem.distractors || [])]
+        .find((option) => option.id === recordedAnswer.chosen?.id) || recordedAnswer.chosen;
+      speak(
+        recordedAnswer.isCorrect ?? recordedAnswer.isSafe
+          ? `Correct choice. ${chosen.reason}`
+          : `${chosen.reason} The requested item is ${currentItem.correctOption.name}.`,
+        (recordedAnswer.isCorrect ?? recordedAnswer.isSafe) ? 'happy' : 'thinking',
+        {
+          badge: (recordedAnswer.isCorrect ?? recordedAnswer.isSafe) ? 'Correct Choice' : 'Check the Target',
+          note: `Requested item: ${currentItem.correctOption.name}.`,
+          hint: 'Your first answer has been recorded and cannot be changed. Review the feedback, then continue.',
+        }
+      );
+      return;
+    }
     speak(
       `Inspect these three ${targetTypePlural}. Select the option that best matches the required item for this task.`,
       'neutral',
@@ -113,8 +130,8 @@ export const MinigameInspection = ({
 
     speak(
       card.isCorrect
-        ? `Correct! ${card.name} is the requested ${currentItem.name.toLowerCase()}.`
-        : `That is ${card.name}, but it is not the requested ${currentItem.name.toLowerCase()}. The requested item is ${currentItem.correctOption.name}.`,
+        ? `Correct choice. ${card.reason}`
+        : `${card.reason} The requested item is ${currentItem.correctOption.name}.`,
       card.isCorrect ? 'happy' : 'thinking',
       {
         badge: card.isCorrect ? 'Correct Choice' : 'Check the Target',
@@ -170,6 +187,9 @@ export const MinigameInspection = ({
   };
 
   const answeredCount = Object.keys(answers).length;
+  const selectedOption = currentAnswer
+    ? currentPair.find((card) => card.id === currentAnswer.chosen?.id) || currentAnswer.chosen
+    : null;
 
   return (
     <div className="inspection-minigame-container">
@@ -297,11 +317,11 @@ export const MinigameInspection = ({
                 : `🔎 Compare the ${currentItem.name} Options`}
             </strong>
             <p style={{ margin: '0 0 6px', fontSize: '0.86rem', lineHeight: 1.4 }}>
-              {currentAnswer.chosen.reason}
+              {selectedOption?.reason}
             </p>
             {!(currentAnswer.isCorrect ?? currentAnswer.isSafe) && (currentAnswer.correctOption || currentAnswer.safeOption) && (
               <div style={{ fontSize: '0.82rem', background: '#ffffff', padding: '6px 10px', borderRadius: '8px', border: '1px solid #86efac', color: '#15803d' }}>
-                <strong>Requested item:</strong> {(currentAnswer.correctOption || currentAnswer.safeOption).name}
+                <strong>Requested item:</strong> {currentItem.correctOption.name}. {currentItem.correctOption.description}
               </div>
             )}
           </div>
