@@ -36,7 +36,7 @@ export const HelpModal = () => {
 
   return createPortal(
     <div className="modal-overlay" onClick={closeModal}>
-      <div className="modal-card help-modal-card" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-card quick-link-modal-card help-modal-card" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>❓ How to Play & Laboratory User Guide</h2>
           <button className="close-btn" onClick={closeModal} title="Close Modal">&times;</button>

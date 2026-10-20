@@ -75,7 +75,7 @@ export const LearningCornerModal = () => {
 
   return createPortal(
     <div className="modal-overlay" onClick={closeModal}>
-      <div className="modal-card learning-corner-modal-card" role="dialog" aria-modal="true" aria-labelledby="learning-corner-title" onClick={(event) => event.stopPropagation()}>
+      <div className="modal-card quick-link-modal-card learning-corner-modal-card" role="dialog" aria-modal="true" aria-labelledby="learning-corner-title" onClick={(event) => event.stopPropagation()}>
         <div className="modal-header">
           <h2 id="learning-corner-title">LEARNING CORNER</h2>
           <button className="close-btn" onClick={closeModal} aria-label="Close Learning Corner">&times;</button>

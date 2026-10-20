@@ -52,7 +52,7 @@ export const AboutUsModal = () => {
 
   return createPortal(
     <div className="modal-overlay" onClick={closeModal}>
-      <div className="modal-card about-us-modal-card" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-card quick-link-modal-card about-us-modal-card" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>👥 About Us & The Coconut Palm Research Project</h2>
           <button className="close-btn" onClick={closeModal} title="Close Modal">&times;</button>
