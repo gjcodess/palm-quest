@@ -11,6 +11,7 @@ import { AboutUsModal } from './components/Modals/AboutUsModal';
 import { HelpModal } from './components/Modals/HelpModal';
 import { SystemOverviewModal } from './components/Modals/SystemOverviewModal';
 import { ConfirmModal } from './components/Modals/ConfirmModal';
+import { LearningCornerModal } from './components/Modals/LearningCornerModal';
 import { FloatingItemCursor } from './components/FloatingItemCursor';
 import { LoadingScreen } from './components/LoadingScreen';
 import { ScreenRestrictionOverlay } from './components/ScreenRestrictionOverlay';
@@ -130,6 +131,7 @@ export const App = () => {
       <AboutUsModal />
       <HelpModal />
       <SystemOverviewModal />
+      <LearningCornerModal />
       <ConfirmModal />
       <FloatingItemCursor />
     </div>

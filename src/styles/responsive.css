@@ -2706,3 +2706,131 @@
     font-size: .85rem !important;
   }
 }
+
+/* Title quick links and their reference modals on short landscape screens. */
+@media screen and (max-width: 950px) and (orientation: landscape),
+       screen and (max-height: 520px) and (orientation: landscape) {
+  .title-quick-links {
+    width: 100% !important;
+    max-width: 660px !important;
+    gap: 5px 6px !important;
+    margin-top: 6px !important;
+  }
+
+  .title-quick-links .link-btn {
+    padding: 5px 9px !important;
+    font-size: 0.73rem !important;
+    line-height: 1.15;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+  }
+
+  .modal-card.quick-link-modal-card {
+    width: min(100%, 740px);
+    max-width: 740px;
+    max-height: calc(100dvh - 18px);
+    border-width: 2px;
+    border-radius: 16px;
+    box-shadow: 0 4px 0 #bfa88c, 0 16px 36px rgba(0, 0, 0, 0.28);
+  }
+
+  .quick-link-modal-card .modal-header {
+    min-height: 42px;
+    padding: 6px 12px;
+    gap: 8px;
+  }
+
+  .quick-link-modal-card .modal-header h2 {
+    font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+    line-height: 1.2;
+  }
+
+  .quick-link-modal-card .close-btn {
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    font-size: 1rem;
+  }
+
+  .quick-link-modal-card .modal-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
+    padding: 10px 14px;
+    overflow-y: auto;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  .quick-link-modal-card .modal-footer {
+    min-height: 40px;
+    flex: 0 0 auto;
+    padding: 5px 12px;
+    gap: 8px;
+  }
+
+  .quick-link-modal-card .modal-footer .btn-primary {
+    padding: 6px 12px;
+    font-size: 0.76rem;
+    line-height: 1.2;
+  }
+
+  .quick-link-modal-card .system-modal-nav {
+    flex: 0 0 auto;
+    padding: 4px 12px 0;
+  }
+
+  .quick-link-modal-card .system-nav-btn {
+    padding: 5px 10px;
+    font-size: 0.72rem;
+  }
+
+  .quick-link-modal-card .learning-corner-tabs {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 6px;
+    padding: 6px 10px;
+    overflow-x: auto;
+  }
+
+  .quick-link-modal-card .learning-corner-tab,
+  .quick-link-modal-card .learning-corner-tab:nth-child(n + 4) {
+    flex: 0 0 auto;
+    min-height: 32px;
+    grid-column: auto;
+    padding: 5px 10px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+
+  .quick-link-modal-card .learning-corner-section h3 {
+    font-size: 1.12rem;
+  }
+
+  .quick-link-modal-card .learning-corner-section h4 {
+    margin: 16px 0 6px;
+    font-size: 0.94rem;
+  }
+
+  .quick-link-modal-card .learning-corner-table th,
+  .quick-link-modal-card .learning-corner-table td {
+    padding: 7px 9px;
+  }
+
+  .quick-link-modal-card .objective-card,
+  .quick-link-modal-card .science-concept-card,
+  .quick-link-modal-card .help-card-item,
+  .quick-link-modal-card .about-hero-banner {
+    padding: 9px 11px;
+  }
+
+  .quick-link-modal-card .objective-card {
+    margin-bottom: 8px;
+  }
+
+  .quick-link-modal-card .science-concepts-grid,
+  .quick-link-modal-card .help-sections-grid {
+    gap: 8px;
+  }
+}

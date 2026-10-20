@@ -10,7 +10,7 @@ export const ScienceConceptsModal = () => {
 
   return createPortal(
     <div className="modal-overlay" onClick={closeModal}>
-      <div className="modal-card science-concepts-modal-card" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-card quick-link-modal-card science-concepts-modal-card" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>🔬 Science Concept</h2>
           <button className="close-btn" onClick={closeModal}>&times;</button>

@@ -9,7 +9,7 @@ export const RecipeModal = () => {
 
   return createPortal(
     <div className="modal-overlay" onClick={closeModal}>
-      <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-card quick-link-modal-card" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>🥥 Recipe Standard</h2>
           <button className="close-btn" onClick={closeModal}>&times;</button>

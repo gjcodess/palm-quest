@@ -17,6 +17,12 @@ Output: `android/app/build/outputs/apk/debug/PALMQuest.apk`. Copy this APK to a 
 
 For public distribution, create a signing key and signed **release** APK or AAB in Android Studio (`Build > Generate Signed Bundle / APK`). Keep the signing key and password safe; future updates need the same key. Sync after every web change, then rebuild the APK.
 
+### Google Play release bundle
+
+Release signing reads `%USERPROFILE%/.android/palmquest-upload.properties`, or the file named by `PALMQUEST_SIGNING_PROPERTIES`. Keep this credentials file and its upload keystore outside Git. The local upload key is at `%USERPROFILE%/.android/palmquest/palmquest-upload.jks`, with alias `palmquest-upload`; the public certificate is `palmquest-upload-certificate.pem` in the same folder. Back up the key and credentials securely.
+
+After `npm run android:sync`, run `./gradlew.bat :app:bundleRelease` from `android` with Android Studio's JDK 21 and the Android SDK configured. The bundle is `android/app/build/outputs/bundle/release/app-release.aab`. Signing is applied when the credentials file exists; without it the release bundle is unsigned and cannot be uploaded to Google Play. Increment `versionCode` in `android/app/build.gradle` for subsequent Play releases.
+
 Laboratory progress is saved locally as it changes. Reopening after the Android
 process is recreated restores the current stage, workstation steps, answers,
 and incomplete pre-test/post-test activities. Active workstation timers continue

@@ -39,7 +39,7 @@ export const SystemOverviewModal = () => {
 
   return createPortal(
     <div className="modal-overlay" onClick={closeModal}>
-      <div className="modal-card system-overview-modal-card" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-card quick-link-modal-card system-overview-modal-card" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <div className="modal-title-with-badge">
             <span className="modal-top-pill">🌐 System & Instructional Overview</span>
